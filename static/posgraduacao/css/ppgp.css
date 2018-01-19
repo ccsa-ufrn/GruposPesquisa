@@ -1,0 +1,26 @@
+/* (re)color some stuff due to program specificatinos */
+
+section header h2{
+    padding-left: 5px;
+    border-bottom: 2px solid #99b333;
+}
+
+h4,
+section span,
+.page-header h2{
+    color: #063E5F;
+}
+
+.main-page-header{
+    background-color: #063E5F;
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+
+.main-page-header h1{
+    color: #ecf0f1;
+}
+
+.main-page-header h1 small{
+    color: #bdc3c7;
+}

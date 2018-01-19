@@ -1,0 +1,8 @@
+version: '2'
+services:
+    web:
+        build: .
+        command: python -u app.py
+        volumes:
+            - .:/juno
+        network_mode: 'host'

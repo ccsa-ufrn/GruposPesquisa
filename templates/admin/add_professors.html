@@ -1,0 +1,41 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+
+<div class="col-md-6" style="margin-left: -4%">
+<div class="panel panel-danger">
+<div class="panel-heading text-center">
+    <h4>Adicionar docente<h4/>
+</div>
+<div class="panel-body">
+<form method="POST" action="{{ url_for('admin.add_professors') }}">
+    <div class="form-group">
+    {{ form.csrf_token }}
+    <br/>
+    {{ form.name.label }}<br/>
+    {{ form.name(required='true', class="form-control", placeholder="Ex: Leonardo Martins") }}
+    <br/>
+    {{ form.rank.label }}<br/>
+    {{ form.rank(required='true', placeholder="Ex: Professor ou Colaborador", class="form-control") }}
+    <br/>
+    {{ form.lattes.label }}<br/>
+    {{ form.lattes(class="form-control") }}
+    <br/>
+    {{ form.email.label }}<br/>
+    {{ form.email(required='true', class="form-control") }}    
+    <br/>
+    {{ form.create(class="form-control") }}
+    </div>
+</form>
+<p>
+    Você pode <a onclick="window.history.go(-1); return false;" href="#">voltar à página anterior</a>.
+</p>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

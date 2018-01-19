@@ -1,0 +1,91 @@
+{% extends "public/layout.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/static/posgraduacao/css/{{ std.research_group.name.lower() }}.css"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="main-page-header">
+    <h1 class="text-center"><small>Pós-Graduação em</small><br/> {{ std.research_group.name }}</h1>
+</div>
+
+<section>
+    <header class="page-header">
+        <h2>&raquo Equipe</h2>
+    </header>
+
+    <p>
+        Os coordenadores são os "lideres" ou "chefes" da base de pesquisa.
+    </p>
+
+    {% for coordinator in board_of_staffs.coordination %}
+    {% if "deleted" not in coordinator %}
+    <div class="row">
+        <div class="col-md-3">
+            <img alt="Coordenador(a)" src="{{ coordinator.photo }}" class="img-circle pull-right" height="190" width="180">
+        </div>
+        <div class="col-md-9">
+            <h3>{{ coordinator.name }}<br/>
+                <small>{{ coordinator.rank }}</small>
+            </h3>
+            <p>{{ coordinator.abstract }}</p>
+        </div>
+    </div>
+    <br/>
+    {% endif %}
+    {% endfor %}
+
+    <h3>Pesquisadores</h3>
+
+    <p>
+        Pesquisadores são os profissionais com titulação de Mestrado ou Doutorado que produzem junto a base de pesquisa
+    </p>
+
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
+                <th>Nome</th>
+                <th>Posição</th>
+                <th>Descrição das atividades</th>
+            </thead>
+            {% for researcher in board_of_staffs.researchers %}
+            {% if "deleted" not in researcher %}
+            <tr>
+                <td>{{ researcher.name }}</td>
+                <td>{{ researcher.function.rank }}</td>
+                <td>{{ researcher.function.description }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+    <h3>Discentes</h3>
+
+    <p>
+        Estudantes de Mestrado ou Doutorado que estão vinculados ao grupo de pesquisa durante o respectivo curso
+    </p>
+
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
+                <th>Nome</th>
+                <th>Posição</th>
+                <th>Descrição das atividades</th>
+            </thead>
+            {% for student in board_of_staffs.students %}
+            {% if "deleted" not in student %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.function.rank }}</td>
+                <td>{{ student.function.description }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+</section>
+
+{% endblock %}

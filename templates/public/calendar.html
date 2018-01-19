@@ -1,0 +1,49 @@
+{% extends "public/layout.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/static/posgraduacao/css/{{ std.research_group.name.lower() }}.css"/>
+<style>
+    .card {
+        width: 100%;
+        height: 180px;
+        border: 1.5px solid grey;
+        border-radius: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="main-page-header">
+    <h1 class="text-center"><small>Pós-Graduação em</small><br/> {{ std.research_group.name }}</h1>
+</div>
+
+<section>
+    <header class="page-header">
+        <h2>&raquo Calendário
+            <small>2017.2</small>
+        </h2>
+    </header>
+    <div class="row">
+        {% for event in calendar_info.events %}
+        {% if "deleted" not in event %}
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ event.title }}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Início: {{ event.initialDate }}</h6>
+                    {% if event.finalDate != None %}<h6 class="card-subtitle mb-2 text-muted">Fim: {{ event.finalDate }}</h6>{% endif %}
+                    {% if event.hour != None%}<h6 class="card-subtitle mb-2 text-muted">Horário: {{ event.hour }}</h6>{% endif %}
+                    {% if event.link != None%}<h6 class="card-subtitle mb-2 text-muted"><a href="{{ ''.join(['http://', event.link]) }}"> Mais informações</a></h6>{% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

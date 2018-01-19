@@ -1,0 +1,128 @@
+/* GLOBAL
+-------------------------------------------------- */
+
+body {
+    /* Set padding to protect main menu top place */
+    padding-top: 50px;
+}
+
+.body-content {
+    /* Set padding to keep content from hitting the edges */
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 20px;
+}
+
+.darker-container{
+    background-color: rgb(236,236,236);
+    padding: 30px;
+    box-shadow: 2px 1px 1px 1px #000;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* for reading pages outside home */
+
+section header h2{
+    padding-left: 5px;
+    font-weight: normal;
+}
+
+.page-header h1,
+.page-header h2{
+    margin-bottom: 5px;
+}
+
+.main-page-header{
+    margin-bottom: 5px;
+}
+
+
+/* NAVBAR
+-------------------------------------------------- */
+
+.navbar-default{
+    background-color: #F05648;
+}
+
+.navbar .container .navbar-nav > li > a,
+.navbar .container .navbar-header .navbar-brand{
+    color: #FFF;
+}
+
+.navbar .container .navbar-nav .dropdown-header,
+.navbar .container .navbar-nav .dropdown .dropdown-menu li a{
+    color: #FFF; /* Should only be shown for desktop screens */
+}
+
+.navbar .container .navbar-nav .dropdown-header{
+    font-weight: bold;
+}
+
+.navbar .container .navbar-header .navbar-brand{
+    font-size: 2.5em;
+    margin-bottom: 5px;
+    margin-top: 5px; /* Vertical alignment that should appear only for desktop screens */
+}
+
+.navbar .container .dropdown-header{
+    color: #FFF;
+}
+
+@media (min-width: 768px) {
+    /* If in a desktop */
+
+    .navbar .container .navbar-nav .dropdown-header,
+    .navbar .container .navbar-nav .dropdown .dropdown-menu li a{
+        color: #000; /* Fix that coloring */
+    }
+
+    .navbar .container .navbar-header .navbar-brand{
+        margin-top: 0px; /* Fix that vertical alignment */
+    }
+
+}
+
+.navbar .navbar-toggle{
+    border-color: transparent;
+    background: none !important;
+}
+
+.navbar .navbar-toggle .icon-bar{
+    background-color: #FFF;
+    padding: 2px;
+    margin: 4px;
+    border-radius: 10px;
+}
+
+/* GOOGLE MAPS API
+-------------------------------------------------- */
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+/* FOOTER
+-------------------------------------------------- */
+
+footer{
+    background-color: #D2382A;
+    /* Set padding to keep content footer from hitting the edges */
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+footer p,
+footer li,
+footer li a{
+    color: #fff;
+}
+
+footer a,
+footer a:hover,
+footer a:visited{
+    color: #bdc3c7;
+}

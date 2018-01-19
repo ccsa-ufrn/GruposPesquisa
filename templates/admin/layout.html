@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupos de Pesquisa (CCSA/UFRN)</title>
+
+    <meta name="description" content="Plataforma acadêmica dos grupos de pesquisa do CCSA da UFRN."/>
+    <meta name="author" content="Luccas"/>
+
+    <link rel="icon" href="https://www.ccsa.ufrn.br/portal/wp-content/uploads/2014/08/favicon.fw_.png"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/posgraduacao/css/general_admin.css"/>
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/admin/" class="navbar-brand">Painel de Controle</a>
+            </div>
+
+            <div class="navbar-collapse collapse">                
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"> Ver página </a></li>
+                    <li><a href="#"> Configurações </a></li>
+                    <li><a href="{{ url_for('admin.logout') }}"> Sair </a></li>
+                </ul>
+            </div>
+            
+        </div>
+    </nav>
+
+    {% block precontent %}{% endblock %}
+
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-md-12"> 
+            {% if current_user and current_user.is_authenticated %}
+            <div class="col-md-3" style="padding-left: 0px">
+            <div class="col sidebar mainbar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a data-target=".sidebar-collapse" aria-expanded="true" data-toggle="collapse">{{ current_user.group_name }}<span class="sr-only">(atual)</span><span class="caret"></span> Clique para expandir/esconder</a></li>
+                </ul>
+            </div>
+            <div class="w-100"></div>
+            <div class="col sidebar">
+                <h6 class="sidebar-collapse collapse in"><strong>EDITAR PÁGINAS</strong></h6>
+                <ul class="nav nav-sidebar sidebar-collapse collapse in">
+                    <li><a href="{{ url_for('crud_attendances.edit_attendance') }}">Informações para contato</a></li>
+                    <li><a href="#projects" data-toggle="collapse">Projetos
+                        <span class="caret"></span></a>
+                        <ul id="projects" class="collapse">
+                            <li><a href="{{ url_for('crud_projects.add_project') }}">Adicionar projetos</a></li>
+                            <li><a href="{{ url_for('crud_projects.view_member', crud_type='Adicionar') }}">Adicionar membros</a></li>
+                            <li><a href="{{ url_for('crud_projects.delete_project') }}">Retirar projetos</a></li>
+                            <li><a href="{{ url_for('crud_projects.view_member', crud_type='Deletar') }}">Deletar membros</a></li>
+                            <li><a href="{{ url_for('crud_projects.edit_project') }}">Editar projetos</a></li>
+                            <li><a href="{{ url_for('crud_projects.view_member', crud_type='Editar') }}">Editar membros</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#books" data-toggle="collapse">Livros
+                        <span class="caret"></span></a>
+                        <ul id="books" class="collapse">
+                            <li><a href="{{ url_for('crud_books.add_book') }}">Adicionar livros</a></li>
+                            <li><a href="{{ url_for('crud_books.edit_book') }}">Editar livros</a></li>
+                            <li><a href="{{ url_for('crud_books.delete_book') }}">Deletar livros</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#articles" data-toggle="collapse">Artigos
+                        <span class="caret"></span></a>
+                        <ul id="articles" class="collapse">
+                            <li><a href="{{ url_for('crud_articles.add_article') }}">Adicionar artigos</a></li>
+                            <li><a href="{{ url_for('crud_articles.edit_article') }}">Editar artigos</a></li>
+                            <li><a href="{{ url_for('crud_articles.delete_article') }}">Deletar livros</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#participations" data-toggle="collapse">Intercâmbios
+                        <span class="caret"></span></a>
+                        <ul id="participations" class="collapse">
+                        <li><a href="{{ url_for('crud_participations.participations') }}">Adicionar intercâmbios</a></li>
+                        <li><a href="{{ url_for('crud_participations.edit_participations') }}">Editar intercâmbios</a></li>
+                        <li><a href="{{ url_for('crud_participations.delete_participations') }}">Retirar intercâmbios</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#scheduledReports" data-toggle="collapse">Agendamento de defesas
+                        <span class="caret"></span></a>
+                        <ul id="scheduledReports" class="collapse">
+                        <li><a href="{{ url_for('crud_scheduled_reports.scheduled_reports') }}">Adicionar agendamento</a></li>
+                        <li><a href="{{ url_for('crud_scheduled_reports.edit_scheduled_reports') }} ">Editar agendamento</a></li>
+                        <li><a href="{{ url_for('crud_scheduled_reports.delete_scheduled_reports') }} ">Deletar agendamento</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#staff" data-toggle="collapse">Equipe
+                        <span class="caret"></span></a>
+                        <ul id="staff" class="collapse">
+                        <li><a href="{{ url_for('crud_staff.add_staff') }}">Adicionar membros da equipe</a></li>
+                        <li><a href="{{ url_for('crud_staff.edit_staff') }}">Editar membros da equipe</a></li>
+                        <li><a href="{{ url_for('crud_staff.delete_staff') }}">Retirar membrors da equipe</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#covenants" data-toggle="collapse">Convênios
+                        <span class="caret"></span></a>
+                        <ul id="covenants" class="collapse">
+                            <li><a href="{{ url_for('admin.covenants') }}">Adicionar convênios</a></li>
+                            <li><a href="{{ url_for('admin.edit_covenants') }}">Editar convênios</a></li>
+                            <li><a href="{{ url_for('admin.delete_covenants') }}">Retirar convênios</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#calendar" data-toggle="collapse">Calendário
+                        <span class="caret"></span></a>
+                        <ul id="calendar" class="collapse">
+                            <li><a href="{{ url_for('crud_events.add_events') }}">Adicionar evento</a></li>
+                            <li><a href="{{ url_for('crud_events.edit_events') }}">Editar evento</a></li>
+                            <li><a href="{{ url_for('crud_events.delete_events') }}">Retirar evento</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <h6 class="sidebar-collapse collapse in"><strong>BUROCRACIA</strong></h6>
+                <ul class="nav nav-sidebar sidebar-collapse collapse in">
+                <li><a href="#documents" data-toggle="collapse">Documentos
+                    <span class="caret"></span></a>
+                    <ul id="documents" class="collapse">
+                    <li><a href="{{ url_for('admin.documents') }}">Adicionar documentos</a></li>
+                    <li><a href="{{ url_for('admin.edit_documents') }}">Editar documentos</a></li>
+                    <li><a href="{{ url_for('admin.delete_documents') }}">Retirar documentos</a></li>
+                    </ul>
+                </li>
+                </ul>
+            </div>
+            </div>
+            {% endif %}
+
+            <div class="content">
+                
+                {% if form and form.errors %}
+                <div class="form-errors">
+                    
+                    <p>Erros no preenchimento do formulário:</p>
+                    <ul>
+                        {% for field, errors in form.errors.items() %}
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                                
+                {% if success_msg %}
+                <div class="form-success">
+                    <p>{{ success_msg }}</p>
+                </div>
+                {% endif %}
+                
+                {% block content %}{% endblock %}
+            </div>
+
+            </div>
+        </div>
+        <hr/>
+    </div>
+
+    <footer>
+        <div class="container">
+            <a href="http://www.sistemas.ufrn.br/acessoainformacao/" target="_blank">
+                <img class="pull-right" src="/static/assets/icon-acessoainformacao.png"/>
+            </a>
+            <p><span class="glyphicon glyphicon-link"></span> <strong>Links rápidos:</strong></p>
+            <ul id="institutional-quick-links">
+                <li><a target="_blank" href="http://ufrn.br/">UFRN: Universidade Federal do Rio Grande do Norte</a></li>
+                <li><a target="_blank" href="https://sigaa.ufrn.br/sigaa/public/home.jsf">SIGAA: Sistema Integrado de Gestão de Atividades Acadêmicas</a></li>
+                <li><a target="_blank" href="https://ccsa.ufrn.br/portal/">CCSA: Centro de Ciências Sociais Aplicadas</a></li>
+                <li><a target="_blank" href="http://www.capes.gov.br/">CAPES: Coordenação de Aperfeiçoamento de Pessoal de Nível Superior</a></li>
+                <li><a target="_blank" href="http://cnpq.br/">CNPq: Conselho Nacional de Desenvolvimento Científico e Tecnológico</a></li>
+                <li><a target="_blank" href="https://repositorio.ufrn.br/jspui/">RI: Repositório Institucional</a></li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <p class="pull-right">v1.0.0 (Minerva)</p>
+            <p><strong>&copy; 2017 - Projeto Plataforma de Pós-Graduação (Centro de Ciências Sociais Aplicadas, Universidade Federal do Rio Grande do Norte)</strong></p>
+            <p><a href="https://github.com/ccsa-ufrn/PosGraduacao" target="_blank">Código livre</a>, licenciado em GPL3.</p>
+        </div>
+    </footer>
+
+    <script src="/static/jquery3/jquery-3.1.1.min.js"></script>
+    <script src="/static/bootstrap3/js/bootstrap.js"></script>
+    {% block scripts %}{% endblock %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            marginTop = $(".navbar-fixed-top").height() - 45 ;
+            $('.mainbar').css('margin-top', marginTop + 'px');
+            $(".content").toggleClass("col-md-8");
+            if($(window).width() <= 768){
+            $(".in").toggleClass("in");
+            var width = $(window).width() - 15;
+            $('.mainbar').css('width', width);
+            }
+            $(window).resize(function(){
+                marginTop = $(".navbar-fixed-top").height() - 45 ;
+                $('.mainbar').css('margin-top', marginTop + 'px');
+            });
+        });
+    </script>
+
+</body>
+</html>

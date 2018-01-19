@@ -1,0 +1,63 @@
+#######################################################
+# Misc
+
+tcl
+.vscode/
+*.swp
+
+######################################################
+#Upload Files
+*static/upload_files/*/*/*.pdf
+*static/upload_files/*/*/*.docx
+*static/upload_files/*.jpeg
+
+#######################################################
+# PosGraduacao
+
+*settings/files/api_keys.json
+
+#######################################################
+#Upload files
+*.pdf
+*.jpeg
+*.docx
+
+########################################################
+# flask
+# from: https://raw.githubusercontent.com/pallets/flask/master/.gitignore
+
+.DS_Store
+*.pyc
+*.pyo
+env
+env*
+dist
+build
+*.egg
+*.egg-info
+_mailinglist
+.tox
+.cache/
+.idea/
+
+# Coverage reports
+htmlcov
+.coverage
+.coverage.*
+*,cover
+
+########################################################
+# virtualenv
+# from: https://raw.githubusercontent.com/github/gitignore/master/Global/VirtualEnv.gitignore
+# attached link: http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json

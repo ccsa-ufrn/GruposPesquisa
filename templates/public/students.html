@@ -1,0 +1,40 @@
+{% extends "public/layout.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/static/posgraduacao/css/{{ std.research_group.name.lower() }}.css"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="main-page-header">
+    <h1 class="text-center"><small>Pós-Graduação em</small><br/> {{ std.research_group.name }}</h1>
+</div>
+
+<section>
+    <header class="page-header">
+        <h2>&raquo Discentes</h2>
+    </header>
+    {% for course in students %}
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h4>{{ course }}</h4>
+        </div>
+        <table class="table">
+            <thead>
+                <th>Nome</th>
+                <th>Matricula</th>
+            </thead>
+            <tr>
+            {% for student in students[course] %}
+                <td>{{ student.name }}</td>
+                <td>{{ student.class }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <br/>
+    {% endfor %}
+
+</section>
+
+{% endblock %}

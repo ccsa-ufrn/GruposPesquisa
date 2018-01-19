@@ -1,0 +1,62 @@
+{% extends "public/layout.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/static/posgraduacao/css/{{ std.research_group.name.lower() }}.css"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="main-page-header">
+    <h1 class="text-center"><small>Pós-Graduação em</small><br/> {{ std.research_group.name }}</h1>
+</div>
+
+<section>
+    <header class="page-header">
+        <h2>&raquo Docentes</h2>
+    </header>
+
+    <div class="panel panel-default table-responsive">
+        <table class="table">
+            <thead>
+                <th>Nome</th>
+                <th>Vínculo</th>
+                <th>E-mail</th>
+                <th>Currículo Lattes</th>
+            </thead>
+            {% for professor in board_of_professors.professors %}
+            {% if "deleted" not in professor %}
+            <tr>
+                <td>{{ professor.name }}</td>
+                <td>{{ professor.rank }}(a)</td>
+                
+                <td>
+                    <a href="mailto:{{ professor.email }}">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        {{ professor.email }}
+                    </a>
+                </td>
+                
+                <td>
+                    {% if professor.lattes != "" %}
+                    <a href="{{ professor.lattes }}" target="_blank">
+                        <img src="/static/assets/lattes.gif">
+                        {{ professor.lattes }}
+                    </a>
+                    {% else %}
+                    <a href="#" target="_blank">
+                        <img src="/static/assets/lattes.gif">
+                        Não informado
+                    </a>
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    <br/>
+
+</section>
+
+{% endblock %}
