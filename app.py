@@ -14,6 +14,8 @@ from views.crud_projects import crud_projects
 from views.crud_events import crud_events
 from views.crud_participations import crud_participations 
 from views.crud_staff import crud_staff 
+from views.crud_covenants import crud_covenants 
+from views.crud_fomentation import crud_fomentation
 from views.crud_scheduled_reports import crud_scheduled_reports 
 from settings.extensions import ExtensionsManager
 
@@ -28,6 +30,8 @@ APP.register_blueprint(crud_attendances)
 APP.register_blueprint(crud_projects)
 APP.register_blueprint(crud_events)
 APP.register_blueprint(crud_staff)
+APP.register_blueprint(crud_covenants)
+APP.register_blueprint(crud_fomentation)
 APP.register_blueprint(crud_participations)
 APP.register_blueprint(crud_scheduled_reports)
 

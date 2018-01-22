@@ -29,7 +29,7 @@
             <div class="container">
                 <div class="carousel-caption">
                     <div class="carousel-caption-content">
-                        <h1>Grupo de pesquisa:<br/><strong>{{ std.research_group.name }}</strong>.</h1>
+                        <h1>Grupo de pesquisa:<br/><strong>{{ std.research_group.name | replace("+"," ") }}</strong>.</h1>
                         <p>
                         Linha de pesquisa: {{ std.research_group.descriptionSmall }}</p>
                         <p><a class="btn btn-lg btn-primary" href="#program-about" role="button">Ver mais</a></p>

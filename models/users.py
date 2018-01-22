@@ -80,7 +80,7 @@ class User(object):
     @property
     def group_name(self):
         """Research group that the user manages"""
-        return self._group_name.upper()
+        return self._group_name
 
     @property
     def is_authenticated(self):

@@ -13,26 +13,27 @@ $(document).ready(function() {
     var integrations = {{ integrations|tojson|safe }};
     var integrations = JSON.parse(integrations);
     console.log(integrations);
-    var listOfCovenants = [];
-    for( i = 0; i < integrations.institutionsWithCovenant.length; i++){
-        if (!(integrations.institutionsWithCovenant[i].hasOwnProperty('deleted'))){
-            listOfCovenants.push({
+    var listOfFomentation = [];
+    for( i = 0; i < integrations.fomentation.length; i++){
+        if (!(integrations.fomentation[i].hasOwnProperty('deleted'))){
+            listOfFomentation.push({
                 id: i,
-                text: (integrations.institutionsWithCovenant[i].name)
+                text: (integrations.fomentation[i].name)
             })
         }
     }
     
     $("#list").select2({
-        data: listOfCovenants 
+        data: listOfFomentation
     });
 
     $("button").click(function(){
-        var indexInCovenants = $("select#list").val();
+        var indexInFomentations = $("select#list").val();
         $("#form-edit").css("visibility", "visible");
-        $("input[name=name]").val(integrations.institutionsWithCovenant[indexInCovenants].name);
-        $("input[name=initials]").val(integrations.institutionsWithCovenant[indexInCovenants].initials);
-        $("input[name=index]").val(indexInCovenants);
+        $("input[name=name]").val(integrations.fomentation[indexInFomentations].name);
+        $("input[name=initials]").val(integrations.fomentation[indexInFomentations].initials);
+        $("textarea[name=description]").val(integrations.fomentation[indexInFomentations].description);
+        $("input[name=index]").val(indexInFomentations);
     });
 
 });
@@ -43,18 +44,18 @@ $(document).ready(function() {
 <div class="col-md-12">
 <div class="panel panel-danger" style="margin-left: -4%">
 <div class="panel-heading text-center">
-    <h4>Deletar convênio<h4/>
+    <h4>Deletar Fomento<h4/>
 </div>
 <div class="panel-body">
 <div class="col-md-10">
-<h5>Selecione o convênio</h5>
+<h5>Selecione o Fomento</h5>
 <select id="list"></select>
 </br>
 </br>
 <button id="edit" type="button" class="btn btn-default">Selecionar</button>
 </div>
 <div class="col-md-10">
-    <form method="POST" id="form-edit" action="{{ url_for('crud_covenants.delete_covenants') }}">
+    <form method="POST" id="form-edit" action="{{ url_for('crud_fomentation.delete_fomentation') }}">
     <div class="form-group">
     {{ form.csrf_token }}
     {{ form.index(required='true', style="display:none;", readonly="readonly") }}
@@ -64,6 +65,9 @@ $(document).ready(function() {
     <br/>
     {{ form.initials.label }}
     {{ form.initials(required='true', class="form-control", readonly="readonly") }}
+    <br/>
+    {{ form.description.label }}
+    {{ form.description(class="form-control", readonly="readonly") }}
     <br/>
     {{ form.create(class="form-control") }}
     </div>

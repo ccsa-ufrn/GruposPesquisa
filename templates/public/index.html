@@ -16,7 +16,7 @@
     Abaixo, a lista de Programas do Centro atualmente disponíveis através deste projeto:
     <ul>
         {% for registered in std.research_group_registered.rewind() %}
-        <li><a href="/{{ registered.name }}">{{ registered.name }}</a></li>
+        <li><a href="/{{ registered.name }}">{{ registered.name | replace("+"," ") }}</a></li>
         {% endfor %}
     </ul>
 </p>

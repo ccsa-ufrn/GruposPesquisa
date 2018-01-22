@@ -130,6 +130,8 @@ class InstitutionsWithCovenantsForm(FlaskForm):
     initials = StringField('Sigla da Instituição:', validators=[
         DataRequired('Digite a sigla da instituição.')
     ])
+    
+    description = TextAreaField('Descrição do relacionamento entre o Grupo de Pesquisa e a Instituição')
 
     logo = FileField(validators=[
         DataRequired('Por favor insira um logo em formato .jpeg ou .png')
@@ -151,6 +153,8 @@ class EditInstitutionsWithCovenantsForm(FlaskForm):
     ])
 
     logo = FileField()
+
+    description = TextAreaField('Descrição do relacionamento entre o Grupo de Pesquisa e a Instituição')
 
     index = IntegerField()
 

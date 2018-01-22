@@ -137,6 +137,22 @@ def view_covenants(name):
         integrations_infos=integrations_infos
     )
 
+@app.route('/<string:name>/fomentos/')
+def view_fomentation(name):
+    """Render a view for fomentation."""
+
+    pfactory = ResearchGroupFactory(name)
+    research_group = pfactory.research_group
+
+    integrations_infos = pfactory.integrations_infos_dao().find_one()
+
+    # renders an own page or redirect to another (external/404)?
+    return render_template(
+        'public/fomentation.html',
+        std=get_std_for_template(research_group),
+        integrations_infos=integrations_infos
+    )
+
 @app.route('/<string:name>/calendario/')
 def view_calendar(name):
     """Render a view for calendar."""

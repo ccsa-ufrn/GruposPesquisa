@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="main-page-header">
-    <h1 class="text-center"><small>Grupo de pesquisa:</small><br/> {{ std.research_group.name }}</h1>
+    <h1 class="text-center"><small>Grupo de pesquisa:</small><br/> {{ std.research_group.name | replace("+"," ") }}</h1>
 </div>
 
 <section>

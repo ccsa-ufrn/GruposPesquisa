@@ -31,7 +31,9 @@
 
             <div class="navbar-collapse collapse">                
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"> Ver página </a></li>
+                    {% if current_user and current_user.is_authenticated %}
+                    <li><a href="/{{ current_user.group_name }}"> Página pública </a></li>
+                    {% endif %}
                     <li><a href="#"> Configurações </a></li>
                     <li><a href="{{ url_for('admin.logout') }}"> Sair </a></li>
                 </ul>
@@ -49,7 +51,7 @@
             <div class="col-md-3" style="padding-left: 0px">
             <div class="col sidebar mainbar">
                 <ul class="nav nav-sidebar">
-                    <li class="active"><a data-target=".sidebar-collapse" aria-expanded="true" data-toggle="collapse">{{ current_user.group_name }}<span class="sr-only">(atual)</span><span class="caret"></span> Clique para expandir/esconder</a></li>
+                    <li class="active"><a data-target=".sidebar-collapse" aria-expanded="true" data-toggle="collapse">{{ current_user.group_name | replace("+", " ") }}<span class="sr-only">(atual)</span><span class="caret"></span> Clique para expandir/esconder</a></li>
                 </ul>
             </div>
             <div class="w-100"></div>
@@ -111,9 +113,17 @@
                     <li><a href="#covenants" data-toggle="collapse">Convênios
                         <span class="caret"></span></a>
                         <ul id="covenants" class="collapse">
-                            <li><a href="{{ url_for('admin.covenants') }}">Adicionar convênios</a></li>
-                            <li><a href="{{ url_for('admin.edit_covenants') }}">Editar convênios</a></li>
-                            <li><a href="{{ url_for('admin.delete_covenants') }}">Retirar convênios</a></li>
+                            <li><a href="{{ url_for('crud_covenants.covenants') }}">Adicionar convênios</a></li>
+                            <li><a href="{{ url_for('crud_covenants.edit_covenants') }}">Editar convênios</a></li>
+                            <li><a href="{{ url_for('crud_covenants.delete_covenants') }}">Retirar convênios</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#fomentation" data-toggle="collapse">Fomentos
+                        <span class="caret"></span></a>
+                        <ul id="fomentation" class="collapse">
+                            <li><a href="{{ url_for('crud_fomentation.add_fomentation') }}">Adicionar fomento</a></li>
+                            <li><a href="{{ url_for('crud_fomentation.edit_fomentation') }}">Editar fomento</a></li>
+                            <li><a href="{{ url_for('crud_fomentation.delete_fomentation') }}">Retirar fomento</a></li>
                         </ul>
                     </li>
                     <li><a href="#calendar" data-toggle="collapse">Calendário

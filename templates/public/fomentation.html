@@ -1,0 +1,40 @@
+{% extends "public/layout.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/static/posgraduacao/css/{{ std.research_group.name.lower() }}.css"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="main-page-header">
+    <h1 class="text-center"><small>Grupo de Pesquisa</small><br/> {{ std.research_group.name | replace("+"," ") }}</h1>
+</div>
+
+<section>
+    <header class="page-header">
+        <h2>Fomentos</h2>
+    </header>
+
+    <p>
+        Fomentos são os patrocínios oferecidos por instituições de fora para o grupo de pesquisa
+    </p>
+
+    {% for fomentation in integrations_infos.fomentation %}
+    {% if "deleted" not in fomentation %}
+    <div class="row">
+        <div class="col-md-3">
+            <img alt="Logo" src="/static/assets/{{ fomentation.logoFile }}" class="img-circle pull-right" height="190" width="180">
+        </div>
+        <div class="col-md-9">
+            <h3>{{ fomentation.name }}<br/>
+                <small>{{ fomentation.initials }}</small>
+            </h3>
+            <h5 style="word-wrap: break-word;">{{ fomentation.description }}</h4>
+        </div>
+    </div>
+    <br/>
+    {% endif %}
+    {% endfor %}
+</section>
+
+{% endblock %}

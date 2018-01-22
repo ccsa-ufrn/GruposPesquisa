@@ -28,7 +28,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 {% if std.research_group %}
-                <a href="/{{ std.research_group.name }}" class="navbar-brand">{{ std.research_group.name }}</a>
+                <a href="/{{ std.research_group.name }}" class="navbar-brand">{{ std.research_group.name | replace("+", " ") }}</a>
                 {% else %}
                 <a href="/" class="navbar-brand">Grupos de Pesquisa</a>
                 {% endif %}
@@ -56,6 +56,14 @@
                                 <span class="glyphicon glyphicon-plane"></span> Intercâmbios</a>
                             </li>
 
+                            <li><a href="{{ url_for('public.view_covenants', name=std.research_group.name) }}">
+                                <span class="glyphicon glyphicon-globe"></span> Convênios</a>
+                            </li>
+
+                            <li><a href="{{ url_for('public.view_fomentation', name=std.research_group.name) }}">
+                                <span class="glyphicon glyphicon-globe"></span> Fomentos</a>
+                            </li>
+
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Publicações</li>
 
@@ -73,10 +81,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{ url_for('public.view_staffs', name=std.research_group.name) }}">
                                 <span class="glyphicon glyphicon-knight"></span> Equipe</a>
-                            </li>
-
-                            <li><a href="{{ url_for('public.view_covenants', name=std.research_group.name) }}">
-                                <span class="glyphicon glyphicon-globe"></span> Convênios</a>
                             </li>
                             
                             <li><a href="{{ url_for('public.view_calendar', name=std.research_group.name) }}">
@@ -102,9 +106,13 @@
                 </ul>
                 {% endif %}
                 <ul class="nav navbar-nav navbar-right">
+                    {% if current_user and current_user.is_authenticated %}
                     <li><a href="{{ url_for('admin.index') }}">
-                        <span class="glyphicon glyphicon-user"></span> Login </a></li>
-                    
+                            <span class="glyphicon glyphicon-user"></span> {{ current_user.nick }} </a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('admin.index') }}">
+                            <span class="glyphicon glyphicon-user"></span> Login </a></li>
+                    {% endif %}
                     <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="glyphicon glyphicon-random"></span> Grupos de Pesquisa <span class="caret"></a>
                         <ul class="dropdown-menu">
@@ -115,7 +123,7 @@
                             </li>
                             
                             {% for registered in std.research_group_registered %}
-                            <li><a href="/{{ registered.name }}">{{ registered.name }}</a></li>
+                            <li><a href="/{{ registered.name }}">{{ registered.name | replace("+", " ") }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>

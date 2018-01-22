@@ -35,7 +35,6 @@ class ResearchGroupFactory(object):
         self.research_group = self.research_groups_dao().find_one({
             'name': name
         })
-        print(self.research_group, file=sys.stderr)
 
         if self.research_group is not None:
             self.mongo_id = self.research_group['_id']
