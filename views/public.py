@@ -225,6 +225,22 @@ def view_books(name):
         publications=publications
     )
 
+
+@app.route('/<string:name>/capitulos/')
+def view_chapters(name):
+    """Render a view for chapters list."""
+
+    pfactory = ResearchGroupFactory(name)
+    research_group = pfactory.research_group
+
+    publications = pfactory.publications_dao().find_one()
+
+    # renders an own page or redirect to another (external/404)?
+    return render_template(
+        'public/chapters.html',
+        std=get_std_for_template(research_group),
+        publications=publications
+    )
 @app.route('/<string:name>/artigos/')
 def view_articles(name):
     """Render a view for artigos list."""

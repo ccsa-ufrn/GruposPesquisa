@@ -20,10 +20,7 @@ from models.users import User
 from settings.extensions import ExtensionsManager
 
 from views.forms.auth import LoginForm
-from views.forms.content import ParticipationsInEventsForm, \
-    ScheduledReportForm, InstitutionsWithCovenantsForm, \
-    DocumentForm, SubjectsForm, ProfessorForm, StaffForm, CalendarForm, \
-    EditInstitutionsWithCovenantsForm, EditDocumentForm
+from views.forms.content import DocumentForm, EditDocumentForm
 
 from bson.json_util import dumps
 import json

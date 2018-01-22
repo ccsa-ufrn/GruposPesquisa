@@ -74,8 +74,11 @@
                         <span class="caret"></span></a>
                         <ul id="books" class="collapse">
                             <li><a href="{{ url_for('crud_books.add_book') }}">Adicionar livros</a></li>
+                            <li><a href="{{ url_for('crud_books.add_chapter') }}">Adicionar capitulo</a></li>
                             <li><a href="{{ url_for('crud_books.edit_book') }}">Editar livros</a></li>
+                            <li><a href="{{ url_for('crud_books.edit_chapter') }}">Editar capitulos</a></li>
                             <li><a href="{{ url_for('crud_books.delete_book') }}">Deletar livros</a></li>
+                            <li><a href="{{ url_for('crud_books.delete_chapter') }}">Deletar capitulos</a></li>
                         </ul>
                     </li>
                     <li><a href="#articles" data-toggle="collapse">Artigos
