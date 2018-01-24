@@ -89,6 +89,14 @@
                             <li><a href="{{ url_for('crud_articles.delete_article') }}">Deletar livros</a></li>
                         </ul>
                     </li>
+                    <li><a href="#magazines" data-toggle="collapse">Periódicos
+                        <span class="caret"></span></a>
+                        <ul id="magazines" class="collapse">
+                            <li><a href="{{ url_for('crud_magazines.add_magazine') }}">Adicionar periódicos</a></li>
+                            <li><a href="{{ url_for('crud_magazines.delete_magazine') }}">Deletar periódicos</a></li>
+                            <li><a href="{{ url_for('crud_magazines.edit_magazine') }}">Editar periódicos</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#participations" data-toggle="collapse">Intercâmbios
                         <span class="caret"></span></a>
                         <ul id="participations" class="collapse">

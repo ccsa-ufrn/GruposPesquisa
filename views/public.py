@@ -241,9 +241,10 @@ def view_chapters(name):
         std=get_std_for_template(research_group),
         publications=publications
     )
+
 @app.route('/<string:name>/artigos/')
 def view_articles(name):
-    """Render a view for artigos list."""
+    """Render a view for articles list."""
 
     pfactory = ResearchGroupFactory(name)
     research_group = pfactory.research_group
@@ -257,6 +258,21 @@ def view_articles(name):
         publications=publications
     )
 
+@app.route('/<string:name>/periodicos/')
+def view_magazines(name):
+    """Render a view for magazines list."""
+
+    pfactory = ResearchGroupFactory(name)
+    research_group = pfactory.research_group
+
+    publications = pfactory.publications_dao().find_one()
+
+    # renders an own page or redirect to another (external/404)?
+    return render_template(
+        'public/magazines.html',
+        std=get_std_for_template(research_group),
+        publications=publications
+    )
 
 
 @app.route('/<string:name>/documentos/regimentos')

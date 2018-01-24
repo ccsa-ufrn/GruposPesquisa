@@ -101,6 +101,50 @@ class EditInstitutionsWithCovenantsForm(FlaskForm):
 
     create = SubmitField('Editar')
 
+class MagazinesForm(FlaskForm):
+    """
+    Form for the list of magazines.
+    """
+    name = StringField('Nome da revista:', validators=[
+        DataRequired('Digite o nome da revista.')
+    ])
+
+    issn = StringField('ISSN do periódico:', validators=[
+        DataRequired('Digite o ISSN do periódico.')
+    ])
+    
+    description = TextAreaField('Descrição da revista', validators=[
+        DataRequired('Por favor descreva a revista.')
+    ])
+
+    cover = FileField(validators=[
+        DataRequired('Por favor insira uma foto para a revista')
+    ])
+
+    create = SubmitField('Adicionar')
+
+class EditMagazinesForm(FlaskForm):
+    """
+    Form for the list of magazines.
+    """
+    name = StringField('Nome da revista:', validators=[
+        DataRequired('Digite o nome da revista.')
+    ])
+
+    issn = StringField('ISSN do periódico:', validators=[
+        DataRequired('Digite o ISSN do periódico.')
+    ])
+    
+    description = TextAreaField('Descrição da revista', validators=[
+        DataRequired('Por favor descreva a revista.')
+    ])
+
+    cover = FileField()
+
+    index = IntegerField()
+
+    create = SubmitField('Adicionar')
+
 class ScheduledReportForm(FlaskForm):
 
     """

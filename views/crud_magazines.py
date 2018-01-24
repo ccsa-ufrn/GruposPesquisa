@@ -1,5 +1,5 @@
 """
-Routes and views for covenants CRUD.
+Routes and views for add_magazine CRUD.
 """
 
 import json
@@ -17,165 +17,164 @@ from models.factory import ResearchGroupFactory
 from settings.extensions import ExtensionsManager
 from werkzeug.utils import secure_filename
 
-from views.forms.content import InstitutionsWithCovenantsForm, EditInstitutionsWithCovenantsForm 
+from views.forms.content import MagazinesForm, EditMagazinesForm 
 
 from bson.json_util import dumps
 
-crud_covenants = Blueprint('crud_covenants', __name__, url_prefix='/admin')
+crud_magazines = Blueprint('crud_magazines', __name__, url_prefix='/admin')
 
 ##############################################################################
-#Adicionar deletar e editar convênios(Não finalizado)
+#Adicionar deletar e editar periódicos 
 ###############################################################################
 
-@crud_covenants.route('/convenios/', methods=['GET', 'POST'])
+@crud_magazines.route('/add_periódico/', methods=['GET', 'POST'])
 @login_required
-def covenants():
+def add_magazine():
     """Render covenant adding form."""
 
     allowed_extensions = ['jpg', 'png']
 
-    form = InstitutionsWithCovenantsForm()
+    form = MagazinesForm()
 
     pfactory = ResearchGroupFactory(current_user.group_name)
-    dao = pfactory.integrations_infos_dao()
+    dao = pfactory.publications_dao()
 
     if form.validate_on_submit() and form.create.data:
-        if form.logo.data and allowedFile(form.logo.data.filename, allowed_extensions):
-            photo = form.logo.data
-            path = os.path.normpath("static/assets")
-            filename = secure_filename(photo.filename)
+        if form.cover.data and allowedFile(form.cover.data.filename, allowed_extensions):
+            cover = form.cover.data
+            path = os.path.normpath("static/assets/magazines")
+            filename = secure_filename(cover.filename)
             if filename.count('.') > 1:
                 return redirect(
                     url_for(
-                        'crud_covenants.covenants',
-                        success_msg='Nome da logo contem mais de um . por favor corrija isso'
+                        'crud_magazines.add_magazine',
+                        success_msg='Nome do arquivo com a foto contem mais de um . por favor corriga isso'
                     )
                 )
             name, extension = filename.split('.')
-            logoFile = 'logo-' + form.initials.data.lower() + '.' + extension
-            uploadFiles(photo, path, logoFile)
-            new_covenant = {
+            uploadFiles(cover, path, filename)
+            new_magazine = {
                 'name': form.name.data,
-                'initials': form.initials.data.upper(),
-                'logoFile': logoFile
+                'coverFile': filename,
+                'description': form.description.data,
+                'issn' : form.issn.data
             }
 
         dao.find_one_and_update(None, {
-            '$push': {'InstitutionsWithCovenants' : new_covenant}
+            '$push': {'magazines' : new_magazine}
         })
 
         return redirect(
             url_for(
-                'crud_covenants.covenants',
-                success_msg=msg_type + 'Convênio adicionado com sucesso.',
+                'crud_magazines.add_magazine',
+                success_msg='Periódico adicionado com sucesso',
             )
         )
 
 
     return render_template(
-        'admin/covenants.html',
+        'admin/add_magazine.html',
         form=form,
         success_msg=request.args.get('success_msg'),
     )
 
-@crud_covenants.route('/deletar_convenios/', methods=['GET', 'POST'])
+@crud_magazines.route('/deletar_periodicos/', methods=['GET', 'POST'])
 @login_required
-def delete_covenants():
-    """Render covenant deleting form."""
+def delete_magazine():
 
-    form = EditInstitutionsWithCovenantsForm()
+    form = EditMagazinesForm()
 
     pfactory = ResearchGroupFactory(current_user.group_name)
-    dao = pfactory.integrations_infos_dao()
-    json = pfactory.integrations_infos_dao().find_one()
-    json = dict(json)
-    json = dumps(json)
+    dao = pfactory.publications_dao()
+    magazines = pfactory.publications_dao().find_one()
+    magazines = dict(magazines)['magazines']
+    magazines = dumps(magazines)
 
     if form.validate_on_submit() and form.create.data:
         index = str(form.index.data)
         dao.find_one_and_update(None, {
-            '$set': {'institutionsWithCovenant.' + index + '.deleted' : ""}
+            '$set': {'magazines.' + index + '.deleted' : ""}
         })
         return redirect(
             url_for(
-                'crud_covenants.delete_covenants',
-                integrations=json,
-                success_msg='Convênio deletado com sucesso.'
+                'crud_magazines.delete_magazine',
+                success_msg='Periódico deletado com sucesso.'
             )
         )
 
     return render_template(
-        'admin/delete_covenants.html',
+        'admin/delete_magazine.html',
         form=form,
-        integrations=json,
+        magazines=magazines,
         success_msg=request.args.get('success_msg')
     )
 
-@crud_covenants.route('/editar_convenios/', methods=['GET', 'POST'])
+@crud_magazines.route('/editar_periodicos/', methods=['GET', 'POST'])
 @login_required
-def edit_covenants():
-    """Render covenant editing form."""
+def edit_magazine():
 
     allowed_extensions = ['jpg', 'png']
 
-    form = EditInstitutionsWithCovenantsForm()
+    form = EditMagazinesForm()
 
     pfactory = ResearchGroupFactory(current_user.group_name)
-    dao = pfactory.integrations_infos_dao()
-    json = pfactory.integrations_infos_dao().find_one()
-    json = dict(json)
-    json = dumps(json)
+    dao = pfactory.publications_dao()
+    magazines = pfactory.publications_dao().find_one()
+    magazines = dict(magazines)['magazines']
+    magazines = dumps(magazines)
 
     if form.validate_on_submit() and form.create.data:
         index = str(form.index.data)
-        if form.logo.data and allowedFile(form.logo.data.filename, allowed_extensions):
-            photo = form.logo.data
-            path = os.path.normpath("static/assets")
-            filename = secure_filename(photo.filename)
+        if form.cover.data is not None:
+            cover = form.cover.data
+            path = os.path.normpath("static/assets/magazines")
+            filename = secure_filename(cover.filename)
             if filename.count('.') > 1:
                 return redirect(
                     url_for(
-                        'crud_covenants.edit_covenants',
-                        integrations=json,
-                        success_msg='Nome da logo contem mais de um . por favor corrija isso'
+                        'crud_magazines.edit_magazine',
+                        success_msg='Nome do arquivo da capa contem mais de um . por favor corrija isso'
                     )
                 )
             name, extension = filename.split('.')
-            logoFile = 'logo-' + form.initials.data.lower() + '.' + extension
-            uploadFiles(photo, path, logoFile)
-            new_covenant = {
+            uploadFiles(cover, path, filename)
+            new_magazine = {
                 'name': form.name.data,
-                'initials': form.initials.data.upper(),
-                'logoFile': logoFile
+                'coverFile': filename,
+                'description': form.description.data,
+                'issn' : form.issn.data
             }
-
             dao.find_one_and_update(None, {
-                '$set': {'institutionsWithCovenant.' + index : new_covenant}
+                '$set': {'magazines.' + index : new_magazine}
             })
+            print('Foi até aqui', file=sys.stderr)
         else:
+            print('Não foi até aqui', file=sys.stderr)
             dao.find_one_and_update(None, {
-                '$set' : {'institutionsWithCovenant.' + index + '.initials' : form.initials.data.upper()}
+                '$set' : {'magazines.' + index + '.issn' : form.issn.data}
             })
             dao.find_one_and_update(None, {
-                '$set' : {'institutionsWithCovenant.' + index + '.name' : form.name.data}
+                '$set' : {'magazines.' + index + '.description' : form.description.data}
+            })
+            dao.find_one_and_update(None, {
+                '$set' : {'magazines.' + index + '.name' : form.name.data}
             })
 
         return redirect(
             url_for(
-                'crud_covenants.edit_covenants',
-                integrations=json,
-                success_msg='Convênio editado com sucesso.'
+                'crud_magazines.edit_magazine',
+                magazines=magazines,
+                success_msg='Periódico editado com sucesso.'
             )
         )
 
 
     return render_template(
-        'admin/edit_covenants.html',
+        'admin/edit_magazine.html',
         form=form,
-        integrations=json,
+        magazines=magazines,
         success_msg=request.args.get('success_msg')
     )
-
 
 def uploadFiles(document, path, filename):
     """3 functions, effectively upload files to server,
