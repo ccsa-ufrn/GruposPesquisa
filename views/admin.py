@@ -164,7 +164,6 @@ def change_password():
             user_dao.find_one_and_update({'name': reset_document['groupName']},{
                 '$set' : {'users.0.password': password_one}
             })
-            print(user_dao.find({'name': reset_document['groupName']}), file=sys.stderr)
         return redirect(
             url_for(
                 'admin.login'

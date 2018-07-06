@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if std.research_group %}{{ std.research_group.name }} {% else %} Grupos de Pesquisa {% endif %} (CCSA/UFRN)</title>
+    <title>{% if std.research_group %}{{ std.research_group.name | replace("+", " ") }}{% else %} Grupos de Pesquisa {% endif %} (CCSA/UFRN)</title>
 
     <meta name="description" content="Plataforma acadêmica dos grupos de pesquisa do CCSA da UFRN."/>
     <meta name="author" content="Luccas"/>

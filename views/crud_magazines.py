@@ -147,9 +147,7 @@ def edit_magazine():
             dao.find_one_and_update(None, {
                 '$set': {'magazines.' + index : new_magazine}
             })
-            print('Foi até aqui', file=sys.stderr)
         else:
-            print('Não foi até aqui', file=sys.stderr)
             dao.find_one_and_update(None, {
                 '$set' : {'magazines.' + index + '.issn' : form.issn.data}
             })

@@ -34,6 +34,27 @@ class ParticipationsInEventsForm(FlaskForm):
 
     create = SubmitField('Adicionar')
 
+class NewsForm(FlaskForm):
+    """
+    Form for adding and editing news 
+    """
+
+    title = StringField('Titúlo da notícia:', validators=[
+        DataRequired('Digite um titúlo para a notícia')
+    ])
+    
+    headLine = StringField('Resumo básico/Manchete:', validators=[
+        DataRequired('Digite a manchete')
+    ])
+
+    body = TextAreaField('Notícia:', validators=[
+        DataRequired('Insira a notícia.')
+    ])
+
+    index = IntegerField()
+
+    create = SubmitField('Editar');
+
 class StaffForm(FlaskForm):
     """
     Form for list of staff.

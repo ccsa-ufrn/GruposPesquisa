@@ -7,7 +7,6 @@ $(document).ready(function() {
     var projects = {{ projects|tojson|safe }};
     var projects = JSON.parse(projects);
     $("input[name=create]").val("Editar");
-    console.log(projects);
     var listOfProjects = [];
     for( i = 0; i < projects.length; i++){
         if (!(projects[i].hasOwnProperty('deleted'))){

@@ -60,6 +60,8 @@ def home(name):
     final_reports = pfactory.final_reports_dao().find_one()
     events = pfactory.calendar_dao().find_one()
     events = pfactory.calendar_dao().find_one()['events']
+    news = pfactory.news_dao().find_one()
+    news = news['news']
     final_reports = final_reports['scheduledReports']
     integrations_infos = pfactory.integrations_infos_dao().find_one()
     if integrations_infos is None:
@@ -94,6 +96,7 @@ def home(name):
         google_maps_api_key=google_maps_api_key,
         final_reports=final_reports,
         events=events,
+        news=news,
         institutions_with_covenant=institutions_with_covenant,
         attendance=attendance,
     )
@@ -321,6 +324,24 @@ def view_documents_others(name):
         'public/documents_others.html',
         std=get_std_for_template(research_group),
         documents=documents
+    )
+
+@app.route('/<string:name>/noticias/')
+def view_news(name):
+    """Render a view for news viewing."""
+
+    pfactory = ResearchGroupFactory(name)
+    research_group = pfactory.research_group
+
+    id = request.args.get('id')
+    news = pfactory.news_dao().find_one()['news']
+    fullNews = next(piece for piece in news if piece['id'] == id)
+
+    # renders an own page or redirect to another (external/404)?
+    return render_template(
+        'public/news.html',
+        std=get_std_for_template(research_group),
+        fullNews=fullNews 
     )
 
 # AUX

@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/admin/" class="navbar-brand">Painel de Controle</a>
+                <a href="/admin/" class="navbar-brand">Painel de Controle</a><span class="navbar-brand" id="groupName"><small>{{ current_user.group_name | replace("+", " ") }}</small></span>
             </div>
 
             <div class="navbar-collapse collapse">                
@@ -59,6 +59,7 @@
                 <h6 class="sidebar-collapse collapse in"><strong>EDITAR PÁGINAS</strong></h6>
                 <ul class="nav nav-sidebar sidebar-collapse collapse in">
                     <li><a href="{{ url_for('crud_attendances.edit_attendance') }}">Informações para contato</a></li>
+                    <li><a href="{{ url_for('avaliation_form.submit_avaliation_form') }}">Formulário de avaliação</a></li>
                     <li><a href="#projects" data-toggle="collapse">Projetos
                         <span class="caret"></span></a>
                         <ul id="projects" class="collapse">
@@ -111,6 +112,14 @@
                         <li><a href="{{ url_for('crud_scheduled_reports.scheduled_reports') }}">Adicionar agendamento</a></li>
                         <li><a href="{{ url_for('crud_scheduled_reports.edit_scheduled_reports') }} ">Editar agendamento</a></li>
                         <li><a href="{{ url_for('crud_scheduled_reports.delete_scheduled_reports') }} ">Deletar agendamento</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#news" data-toggle="collapse">Adicionar notícias
+                        <span class="caret"></span></a>
+                        <ul id="news" class="collapse">
+                        <li><a href="{{ url_for('crud_news.add_news') }}">Adicionar notícia</a></li>
+                        <li><a href="{{ url_for('crud_news.edit_news') }} ">Editar notícia</a></li>
+                        <li><a href="{{ url_for('crud_news.delete_news') }} ">Deletar notícia</a></li>
                         </ul>
                     </li>
                     <li><a href="#staff" data-toggle="collapse">Equipe

@@ -105,6 +105,32 @@
     </section>
     
     <div class="col-md-4">
+            <section>
+                    <header>
+                        <h2><span class="glyphicon glyphicon-pushpin"></span> Notícias</h2>
+                    </header>
+                    <p>Notícias relacionadas ao programa.</p>
+                    {% if news %}
+                    <table class="schedule-table">
+                        {% for piece in news %}
+                        {% if "deleted" not in piece %}
+                        {% if loop.revindex < 3 %}
+                        <tr class="schedule-container">
+                            <td class="schedule-container-info">
+                                <h4>{{ piece.title }}
+                                </h4>
+                                <h5>{{ piece.headLine }}</h5>
+                                <h6><a href="{{ url_for('public.view_news', id=piece.id, name=std.research_group.name) }}">Mais informações</a></h6><br/>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </table>
+                    {% else %}
+                    <p><small>(Não há nenhuma notícia cadastrada.)</small></p>
+                    {% endif %}
+        </section>
         
         <section>
             <header>
@@ -148,43 +174,7 @@
             {% endif %}
         </section>
 
-        <section>
-            <header>
-                <h2><span class="glyphicon glyphicon-pushpin"></span> Apresentações</h2>
-            </header>
-            <p>Apresentações públicas dos discentes diante de suas bancas examinadoras.</p>
-            {% if final_reports %}
-            <table class="schedule-table">
-                {% for report in final_reports %}
-                {% if "deleted" not in report %}
-                {% if loop.revindex < 4 %}
-                <tr class="schedule-container">
-                    <td class="schedule-container-date">
-                        <ul>
-                            <li class="schedule-date-day">{{ report.time.strftime("%d") }}</li>
-                            <li class="schedule-date-month">{{ report.time.strftime("%b").upper() }}</li>
-                            <li class="schedule-date-year">{{ report.time.strftime("%Y") }}</li>
-                        </ul>
-                    </td>
-                    <td class="schedule-container-info">
-                        <h4>{{ report.title }}
-                            <br/>
-                            <small>{{ report.author }}</small>
-                        </h4>
-                        <p>
-                            Local: {{ report.location }}<br/>
-                            Horário: {{ report.time.strftime("%H:%M") }}<br/>
-                        </p>
-                    </td>
-                </tr>
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-            </table>
-            {% else %}
-            <p><small>(Não há nenhuma apresentação do Programa agendada.)</small></p>
-            {% endif %}
-        </section>
+        
     </div>
     
     <div class="col-md-4">
@@ -226,6 +216,44 @@
         -->
     </div>
 
+        <section>
+            <header>
+                <h2><span class="glyphicon glyphicon-pushpin"></span> Apresentações</h2>
+            </header>
+            <p>Apresentações públicas dos discentes diante de suas bancas examinadoras.</p>
+            {% if final_reports %}
+            <table class="schedule-table">
+                {% for report in final_reports %}
+                {% if "deleted" not in report %}
+                {% if loop.revindex < 4 %}
+                <tr class="schedule-container">
+                    <td class="schedule-container-date">
+                        <ul>
+                            <li class="schedule-date-day">{{ report.time.strftime("%d") }}</li>
+                            <li class="schedule-date-month">{{ report.time.strftime("%b").upper() }}</li>
+                            <li class="schedule-date-year">{{ report.time.strftime("%Y") }}</li>
+                        </ul>
+                    </td>
+                    <td class="schedule-container-info">
+                        <h4>{{ report.title }}
+                            <br/>
+                            <small>{{ report.author }}</small>
+                        </h4>
+                        <p>
+                            Local: {{ report.location }}<br/>
+                            Horário: {{ report.time.strftime("%H:%M") }}<br/>
+                        </p>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </table>
+            {% else %}
+            <p><small>(Não há nenhuma apresentação do Programa agendada.)</small></p>
+            {% endif %}
+        </section>
+        
 </div>
 
 <div class="row darker-container" id="program-about">
@@ -276,6 +304,7 @@
 </script>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+<script src="{{url_for('static', filename='teste.js')}}" type="text/javascript"></script>
 
 <!-- Stick carousel for convenants -->
 
