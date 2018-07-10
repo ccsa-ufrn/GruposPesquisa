@@ -9,30 +9,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $("input[name=create]").val("Editar");
-    var integrations = {{ integrations|tojson|safe }};
-    var integrations = JSON.parse(integrations);
-    console.log(integrations);
-    var listOfCovenants = [];
-    for( i = 0; i < integrations.institutionsWithCovenant.length; i++){
-        if (!(integrations.institutionsWithCovenant[i].hasOwnProperty('deleted'))){
-            listOfCovenants.push({
+    $("input[name=create]").val("Deletar");
+    var magazines = {{ magazines|tojson|safe }};
+    var magazines = JSON.parse(magazines);
+    console.log(magazines);
+    var listOfMagazines = [];
+    for( i = 0; i < magazines.length; i++){
+        if (!(magazines[i].hasOwnProperty('deleted'))){
+            listOfMagazines.push({
                 id: i,
-                text: (integrations.institutionsWithCovenant[i].name)
+                text: (magazines[i].name)
             })
         }
     }
     
     $("#list").select2({
-        data: listOfCovenants 
+        data: listOfMagazines 
     });
 
     $("button").click(function(){
-        var indexInCovenants = $("select#list").val();
+        var indexInMagazines = $("select#list").val();
         $("#form-edit").css("visibility", "visible");
-        $("input[name=name]").val(integrations.institutionsWithCovenant[indexInCovenants].name);
-        $("input[name=initials]").val(integrations.institutionsWithCovenant[indexInCovenants].initials);
-        $("input[name=index]").val(indexInCovenants);
+        $("input[name=name]").val(magazines[indexInMagazines].name);
+        $("input[name=issn]").val(magazines[indexInMagazines].issn);
+        $("textarea[name=description]").val(magazines[indexInMagazines].description);
+        $("input[name=index]").val(indexInMagazines);
     });
 
 });
@@ -43,33 +44,29 @@ $(document).ready(function() {
 <div class="col-md-12">
 <div class="panel panel-danger" style="margin-left: -4%">
 <div class="panel-heading text-center">
-    <h4>Editar convênio<h4/>
+    <h4>Deletar periódico<h4/>
 </div>
 <div class="panel-body">
 <div class="col-md-10">
-<h5>Selecione o convênio</h5>
+<h5>Selecione o periódico</h5>
 <select id="list"></select>
 </br>
 </br>
 <button id="edit" type="button" class="btn btn-default">Selecionar</button>
 </div>
 <div class="col-md-10">
-<form method="POST" id="form-edit" action="{{ url_for('crud_covenants.edit_covenants') }}" enctype="multipart/form-data">
+    <form method="POST" id="form-edit" action="{{ url_for('crud_magazines.delete_magazine') }}">
     <div class="form-group">
     {{ form.csrf_token }}
     {{ form.index(required='true', style="display:none;", readonly="readonly") }}
+    {{ form.name.label }}<br/>
+    {{ form.name(required='true', placeholder="Ex: InVerbis", class="form-control", readonly="readonly") }}
     <br/>
-    {{ form.name.label }}
-    {{ form.name(required='true', class="form-control") }}
+    {{ form.description.label }}<br/>
+    {{ form.description(required='true', class="form-control", readonly="readonly") }}
     <br/>
-    {{ form.initials.label }}
-    {{ form.initials(required='true', class="form-control") }}
-    <br/>
-    <label class="btn btn-default">
-        {{ form.logo }}
-    </label>
-
-    <br/>
+    {{ form.issn.label }}<br/>
+    {{ form.issn(required='true', placeholder="Ex: ISSN 2176-9036", class="form-control", readonly="readonly") }}
     <br/>
     {{ form.create(class="form-control") }}
     </div>

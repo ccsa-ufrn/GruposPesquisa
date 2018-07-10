@@ -10,30 +10,30 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $("input[name=create]").val("Editar");
-    var integrations = {{ integrations|tojson|safe }};
-    var integrations = JSON.parse(integrations);
-    console.log(integrations);
-    var listOfFomentation = [];
-    for( i = 0; i < integrations.fomentation.length; i++){
-        if (!(integrations.fomentation[i].hasOwnProperty('deleted'))){
-            listOfFomentation.push({
+    var magazines = {{ magazines|tojson|safe }};
+    var magazines = JSON.parse(magazines);
+    console.log(magazines);
+    var listOfMagazines = [];
+    for( i = 0; i < magazines.length; i++){
+        if (!(magazines[i].hasOwnProperty('deleted'))){
+            listOfMagazines.push({
                 id: i,
-                text: (integrations.fomentation[i].name)
+                text: (magazines[i].name)
             })
         }
     }
     
     $("#list").select2({
-        data: listOfFomentation 
+        data: listOfMagazines 
     });
 
     $("button").click(function(){
-        var indexInFomentations = $("select#list").val();
+        var indexInMagazines = $("select#list").val();
         $("#form-edit").css("visibility", "visible");
-        $("input[name=name]").val(integrations.fomentation[indexInFomentations].name);
-        $("input[name=initials]").val(integrations.fomentation[indexInFomentations].initials);
-        $("textarea[name=description]").val(integrations.fomentation[indexInFomentations].description);
-        $("input[name=index]").val(indexInFomentations);
+        $("input[name=name]").val(magazines[indexInMagazines].name);
+        $("input[name=issn]").val(magazines[indexInMagazines].issn);
+        $("textarea[name=description]").val(magazines[indexInMagazines].description);
+        $("input[name=index]").val(indexInMagazines);
     });
 
 });
@@ -44,35 +44,33 @@ $(document).ready(function() {
 <div class="col-md-12">
 <div class="panel panel-danger" style="margin-left: -4%">
 <div class="panel-heading text-center">
-    <h4>Editar fomentos<h4/>
+    <h4>Editar periódico<h4/>
 </div>
 <div class="panel-body">
 <div class="col-md-10">
-<h5>Selecione o fomentos</h5>
+<h5>Selecione o periódico</h5>
 <select id="list"></select>
 </br>
 </br>
 <button id="edit" type="button" class="btn btn-default">Selecionar</button>
 </div>
 <div class="col-md-10">
-<form method="POST" id="form-edit" action="{{ url_for('crud_fomentation.edit_fomentation') }}" enctype="multipart/form-data">
+    <form method="POST" id="form-edit" action="{{ url_for('crud_magazines.edit_magazine') }}" enctype="multipart/form-data">
     <div class="form-group">
     {{ form.csrf_token }}
     {{ form.index(required='true', style="display:none;", readonly="readonly") }}
-    <br/>
-    {{ form.name.label }}
+    {{ form.name.label }}<br/>
     {{ form.name(required='true', class="form-control") }}
     <br/>
-    {{ form.initials.label }}
-    {{ form.initials(required='true', class="form-control") }}
+    {{ form.description.label }}<br/>
+    {{ form.description(required='true', class="form-control") }}
     <br/>
-    {{ form.description.label }}
-    {{ form.description(class="form-control") }}
+    {{ form.issn.label }}<br/>
+    {{ form.issn(required='true', class="form-control") }}
     <br/>
     <label class="btn btn-default">
-        {{ form.logo }}
+        {{ form.cover }}
     </label>
-
     <br/>
     <br/>
     {{ form.create(class="form-control") }}

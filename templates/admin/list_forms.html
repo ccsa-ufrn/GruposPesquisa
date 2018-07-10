@@ -1,0 +1,42 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+
+<div class="col-md-12" style="margin-left: -4%">
+<div class="panel panel-danger">
+<div class="panel-heading text-center">
+    <h4>Listar formulários<h4/>
+</div>
+<div class="panel-body">
+    <table class="table">
+        <thead>
+            <th>Nome</th>
+            <th>Ano</th>
+            <th>Status</th>
+            <th>Continuar editando</th>
+        </thead>
+        {% for form in forms %}
+            <tr>
+                <td>{{ form.year }}</td>
+                <td>{{ form.group_name }}</td>
+                {% if form.state == "final" %}
+                <td>Finalizado</td>
+                <td>Não é possível continuar editando</td>
+                {% else %}
+                <td>Pendente</td>
+                <td><a class="btn btn-success" href="{{ url_for('avaliation_form.submit_avaliation_form', new='old', index=loop.index, id=form._id, form_type=request.args.get('form_type')) }}">Continuar editando</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+<br/>
+<p>
+    Você pode <a onclick="window.history.go(-1); return false;" href="#">voltar à página anterior</a>.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

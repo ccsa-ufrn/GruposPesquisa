@@ -1,3 +1,3 @@
-use posgrad-test
+use grupospesquisa-test
 
 db.dropDatabase()

@@ -1,0 +1,36 @@
+{% extends "public/layout.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/static/posgraduacao/css/{{ std.research_group.name.lower() }}.css"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="main-page-header">
+    <h1 class="text-center"><small>Grupo de Pesquisa</small><br/> {{ std.research_group.name | replace("+", " ") }}</h1>
+</div>
+
+<section>
+    <header class="page-header">
+        <h2>&raquo Periódicos</h2>
+    </header>
+
+    {% for magazine in publications.magazines %}
+    {% if "deleted" not in magazine %}
+    <div class="row">
+        <div class="col-md-3">
+            <img alt="Capa revista" src="/static/assets/magazines/{{ magazine.coverFile }}" class="img-rounded pull-right" height="190" width="180">
+        </div>
+        <div class="col-md-9">
+            <h3>{{ magazine.name }}<br/>
+                <small>ISSN: {{ magazine.issn }}</small>
+            </h3>
+            <p>{{ magazine.description }}</p>
+        </div>
+    </div>
+    <br/>
+    {% endif %}
+    {% endfor %}
+</section>
+
+{% endblock %}

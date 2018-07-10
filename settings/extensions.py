@@ -2,6 +2,7 @@
 
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
+from flask_cors import CORS
 
 
 class ExtensionsManager:
@@ -17,6 +18,7 @@ class ExtensionsManager:
     def auto_configure(app):
         """Initialize extensions needed for this Flask app."""
         app.config['SECRET_KEY'] = 'english,motherfucker!doyouspeak?'
+        app.config['WTF_CSRF_FIELD_NAME'] = 'csrf_token'
 
         ExtensionsManager.csrf.init_app(app)
         ExtensionsManager.login_manager.init_app(app)

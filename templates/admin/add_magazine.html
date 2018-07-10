@@ -4,29 +4,23 @@
 <div class="col-md-6" style="margin-left: -4%">
 <div class="panel panel-danger">
 <div class="panel-heading text-center">
-    <h4>Adicionar Fomento<h4/>
+    <h4>Adicionar convênio<h4/>
 </div>
 <div class="panel-body">
-<form method="POST" action="{{ url_for('crud_fomentation.add_fomentation') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ url_for('crud_magazines.add_magazine') }}" enctype="multipart/form-data">
     <div class="form-group">
     {{ form.csrf_token }}
-    
     {{ form.name.label }}<br/>
-    {{ form.name(required='true', placeholder="Ex: Universidade Federal do Rio de Janeiro", class="form-control") }}
-    
+    {{ form.name(required='true', placeholder="Ex: InVerbis", class="form-control") }}
     <br/>
-
-    {{ form.initials.label }}<br/>
-    {{ form.initials(required='true', placeholder="ex: UFRJ", class="form-control") }}
-
-    <br/>
-
     {{ form.description.label }}<br/>
     {{ form.description(required='true', class="form-control") }}
-
+    <br/>
+    {{ form.issn.label }}<br/>
+    {{ form.issn(required='true', placeholder="Ex: ISSN 2176-9036", class="form-control") }}
     <br/>
     <label class="btn btn-default">
-        {{ form.logo }}
+        {{ form.cover }}
     </label>
 
     <br/>

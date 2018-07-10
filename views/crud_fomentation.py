@@ -150,9 +150,13 @@ def edit_fomentation():
             })
         else:
             dao.find_one_and_update(None, {
-                '$set' : {'fomentation.' + index + '.name' : form.name.data},
-                '$set' : {'fomentation.' + index + '.initials' : form.initials.data.upper()},
                 '$set': {'fomentation.' + index + '.description' : form.description.data}
+            })
+            dao.find_one_and_update(None, {
+                '$set': {'fomentation.' + index + '.initials' : form.initials.data.upper()}
+            })
+            dao.find_one_and_update(None, {
+                '$set': {'fomentation.' + index + '.name' : form.name.data}
             })
 
         return redirect(
