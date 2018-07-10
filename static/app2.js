@@ -172,16 +172,11 @@ class TabelaProfessores extends React.Component {
 }
 
 class Avaliacao extends React.Component {
-
-    componentDidMount() {
-        () => this.props.getInformation();
-    }
-
     render() {
         return(
             <div>
                 <h4>Passo 3 de 3 <small className="text-muted">Critérios de avaliação</small></h4>
-                <p>Por favor, preencha corretamente as tabelas abaixo relativas aos 7 critérios de avaliação da base de pesquisa. Os critérios referem-se aos professores, apenas. Note que para cada atividade relatada aparecerá abaixo da tabela um campo para descrição detalhada da atividade</p>
+                <p>Por favor, preencha corretamente as tabelas abaixo relativas aos 7 critérios de avaliação da base de pesquisa. Os critérios referem-se aos professores, apenas. Note que para cada atividade relatada aparecerá abaixo da tabela um campo para descrição detalhada da atividade, lembre-se de selecionar o ano em que a atividade foi feita antes de adicionar</p>
                 <button className="btn" onClick={this.props.previousStep} >Passo anterior</button><br/><br/>
                 <CriterioUm professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
                 <CriterioDois professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
@@ -201,14 +196,22 @@ class CriterioUm extends React.Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.handleInsChange = this.handleInsChange.bind(this);
+        this.changeYearCriterion = this.changeYearCriterion.bind(this);
+        this.state = {
+            year : "2013",
+        }
     }
 
     handleChange(id, criterion, type, e) {
-        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value);
+        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value, this.state.year);
     }
 
     handleInsChange(id, CriIdx, typeIdx, insIdx, e) {
         this.props.changeInsertion(id, CriIdx, typeIdx, insIdx, e.target.value);
+    }
+
+    changeYearCriterion(event) {
+        this.setState({ year: event.nativeEvent.target.value });
     }
 
     render() {
@@ -216,7 +219,13 @@ class CriterioUm extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 1.</b> Produção científica dos professores do Grupo de Pesquisa nos últimos quatro anos em eventos locais, regionais, nacionais e internacionais (número de participações em eventos com trabalhos completos em anais de congressos) Fonte: Lattes
+                        <b>Critério 1.</b> Produção científica dos professores do Grupo de Pesquisa nos últimos quatro anos em eventos locais, regionais, nacionais e internacionais (número de participações em eventos com trabalhos completos em anais de congressos) Fonte: Lattes. Por favor selecione o ano
+                        <select id="form-year" className="form-control" onChange={this.changeYearCriterion}>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                        </select>
                     </div>
                 </div><br/>
                 <table className="table">
@@ -261,8 +270,8 @@ class CriterioUm extends React.Component {
                                                 type.insertions.map(function(ins, insIdx) {
                                                     return(
                                                         <div key={insIdx}>
-                                                            {type.type}<br/>
-                                                            <textarea value={ins} onChange={this.handleInsChange.bind(null, prof.id, 0, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            {type.type} - {ins.year}<br/>
+                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 0, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
                                                         </div>
                                                     );
                                                 }, this)
@@ -286,14 +295,22 @@ class CriterioDois extends React.Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.handleInsChange = this.handleInsChange.bind(this);
+        this.changeYearCriterion = this.changeYearCriterion.bind(this);
+        this.state = {
+            year : "2013",
+        }
     }
 
     handleChange(id, criterion, type, e) {
-        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value);
+        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value, this.state.year);
     }
 
     handleInsChange(id, CriIdx, typeIdx, insIdx, e) {
         this.props.changeInsertion(id, CriIdx, typeIdx, insIdx, e.target.value);
+    }
+
+    changeYearCriterion(event) {
+        this.setState({ year: event.nativeEvent.target.value });
     }
 
     render() {
@@ -302,6 +319,12 @@ class CriterioDois extends React.Component {
                 <div className="card">
                     <div className="card-body">
                         <b>Critério 2.</b> Produção científica definitiva dos professores do Grupo de Pesquisa no último quadriênio (número de publicações em artigos, livros, capítulos de livros). Fonte: Lattes
+                        <select id="form-year" className="form-control" onChange={this.changeYearCriterion}>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                        </select>
                     </div>
                 </div><br/>
                 <table className="table">
@@ -346,8 +369,8 @@ class CriterioDois extends React.Component {
                                                 type.insertions.map(function(ins, insIdx) {
                                                     return(
                                                         <div key={insIdx}>
-                                                            {type.type}<br/>
-                                                            <textarea value={ins} onChange={this.handleInsChange.bind(null, prof.id, 1, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            {type.type} - {ins.year}<br/>
+                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 1, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
                                                         </div>
                                                     );
                                                 }, this)
@@ -370,14 +393,22 @@ class CriterioTres extends React.Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.handleInsChange = this.handleInsChange.bind(this);
+        this.changeYearCriterion = this.changeYearCriterion.bind(this);
+        this.state = {
+            year : "2013",
+        }
     }
 
     handleChange(id, criterion, type, e) {
-        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value);
+        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value, this.state.year);
     }
 
     handleInsChange(id, CriIdx, typeIdx, insIdx, e) {
         this.props.changeInsertion(id, CriIdx, typeIdx, insIdx, e.target.value);
+    }
+
+    changeYearCriterion(event) {
+        this.setState({ year: event.nativeEvent.target.value });
     }
 
     render() {
@@ -386,6 +417,12 @@ class CriterioTres extends React.Component {
                 <div className="card">
                     <div className="card-body">
                         <b>Critério 3.</b> Número de projetos de pesquisa financiados por agências externas à UFRN no último quadriênio. Fonte: Lattes
+                        <select id="form-year" className="form-control" onChange={this.changeYearCriterion}>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                        </select>
                     </div>
                 </div><br/>
                 <table className="table">
@@ -421,8 +458,8 @@ class CriterioTres extends React.Component {
                                                 type.insertions.map(function(ins, insIdx) {
                                                     return(
                                                         <div key={insIdx}>
-                                                            {type.type}<br/>
-                                                            <textarea value={ins} onChange={this.handleInsChange.bind(null, prof.id, 2, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            {type.type} - {ins.year} <br/>
+                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 2, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
                                                         </div>
                                                     );
                                                 }, this)
@@ -445,14 +482,22 @@ class CriterioQuatro extends React.Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.handleInsChange = this.handleInsChange.bind(this);
+        this.changeYearCriterion = this.changeYearCriterion.bind(this);
+        this.state = {
+            year : "2013",
+        }
     }
 
     handleChange(id, criterion, type, e) {
-        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value);
+        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value, this.state.year);
     }
 
     handleInsChange(id, CriIdx, typeIdx, insIdx, e) {
         this.props.changeInsertion(id, CriIdx, typeIdx, insIdx, e.target.value);
+    }
+
+    changeYearCriterion(event) {
+        this.setState({ year: event.nativeEvent.target.value });
     }
 
     render() {
@@ -461,6 +506,12 @@ class CriterioQuatro extends React.Component {
                 <div className="card">
                     <div className="card-body">
                         <b>Critério 4.</b> Número de projetos de pesquisa desenvolvidos internamente pelos participantes do Grupo de Pesquisa, com ou sem financiamento, nos últimos quatro anos, cadastrados no SIGAA. (serão contabilizados o número de projetos por coordenador). Fonte:Lattes
+                        <select id="form-year" className="form-control" onChange={this.changeYearCriterion}>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                        </select>
                     </div>
                 </div><br/>
                 <table className="table">
@@ -496,8 +547,8 @@ class CriterioQuatro extends React.Component {
                                                 type.insertions.map(function(ins, insIdx) {
                                                     return(
                                                         <div key={insIdx}>
-                                                            {type.type}<br/>
-                                                            <textarea value={ins} onChange={this.handleInsChange.bind(null, prof.id, 3, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            {type.type} - {ins.year} <br/>
+                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 3, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
                                                         </div>
                                                     );
                                                 }, this)
@@ -520,14 +571,22 @@ class CriterioCinco extends React.Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.handleInsChange = this.handleInsChange.bind(this);
+        this.changeYearCriterion = this.changeYearCriterion.bind(this);
+        this.state = {
+            year : "2013",
+        }
     }
 
     handleChange(id, criterion, type, e) {
-        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value);
+        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value, this.state.year);
     }
 
     handleInsChange(id, CriIdx, typeIdx, insIdx, e) {
         this.props.changeInsertion(id, CriIdx, typeIdx, insIdx, e.target.value);
+    }
+
+    changeYearCriterion(event) {
+        this.setState({ year: event.nativeEvent.target.value });
     }
 
     render() {
@@ -536,6 +595,12 @@ class CriterioCinco extends React.Component {
                 <div className="card">
                     <div className="card-body">
                         <b>Critério 5.</b> Número de professores com bolsas produtividade que participam do Grupo de Pesquisa nos últimos quatro anos. Fonte: Lattes
+                        <select id="form-year" className="form-control" onChange={this.changeYearCriterion}>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                        </select>
                     </div>
                 </div><br/>
                 <table className="table">
@@ -571,8 +636,8 @@ class CriterioCinco extends React.Component {
                                                 type.insertions.map(function(ins, insIdx) {
                                                     return(
                                                         <div key={insIdx}>
-                                                            {type.type}<br/>
-                                                            <textarea value={ins} onChange={this.handleInsChange.bind(null, prof.id, 4, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            {type.type} - {ins.year} <br/>
+                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 4, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
                                                         </div>
                                                     );
                                                 }, this)
@@ -595,14 +660,22 @@ class CriterioSeis extends React.Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.handleInsChange = this.handleInsChange.bind(this);
+        this.changeYearCriterion = this.changeYearCriterion.bind(this);
+        this.state = {
+            year : "2013",
+        }
     }
 
     handleChange(id, criterion, type, e) {
-        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value);
+        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value, this.state.year);
     }
 
     handleInsChange(id, CriIdx, typeIdx, insIdx, e) {
         this.props.changeInsertion(id, CriIdx, typeIdx, insIdx, e.target.value);
+    }
+
+    changeYearCriterion(event) {
+        this.setState({ year: event.nativeEvent.target.value });
     }
 
     render() {
@@ -611,6 +684,12 @@ class CriterioSeis extends React.Component {
                 <div className="card">
                     <div className="card-body">
                         <b>Critério 6.</b> Participação do Grupo de Pesquisa no Seminário de Pesquisa do CCSA nos últimos quatro anos, (número de atividades). Fonte: Lattes
+                        <select id="form-year" className="form-control" onChange={this.changeYearCriterion}>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                        </select>
                     </div>
                 </div><br/>
                 <table className="table">
@@ -661,8 +740,8 @@ class CriterioSeis extends React.Component {
                                                 type.insertions.map(function(ins, insIdx) {
                                                     return(
                                                         <div key={insIdx}>
-                                                            {type.type}<br/>
-                                                            <textarea value={ins} onChange={this.handleInsChange.bind(null, prof.id, 5, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            {type.type} - {ins.year} <br/>
+                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 5, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
                                                         </div>
                                                     );
                                                 }, this)
@@ -685,14 +764,22 @@ class CriterioSete extends React.Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.handleInsChange = this.handleInsChange.bind(this);
+        this.changeYearCriterion = this.changeYearCriterion.bind(this);
+        this.state = {
+            year : "2013",
+        }
     }
 
     handleChange(id, criterion, type, e) {
-        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value);
+        this.props.changeProfessorFieldNumber(id, criterion, type, e.target.value, this.state.year);
     }
 
     handleInsChange(id, CriIdx, typeIdx, insIdx, e) {
         this.props.changeInsertion(id, CriIdx, typeIdx, insIdx, e.target.value);
+    }
+
+    changeYearCriterion(event) {
+        this.setState({ year: event.nativeEvent.target.value });
     }
 
     render() {
@@ -701,6 +788,12 @@ class CriterioSete extends React.Component {
                 <div className="card">
                     <div className="card-body">
                         <b>Critério 7.</b> Organização de eventos pelos professores do Grupo de Pesquisa (número de eventos - seminários, encontros, colóquios, oficinas, etc) e participação em eventos como debatedor, organizador de mesa redonda e avaliador de trabalhos. Fonte:Lattes
+                        <select id="form-year" className="form-control" onChange={this.changeYearCriterion}>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                        </select>
                     </div>
                 </div><br/>
                 <table className="table">
@@ -752,8 +845,8 @@ class CriterioSete extends React.Component {
                                                 type.insertions.map(function(ins, insIdx) {
                                                     return(
                                                         <div key={insIdx}>
-                                                            {type.type}<br/>
-                                                            <textarea value={ins} onChange={this.handleInsChange.bind(null, prof.id, 6, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            {type.type} - {ins.year} <br/>
+                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 6, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
                                                         </div>
                                                     );
                                                 }, this)
@@ -955,7 +1048,7 @@ class Application extends React.Component {
         }
     }
 
-    addCriterionInsertions(profId, criterionIdx, type, qnt) {
+    addCriterionInsertions(profId, criterionIdx, type, qnt, year) {
         this.setState(function(prevState, props) {
             for (var i=0; i < prevState.professors.length; i++) {
                 if (prevState.professors[i].id == profId) {
@@ -973,7 +1066,8 @@ class Application extends React.Component {
                     var insertions = insType.insertions;
 
                     for (var j = 0; j < qnt; j++) {
-                        insertions.push('');
+                        insertions.push({'year': year,
+                                        'value': ''});
                     }
 
                     insType.insertions = insertions;
@@ -1019,7 +1113,7 @@ class Application extends React.Component {
         });
     }
 
-    changeProfessorFieldNumber(profId, criterion, type, value) {
+    changeProfessorFieldNumber(profId, criterion, type, value, year) {
         var criterion_idx = criterion - 1;
 
         for (var i = 0; i < this.state.professors.length; i++) {
@@ -1029,7 +1123,7 @@ class Application extends React.Component {
                 if (value <= 0) {
                     this.removeCriterionInsertions(profId, criterion_idx, type, currentInsertions.length);
                 } else if(currentInsertions.length < value) {
-                    this.addCriterionInsertions(profId, criterion_idx, type, value - currentInsertions.length);
+                    this.addCriterionInsertions(profId, criterion_idx, type, value - currentInsertions.length, year);
                 } else if(currentInsertions.length > value) {
                     this.removeCriterionInsertions(profId, criterion_idx, type, currentInsertions.length - value);
                 }
@@ -1042,7 +1136,7 @@ class Application extends React.Component {
             for (var i=0; i < prevState.professors.length; i++) {
                 if (prevState.professors[i].id == profId) {
                     var prof = prevState.professors[i];
-                    prof.criterions[critIdx][typeIdx].insertions[insIdx] = value;
+                    prof.criterions[critIdx][typeIdx].insertions[insIdx].value = value;
 
                     var newProfs = prevState.professors;
                     newProfs[i] = prof;
@@ -1121,7 +1215,7 @@ class Application extends React.Component {
             });
     }
 
-    render() {
+   render() {
         switch(this.state.curr_step) {
             case 1:
                 return <DadosBase currentState={this.state}

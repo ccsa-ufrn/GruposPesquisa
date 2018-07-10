@@ -22,4 +22,3 @@ class ExtensionsManager:
 
         ExtensionsManager.csrf.init_app(app)
         ExtensionsManager.login_manager.init_app(app)
-        CORS(app, supports_credentials=True)
