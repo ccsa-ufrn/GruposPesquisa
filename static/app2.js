@@ -2,7 +2,7 @@ var app = document.getElementById('app');
 
 class DadosBase extends React.Component {
     render() {
-        return(
+        return (
             <div>
                 <h4>Passo 1 de 3 <small className="text-muted">Informações do grupo de pesquisa</small></h4>
                 <p>Por favor, preencha abaixo os dados relacionados à base de pesquisa avaliada</p>
@@ -34,7 +34,7 @@ class DadosBase extends React.Component {
                             <div className="col-md-6">
                                 <div className="form-group">
                                     <label htmlFor="alunosPosGraduacao">Número de alunos de pós-graduação vinculados ao projeto de pesquisa (não podem ser contabilizados os projetos de dissertações e teses dos alunos, pois estes são projetos dos alunos). <span className="red-text">*</span></label>
-                                    <input type="number" className="form-control" id="alunosPosGraduacao" defaultValue={this.props.currentState.numPosGrad} onChange={this.props.changePosGrad}/>
+                                    <input type="number" className="form-control" id="alunosPosGraduacao" defaultValue={this.props.currentState.numPosGrad} onChange={this.props.changePosGrad} />
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@ class DadosBase extends React.Component {
                         </div>
                         <button className="btn btn-primary" onClick={this.props.nextStep} >Próximo passo</button>
                     </div>
-                </div><br/><br/><br/>
+                </div><br /><br /><br />
             </div>
         );
     }
@@ -68,28 +68,31 @@ class CadastroProfessores extends React.Component {
     }
 
     changeProfessorName(event) {
-        this.setState({curr_professor : {
-               name : event.nativeEvent.target.value,
-               ccsa: this.state.curr_professor.ccsa,
-               master_phd: this.state.curr_professor.master_phd
+        this.setState({
+            curr_professor: {
+                name: event.nativeEvent.target.value,
+                ccsa: this.state.curr_professor.ccsa,
+                master_phd: this.state.curr_professor.master_phd
             }
         });
     }
 
     changeProfessorCCSA(event) {
-        this.setState({curr_professor : {
-               name : this.state.curr_professor.name,
-               ccsa: !(this.state.curr_professor.ccsa),
-               master_phd: this.state.curr_professor.master_phd
+        this.setState({
+            curr_professor: {
+                name: this.state.curr_professor.name,
+                ccsa: !(this.state.curr_professor.ccsa),
+                master_phd: this.state.curr_professor.master_phd
             }
         });
     }
 
     changeProfessorMasterPHD(event) {
-        this.setState({curr_professor : {
-               name : this.state.curr_professor.name,
-               ccsa: this.state.curr_professor.ccsa,
-               master_phd: !(this.state.curr_professor.master_phd),
+        this.setState({
+            curr_professor: {
+                name: this.state.curr_professor.name,
+                ccsa: this.state.curr_professor.ccsa,
+                master_phd: !(this.state.curr_professor.master_phd),
             }
         });
     }
@@ -98,7 +101,8 @@ class CadastroProfessores extends React.Component {
         document.getElementById('nomeDoProfessor').value = '';
         document.getElementById('professorCCSA').checked = false;
         document.getElementById('professorQualificacao').checked = false;
-        this.setState({curr_professor: {
+        this.setState({
+            curr_professor: {
                 name: '',
                 ccsa: 0,
                 master_phd: 0,
@@ -107,7 +111,7 @@ class CadastroProfessores extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <h4>Passo 2 de 3 <small className="text-muted">Professores relacionados</small></h4>
                 <p>Por favor, cadastre os professores relacionados à base de pesquisas para avaliação</p>
@@ -116,25 +120,25 @@ class CadastroProfessores extends React.Component {
                     <div className="col-md-7">
                         <div className="row">
                             <div className="col-8">
-                                <input type="text" id="nomeDoProfessor" className="form-control" onChange={this.changeProfessorName} placeholder="Nome do professor"/>
+                                <input type="text" id="nomeDoProfessor" className="form-control" onChange={this.changeProfessorName} placeholder="Nome do professor" />
                                 <div className="form-check">
-                                <br></br>
-                                <p>O professor faz parte do CCSA?</p>
-                                <input type="checkbox" name="ccsa" value="1" id="professorCCSA" onChange={this.changeProfessorCCSA}/>
-                                <label className="form-check-label" htmlFor="professorCCSA">Sim</label>
+                                    <br></br>
+                                    <p>O professor faz parte do CCSA?</p>
+                                    <input type="checkbox" name="ccsa" value="1" id="professorCCSA" onChange={this.changeProfessorCCSA} />
+                                    <label className="form-check-label" htmlFor="professorCCSA">Sim</label>
                                 </div>
                                 <div className="form-check">
-                                <p>O professor possui titúlo de mestre ou doutor?</p>
-                                <input type="checkbox" name="master_phd" value="1" id="professorQualificacao" onChange={this.changeProfessorMasterPHD}/>
-                                <label className="form-check-label" htmlFor="professorQualificacao">Sim</label>
+                                    <p>O professor possui titúlo de mestre ou doutor?</p>
+                                    <input type="checkbox" name="master_phd" value="1" id="professorQualificacao" onChange={this.changeProfessorMasterPHD} />
+                                    <label className="form-check-label" htmlFor="professorQualificacao">Sim</label>
                                 </div>
                             </div>
                             <div className="col-4">
                                 <button className="btn" onClick={this.sendProfessor} >Adicionar professor</button>
                             </div>
-                        </div><br/>
-                        <TabelaProfessores professors={this.props.professors} removeProfessor={this.props.removeProfessor}/>
-                        <br/>
+                        </div><br />
+                        <TabelaProfessores professors={this.props.professors} removeProfessor={this.props.removeProfessor} />
+                        <br />
                         <button onClick={this.props.previousStep} className="btn">Passo anterior</button> <button onClick={this.props.nextStep} className="btn btn-primary">Próximo passo</button>
                     </div>
                 </div>
@@ -146,7 +150,7 @@ class CadastroProfessores extends React.Component {
 class TabelaProfessores extends React.Component {
 
     render() {
-        return(
+        return (
             <div>
                 <table className="table">
                     <thead>
@@ -156,8 +160,8 @@ class TabelaProfessores extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.professors.map(function(prof) {
-                                return(
+                            this.props.professors.map(function (prof) {
+                                return (
                                     <tr key={prof.id}>
                                         <td>{prof.name} <button onClick={this.props.removeProfessor.bind(null, prof.id)}>remover</button></td>
                                     </tr>
@@ -173,18 +177,18 @@ class TabelaProfessores extends React.Component {
 
 class Avaliacao extends React.Component {
     render() {
-        return(
+        return (
             <div>
                 <h4>Passo 3 de 3 <small className="text-muted">Critérios de avaliação</small></h4>
                 <p>Por favor, preencha corretamente as tabelas abaixo relativas aos 7 critérios de avaliação da base de pesquisa. Os critérios referem-se aos professores, apenas. Note que para cada atividade relatada aparecerá abaixo da tabela um campo para descrição detalhada da atividade, lembre-se de selecionar o ano em que a atividade foi feita antes de adicionar</p>
-                <button className="btn" onClick={this.props.previousStep} >Passo anterior</button><br/><br/>
-                <CriterioUm professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
-                <CriterioDois professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
-                <CriterioTres professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
-                <CriterioQuatro professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
-                <CriterioCinco professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
-                <CriterioSeis professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
-                <CriterioSete professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion} /><br/><br/>
+                <button className="btn" onClick={this.props.previousStep} >Passo anterior</button><br /><br />
+                <CriterioUm professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion} /><hr />
+                <CriterioDois professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion} /><hr />
+                <CriterioTres professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion} /><hr />
+                <CriterioQuatro professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion} /><hr />
+                <CriterioCinco professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion} /><hr />
+                <CriterioSeis professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion} /><hr />
+                <CriterioSete professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion} /><br /><br />
                 <button onClick={() => this.props.submit("partial")} className="btn">Salvar</button> <button onClick={() => this.props.submit("final")} className="btn btn-primary">Envio final</button>
             </div>
         );
@@ -198,7 +202,7 @@ class CriterioUm extends React.Component {
         this.handleInsChange = this.handleInsChange.bind(this);
         this.changeYearCriterion = this.changeYearCriterion.bind(this);
         this.state = {
-            year : "2013",
+            year: "2013",
         }
     }
 
@@ -215,7 +219,7 @@ class CriterioUm extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <div className="card">
                     <div className="card-body">
@@ -227,7 +231,7 @@ class CriterioUm extends React.Component {
                             <option value="2016">2016</option>
                         </select>
                     </div>
-                </div><br/>
+                </div><br />
                 <table className="table">
                     <thead>
                         <tr>
@@ -243,14 +247,14 @@ class CriterioUm extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.professors.map(function(prof) {
-                                return(
+                            this.props.professors.map(function (prof) {
+                                return (
                                     <tr key={prof.id}>
                                         <td>{prof.name}</td>
                                         <td><input className="tableNumber" value={prof.criterions[0][0].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 1, 'Local')} /></td>
-                                        <td><input className="tableNumber" value={prof.criterions[0][1].insertions.length}  type="number" onChange={this.handleChange.bind(null, prof.id, 1, 'Regional')} /></td>
-                                        <td><input className="tableNumber" value={prof.criterions[0][2].insertions.length}  type="number" onChange={this.handleChange.bind(null, prof.id, 1, 'Nacional')} /></td>
-                                        <td><input className="tableNumber" value={prof.criterions[0][3].insertions.length}  type="number" onChange={this.handleChange.bind(null, prof.id, 1, 'Internacional')} /></td>
+                                        <td><input className="tableNumber" value={prof.criterions[0][1].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 1, 'Regional')} /></td>
+                                        <td><input className="tableNumber" value={prof.criterions[0][2].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 1, 'Nacional')} /></td>
+                                        <td><input className="tableNumber" value={prof.criterions[0][3].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 1, 'Internacional')} /></td>
                                     </tr>
                                 );
                             }, this)
@@ -258,28 +262,28 @@ class CriterioUm extends React.Component {
                     </tbody>
                 </table>
                 {
-                    this.props.professors.map(function(prof) {
-                        return(<div className="card" key={prof.id}>
-                            <div className="card-header">{ prof.name }</div>
+                    this.props.professors.map(function (prof) {
+                        return (<div className="card" key={prof.id}>
+                            <div className="card-header">{prof.name}</div>
                             <div className="card-body">
-                            {
-                                prof.criterions[0].map(function(type, typeIdx){
-                                    return(
-                                        <div key={typeIdx}>
-                                            {
-                                                type.insertions.map(function(ins, insIdx) {
-                                                    return(
-                                                        <div key={insIdx}>
-                                                            {type.type} - {ins.year}<br/>
-                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 0, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
-                                                        </div>
-                                                    );
-                                                }, this)
-                                            }
-                                        </div>
-                                    )
-                                }, this)
-                            }
+                                {
+                                    prof.criterions[0].map(function (type, typeIdx) {
+                                        return (
+                                            <div key={typeIdx}>
+                                                {
+                                                    type.insertions.map(function (ins, insIdx) {
+                                                        return (
+                                                            <div key={insIdx}>
+                                                                {type.type} - {ins.year}<br />
+                                                                <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 0, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            </div>
+                                                        );
+                                                    }, this)
+                                                }
+                                            </div>
+                                        )
+                                    }, this)
+                                }
                             </div>
                         </div>);
                     }, this)
@@ -297,7 +301,7 @@ class CriterioDois extends React.Component {
         this.handleInsChange = this.handleInsChange.bind(this);
         this.changeYearCriterion = this.changeYearCriterion.bind(this);
         this.state = {
-            year : "2013",
+            year: "2013",
         }
     }
 
@@ -314,7 +318,7 @@ class CriterioDois extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <div className="card">
                     <div className="card-body">
@@ -326,7 +330,7 @@ class CriterioDois extends React.Component {
                             <option value="2016">2016</option>
                         </select>
                     </div>
-                </div><br/>
+                </div><br />
                 <table className="table">
                     <thead>
                         <tr>
@@ -342,8 +346,8 @@ class CriterioDois extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.professors.map(function(prof) {
-                                return(
+                            this.props.professors.map(function (prof) {
+                                return (
                                     <tr key={prof.id}>
                                         <td>{prof.name}</td>
                                         <td><input className="tableNumber" value={prof.criterions[1][0].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 2, 'Artigos')} /></td>
@@ -357,28 +361,28 @@ class CriterioDois extends React.Component {
                     </tbody>
                 </table>
                 {
-                    this.props.professors.map(function(prof) {
-                        return(<div className="card" key={prof.id}>
-                            <div className="card-header">{ prof.name }</div>
+                    this.props.professors.map(function (prof) {
+                        return (<div className="card" key={prof.id}>
+                            <div className="card-header">{prof.name}</div>
                             <div className="card-body">
-                            {
-                                prof.criterions[1].map(function(type, typeIdx){
-                                    return(
-                                        <div key={typeIdx}>
-                                            {
-                                                type.insertions.map(function(ins, insIdx) {
-                                                    return(
-                                                        <div key={insIdx}>
-                                                            {type.type} - {ins.year}<br/>
-                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 1, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
-                                                        </div>
-                                                    );
-                                                }, this)
-                                            }
-                                        </div>
-                                    )
-                                }, this)
-                            }
+                                {
+                                    prof.criterions[1].map(function (type, typeIdx) {
+                                        return (
+                                            <div key={typeIdx}>
+                                                {
+                                                    type.insertions.map(function (ins, insIdx) {
+                                                        return (
+                                                            <div key={insIdx}>
+                                                                {type.type} - {ins.year}<br />
+                                                                <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 1, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            </div>
+                                                        );
+                                                    }, this)
+                                                }
+                                            </div>
+                                        )
+                                    }, this)
+                                }
                             </div>
                         </div>);
                     }, this)
@@ -395,7 +399,7 @@ class CriterioTres extends React.Component {
         this.handleInsChange = this.handleInsChange.bind(this);
         this.changeYearCriterion = this.changeYearCriterion.bind(this);
         this.state = {
-            year : "2013",
+            year: "2013",
         }
     }
 
@@ -412,7 +416,7 @@ class CriterioTres extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <div className="card">
                     <div className="card-body">
@@ -424,7 +428,7 @@ class CriterioTres extends React.Component {
                             <option value="2016">2016</option>
                         </select>
                     </div>
-                </div><br/>
+                </div><br />
                 <table className="table">
                     <thead>
                         <tr>
@@ -433,41 +437,41 @@ class CriterioTres extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                    {
-                        this.props.professors.map(function(prof) {
-                            return(
-                                <tr key={prof.id}>
-                                    <td>{prof.name}</td>
-                                    <td><input className="tableNumber" value={prof.criterions[2][0].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 3, 'Projetos')} /></td>
-                                </tr>
-                            );
-                        }, this)
-                    }
+                        {
+                            this.props.professors.map(function (prof) {
+                                return (
+                                    <tr key={prof.id}>
+                                        <td>{prof.name}</td>
+                                        <td><input className="tableNumber" value={prof.criterions[2][0].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 3, 'Projetos')} /></td>
+                                    </tr>
+                                );
+                            }, this)
+                        }
                     </tbody>
                 </table>
                 {
-                    this.props.professors.map(function(prof) {
-                        return(<div className="card" key={prof.id}>
-                            <div className="card-header">{ prof.name }</div>
+                    this.props.professors.map(function (prof) {
+                        return (<div className="card" key={prof.id}>
+                            <div className="card-header">{prof.name}</div>
                             <div className="card-body">
-                            {
-                                prof.criterions[2].map(function(type, typeIdx){
-                                    return(
-                                        <div key={typeIdx}>
-                                            {
-                                                type.insertions.map(function(ins, insIdx) {
-                                                    return(
-                                                        <div key={insIdx}>
-                                                            {type.type} - {ins.year} <br/>
-                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 2, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
-                                                        </div>
-                                                    );
-                                                }, this)
-                                            }
-                                        </div>
-                                    )
-                                }, this)
-                            }
+                                {
+                                    prof.criterions[2].map(function (type, typeIdx) {
+                                        return (
+                                            <div key={typeIdx}>
+                                                {
+                                                    type.insertions.map(function (ins, insIdx) {
+                                                        return (
+                                                            <div key={insIdx}>
+                                                                {type.type} - {ins.year} <br />
+                                                                <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 2, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            </div>
+                                                        );
+                                                    }, this)
+                                                }
+                                            </div>
+                                        )
+                                    }, this)
+                                }
                             </div>
                         </div>);
                     }, this)
@@ -484,7 +488,7 @@ class CriterioQuatro extends React.Component {
         this.handleInsChange = this.handleInsChange.bind(this);
         this.changeYearCriterion = this.changeYearCriterion.bind(this);
         this.state = {
-            year : "2013",
+            year: "2013",
         }
     }
 
@@ -501,7 +505,7 @@ class CriterioQuatro extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <div className="card">
                     <div className="card-body">
@@ -513,7 +517,7 @@ class CriterioQuatro extends React.Component {
                             <option value="2016">2016</option>
                         </select>
                     </div>
-                </div><br/>
+                </div><br />
                 <table className="table">
                     <thead>
                         <tr>
@@ -523,8 +527,8 @@ class CriterioQuatro extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.professors.map(function(prof) {
-                                return(
+                            this.props.professors.map(function (prof) {
+                                return (
                                     <tr key={prof.id}>
                                         <td>{prof.name}</td>
                                         <td><input className="tableNumber" value={prof.criterions[3][0].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 4, 'Projetos')} /></td>
@@ -535,28 +539,28 @@ class CriterioQuatro extends React.Component {
                     </tbody>
                 </table>
                 {
-                    this.props.professors.map(function(prof) {
-                        return(<div className="card" key={prof.id}>
-                            <div className="card-header">{ prof.name }</div>
+                    this.props.professors.map(function (prof) {
+                        return (<div className="card" key={prof.id}>
+                            <div className="card-header">{prof.name}</div>
                             <div className="card-body">
-                            {
-                                prof.criterions[3].map(function(type, typeIdx){
-                                    return(
-                                        <div key={typeIdx}>
-                                            {
-                                                type.insertions.map(function(ins, insIdx) {
-                                                    return(
-                                                        <div key={insIdx}>
-                                                            {type.type} - {ins.year} <br/>
-                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 3, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
-                                                        </div>
-                                                    );
-                                                }, this)
-                                            }
-                                        </div>
-                                    )
-                                }, this)
-                            }
+                                {
+                                    prof.criterions[3].map(function (type, typeIdx) {
+                                        return (
+                                            <div key={typeIdx}>
+                                                {
+                                                    type.insertions.map(function (ins, insIdx) {
+                                                        return (
+                                                            <div key={insIdx}>
+                                                                {type.type} - {ins.year} <br />
+                                                                <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 3, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            </div>
+                                                        );
+                                                    }, this)
+                                                }
+                                            </div>
+                                        )
+                                    }, this)
+                                }
                             </div>
                         </div>);
                     }, this)
@@ -573,7 +577,7 @@ class CriterioCinco extends React.Component {
         this.handleInsChange = this.handleInsChange.bind(this);
         this.changeYearCriterion = this.changeYearCriterion.bind(this);
         this.state = {
-            year : "2013",
+            year: "2013",
         }
     }
 
@@ -590,7 +594,7 @@ class CriterioCinco extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <div className="card">
                     <div className="card-body">
@@ -602,7 +606,7 @@ class CriterioCinco extends React.Component {
                             <option value="2016">2016</option>
                         </select>
                     </div>
-                </div><br/>
+                </div><br />
                 <table className="table">
                     <thead>
                         <tr>
@@ -612,8 +616,8 @@ class CriterioCinco extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.professors.map(function(prof) {
-                                return(
+                            this.props.professors.map(function (prof) {
+                                return (
                                     <tr key={prof.id}>
                                         <td>{prof.name}</td>
                                         <td><input className="tableNumber" value={prof.criterions[4][0].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 5, 'Bolsas')} /></td>
@@ -624,28 +628,28 @@ class CriterioCinco extends React.Component {
                     </tbody>
                 </table>
                 {
-                    this.props.professors.map(function(prof) {
-                        return(<div className="card" key={prof.id}>
-                            <div className="card-header">{ prof.name }</div>
+                    this.props.professors.map(function (prof) {
+                        return (<div className="card" key={prof.id}>
+                            <div className="card-header">{prof.name}</div>
                             <div className="card-body">
-                            {
-                                prof.criterions[4].map(function(type, typeIdx){
-                                    return(
-                                        <div key={typeIdx}>
-                                            {
-                                                type.insertions.map(function(ins, insIdx) {
-                                                    return(
-                                                        <div key={insIdx}>
-                                                            {type.type} - {ins.year} <br/>
-                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 4, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
-                                                        </div>
-                                                    );
-                                                }, this)
-                                            }
-                                        </div>
-                                    )
-                                }, this)
-                            }
+                                {
+                                    prof.criterions[4].map(function (type, typeIdx) {
+                                        return (
+                                            <div key={typeIdx}>
+                                                {
+                                                    type.insertions.map(function (ins, insIdx) {
+                                                        return (
+                                                            <div key={insIdx}>
+                                                                {type.type} - {ins.year} <br />
+                                                                <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 4, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            </div>
+                                                        );
+                                                    }, this)
+                                                }
+                                            </div>
+                                        )
+                                    }, this)
+                                }
                             </div>
                         </div>);
                     }, this)
@@ -662,7 +666,7 @@ class CriterioSeis extends React.Component {
         this.handleInsChange = this.handleInsChange.bind(this);
         this.changeYearCriterion = this.changeYearCriterion.bind(this);
         this.state = {
-            year : "2013",
+            year: "2013",
         }
     }
 
@@ -679,7 +683,7 @@ class CriterioSeis extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <div className="card">
                     <div className="card-body">
@@ -691,7 +695,7 @@ class CriterioSeis extends React.Component {
                             <option value="2016">2016</option>
                         </select>
                     </div>
-                </div><br/>
+                </div><br />
                 <table className="table">
                     <thead>
                         <tr>
@@ -710,8 +714,8 @@ class CriterioSeis extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.professors.map(function(prof) {
-                                return(
+                            this.props.professors.map(function (prof) {
+                                return (
                                     <tr key={prof.id}>
                                         <td>{prof.name}</td>
                                         <td><input className="tableNumber" value={prof.criterions[5][0].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 6, 'Ofic.')} /></td>
@@ -728,28 +732,28 @@ class CriterioSeis extends React.Component {
                     </tbody>
                 </table>
                 {
-                    this.props.professors.map(function(prof) {
-                        return(<div className="card" key={prof.id}>
-                            <div className="card-header">{ prof.name }</div>
+                    this.props.professors.map(function (prof) {
+                        return (<div className="card" key={prof.id}>
+                            <div className="card-header">{prof.name}</div>
                             <div className="card-body">
-                            {
-                                prof.criterions[5].map(function(type, typeIdx){
-                                    return(
-                                        <div key={typeIdx}>
-                                            {
-                                                type.insertions.map(function(ins, insIdx) {
-                                                    return(
-                                                        <div key={insIdx}>
-                                                            {type.type} - {ins.year} <br/>
-                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 5, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
-                                                        </div>
-                                                    );
-                                                }, this)
-                                            }
-                                        </div>
-                                    )
-                                }, this)
-                            }
+                                {
+                                    prof.criterions[5].map(function (type, typeIdx) {
+                                        return (
+                                            <div key={typeIdx}>
+                                                {
+                                                    type.insertions.map(function (ins, insIdx) {
+                                                        return (
+                                                            <div key={insIdx}>
+                                                                {type.type} - {ins.year} <br />
+                                                                <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 5, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            </div>
+                                                        );
+                                                    }, this)
+                                                }
+                                            </div>
+                                        )
+                                    }, this)
+                                }
                             </div>
                         </div>);
                     }, this)
@@ -766,7 +770,7 @@ class CriterioSete extends React.Component {
         this.handleInsChange = this.handleInsChange.bind(this);
         this.changeYearCriterion = this.changeYearCriterion.bind(this);
         this.state = {
-            year : "2013",
+            year: "2013",
         }
     }
 
@@ -783,7 +787,7 @@ class CriterioSete extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <div className="card">
                     <div className="card-body">
@@ -795,7 +799,7 @@ class CriterioSete extends React.Component {
                             <option value="2016">2016</option>
                         </select>
                     </div>
-                </div><br/>
+                </div><br />
                 <table className="table">
                     <thead>
                         <tr>
@@ -815,8 +819,8 @@ class CriterioSete extends React.Component {
                     </thead>
                     <tbody>
                         {
-                            this.props.professors.map(function(prof) {
-                                return(
+                            this.props.professors.map(function (prof) {
+                                return (
                                     <tr key={prof.id}>
                                         <td>{prof.name}</td>
                                         <td><input className="tableNumber" value={prof.criterions[6][0].insertions.length} type="number" onChange={this.handleChange.bind(null, prof.id, 7, 'Seminários')} /></td>
@@ -833,28 +837,28 @@ class CriterioSete extends React.Component {
                     </tbody>
                 </table>
                 {
-                    this.props.professors.map(function(prof) {
-                        return(<div className="card" key={prof.id}>
-                            <div className="card-header">{ prof.name }</div>
+                    this.props.professors.map(function (prof) {
+                        return (<div className="card" key={prof.id}>
+                            <div className="card-header">{prof.name}</div>
                             <div className="card-body">
-                            {
-                                prof.criterions[6].map(function(type, typeIdx){
-                                    return(
-                                        <div key={typeIdx}>
-                                            {
-                                                type.insertions.map(function(ins, insIdx) {
-                                                    return(
-                                                        <div key={insIdx}>
-                                                            {type.type} - {ins.year} <br/>
-                                                            <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 6, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
-                                                        </div>
-                                                    );
-                                                }, this)
-                                            }
-                                        </div>
-                                    )
-                                }, this)
-                            }
+                                {
+                                    prof.criterions[6].map(function (type, typeIdx) {
+                                        return (
+                                            <div key={typeIdx}>
+                                                {
+                                                    type.insertions.map(function (ins, insIdx) {
+                                                        return (
+                                                            <div key={insIdx}>
+                                                                {type.type} - {ins.year} <br />
+                                                                <textarea value={ins.value} onChange={this.handleInsChange.bind(null, prof.id, 6, typeIdx, insIdx)} className="form-control" rows="3"></textarea>
+                                                            </div>
+                                                        );
+                                                    }, this)
+                                                }
+                                            </div>
+                                        )
+                                    }, this)
+                                }
                             </div>
                         </div>);
                     }, this)
@@ -867,7 +871,7 @@ class CriterioSete extends React.Component {
 
 class Success extends React.Component {
     render() {
-        return(
+        return (
             <div>
                 <h4>Avaliação submetida com sucesso!</h4>
             </div>
@@ -877,7 +881,7 @@ class Success extends React.Component {
 
 class Fail extends React.Component {
     render() {
-        return(
+        return (
             <div>
                 <h4>Erro ao submeter avaliação!</h4>
             </div>
@@ -892,7 +896,7 @@ class Application extends React.Component {
             curr_step: 1,
             group_name: '',
             coordinator: '',
-            state : 'inProgress',
+            state: 'inProgress',
             groupAccount: document.getElementById("groupName").textContent.replace(' ', '+'),
             year: 0,
             numGrad: 0,
@@ -921,7 +925,7 @@ class Application extends React.Component {
     componentWillMount() {
         if (!(window.location.href.includes("new=new"))) {
             this.getInformation();
-        }     
+        }
     }
 
     changeName(event) {
@@ -949,15 +953,15 @@ class Application extends React.Component {
     }
 
     nextStep() {
-        this.setState(function (prevState, props) { return {curr_step: prevState.curr_step + 1} });
+        this.setState(function (prevState, props) { return { curr_step: prevState.curr_step + 1 } });
     }
 
     previousStep() {
-        this.setState(function (prevState, props) { return {curr_step: prevState.curr_step - 1} });
+        this.setState(function (prevState, props) { return { curr_step: prevState.curr_step - 1 } });
     }
 
     addProfessor(name, ccsa, master_phd) {
-        this.setState(function(prevState, props) {
+        this.setState(function (prevState, props) {
             var newProfs = prevState.professors;
             newProfs.push({
                 name: name,
@@ -967,44 +971,44 @@ class Application extends React.Component {
                 // {type: '', description: ''}
                 criterions: [
                     [ // Criterio 1
-                        {type: 'Local', insertions: []},
-                        {type: 'Regional', insertions: []},
-                        {type: 'Nacional', insertions: []},
-                        {type: 'Internacional', insertions: []}
+                        { type: 'Local', insertions: [] },
+                        { type: 'Regional', insertions: [] },
+                        { type: 'Nacional', insertions: [] },
+                        { type: 'Internacional', insertions: [] }
                     ],
                     [ // Criterio 2
-                        {type: 'Artigos', insertions: []},
-                        {type: 'Cap. Livro', insertions: []},
-                        {type: 'Livro', insertions: []},
-                        {type: 'Org. Livros', insertions: []},
+                        { type: 'Artigos', insertions: [] },
+                        { type: 'Cap. Livro', insertions: [] },
+                        { type: 'Livro', insertions: [] },
+                        { type: 'Org. Livros', insertions: [] },
 
                     ],
                     [ // Critério 3
-                        {type: 'Projetos', insertions: []},
+                        { type: 'Projetos', insertions: [] },
                     ],
                     [ // Criterio 4
-                        {type: 'Projetos', insertions: []},
+                        { type: 'Projetos', insertions: [] },
                     ],
                     [ // Criteio 5
-                        {type: 'Bolsas', insertions: []},
+                        { type: 'Bolsas', insertions: [] },
                     ],
                     [ // Criterio 6
-                        {type: 'Ofic.', insertions: []},
-                        {type: 'Conf.', insertions: []},
-                        {type: 'Minicursos', insertions: []},
-                        {type: 'Mesas redondas', insertions: []},
-                        {type: 'Coord. GT', insertions: []},
-                        {type: 'Org. Evento', insertions: []},
-                        {type: 'Exposição', insertions: []},
+                        { type: 'Ofic.', insertions: [] },
+                        { type: 'Conf.', insertions: [] },
+                        { type: 'Minicursos', insertions: [] },
+                        { type: 'Mesas redondas', insertions: [] },
+                        { type: 'Coord. GT', insertions: [] },
+                        { type: 'Org. Evento', insertions: [] },
+                        { type: 'Exposição', insertions: [] },
                     ],
                     [ // Criterio 7
-                        {type: 'Seminários', insertions: []},
-                        {type: 'Encontros', insertions: []},
-                        {type: 'Colóquios', insertions: []},
-                        {type: 'Oficinas', insertions: []},
-                        {type: 'Debates', insertions: []},
-                        {type: 'Org. Mesas', insertions: []},
-                        {type: 'Aval. Trabalhos', insertions: []},
+                        { type: 'Seminários', insertions: [] },
+                        { type: 'Encontros', insertions: [] },
+                        { type: 'Colóquios', insertions: [] },
+                        { type: 'Oficinas', insertions: [] },
+                        { type: 'Debates', insertions: [] },
+                        { type: 'Org. Mesas', insertions: [] },
+                        { type: 'Aval. Trabalhos', insertions: [] },
                     ]
                 ]
             });
@@ -1016,11 +1020,11 @@ class Application extends React.Component {
     }
 
     removeProfessor(id) {
-        this.setState(function(prevState, props) {
-            var newProfs = prevState.professors.filter(function(prof) {
+        this.setState(function (prevState, props) {
+            var newProfs = prevState.professors.filter(function (prof) {
                 if (prof.id !== id) return prof;
             });
-            return {professors: newProfs};
+            return { professors: newProfs };
         });
     }
 
@@ -1038,10 +1042,10 @@ class Application extends React.Component {
     clearAllCriterionInsertions(profId, criterionIdx, type) {
         for (var i = 0; i < this.state.professors.length; i++) {
             if (this.state.professors[i].id == profId) {
-                this.setState(function(prevState, props) {
+                this.setState(function (prevState, props) {
                     var newProfs = prevState.professors;
-                    var newProfCriteria = newProfs.criterions[criterionIdx].filter(function(ins) {
-                        return(ins.type != type);
+                    var newProfCriteria = newProfs.criterions[criterionIdx].filter(function (ins) {
+                        return (ins.type != type);
                     });
                 });
             }
@@ -1049,8 +1053,8 @@ class Application extends React.Component {
     }
 
     addCriterionInsertions(profId, criterionIdx, type, qnt, year) {
-        this.setState(function(prevState, props) {
-            for (var i=0; i < prevState.professors.length; i++) {
+        this.setState(function (prevState, props) {
+            for (var i = 0; i < prevState.professors.length; i++) {
                 if (prevState.professors[i].id == profId) {
                     var prof = prevState.professors[i];
                     var insType = {};
@@ -1066,8 +1070,10 @@ class Application extends React.Component {
                     var insertions = insType.insertions;
 
                     for (var j = 0; j < qnt; j++) {
-                        insertions.push({'year': year,
-                                        'value': ''});
+                        insertions.push({
+                            'year': year,
+                            'value': ''
+                        });
                     }
 
                     insType.insertions = insertions;
@@ -1075,15 +1081,15 @@ class Application extends React.Component {
                     var newProfs = prevState.professors;
                     newProfs[i] = prof;
 
-                    return {professors: newProfs};
+                    return { professors: newProfs };
                 }
             }
         });
     }
 
     removeCriterionInsertions(profId, criterionIdx, type, qnt) {
-        this.setState(function(prevState, props) {
-            for (var i=0; i < prevState.professors.length; i++) {
+        this.setState(function (prevState, props) {
+            for (var i = 0; i < prevState.professors.length; i++) {
                 if (prevState.professors[i].id == profId) {
                     var prof = prevState.professors[i];
                     var insType = {};
@@ -1107,7 +1113,7 @@ class Application extends React.Component {
                     var newProfs = prevState.professors;
                     newProfs[i] = prof;
 
-                    return {professors: newProfs};
+                    return { professors: newProfs };
                 }
             }
         });
@@ -1122,9 +1128,9 @@ class Application extends React.Component {
                 var currentInsertions = this.getCriterionInsertions(profId, criterion_idx, type);
                 if (value <= 0) {
                     this.removeCriterionInsertions(profId, criterion_idx, type, currentInsertions.length);
-                } else if(currentInsertions.length < value) {
+                } else if (currentInsertions.length < value) {
                     this.addCriterionInsertions(profId, criterion_idx, type, value - currentInsertions.length, year);
-                } else if(currentInsertions.length > value) {
+                } else if (currentInsertions.length > value) {
                     this.removeCriterionInsertions(profId, criterion_idx, type, currentInsertions.length - value);
                 }
             }
@@ -1132,8 +1138,8 @@ class Application extends React.Component {
     }
 
     changeInsertion(profId, critIdx, typeIdx, insIdx, value) {
-        this.setState(function(prevState, props) {
-            for (var i=0; i < prevState.professors.length; i++) {
+        this.setState(function (prevState, props) {
+            for (var i = 0; i < prevState.professors.length; i++) {
                 if (prevState.professors[i].id == profId) {
                     var prof = prevState.professors[i];
                     prof.criterions[critIdx][typeIdx].insertions[insIdx].value = value;
@@ -1141,22 +1147,22 @@ class Application extends React.Component {
                     var newProfs = prevState.professors;
                     newProfs[i] = prof;
 
-                    return {professors: newProfs};
+                    return { professors: newProfs };
                 }
             }
         });
     }
 
     setStep(stp) {
-        this.setState({curr_step:stp});
+        this.setState({ curr_step: stp });
     }
 
     submit(state) {
         var parsedUrl = new URL(window.location.href);
-        const result = Object.assign({}, this.state, 
-                        {"state": state},
-                        {'index': parsedUrl.searchParams.get('index')}, 
-                        {'form_type': parsedUrl.searchParams.get('form_type')});
+        const result = Object.assign({}, this.state,
+            { "state": state },
+            { 'index': parsedUrl.searchParams.get('index') },
+            { 'form_type': parsedUrl.searchParams.get('form_type') });
         const data = JSON.stringify(result);
         const config = {
             mode: 'cors',
@@ -1169,28 +1175,30 @@ class Application extends React.Component {
         };
         var self = this;
         fetch("http://localhost:3002/admin/formulario_avaliacao_final/", config)
-            .then(function(res) {
+            .then(function (res) {
                 return res.json();
             })
-            .then(function(json){
+            .then(function (json) {
                 const finalJson = JSON.parse(json);
                 if (finalJson.success) {
-                    self.setState({curr_step: 4});
+                    self.setState({ curr_step: 4 });
                 } else {
-                    self.setState({curr_step: 5});
+                    self.setState({ curr_step: 5 });
                 }
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 console.error(e);
             });
     }
 
     getInformation() {
         var parsedUrl = new URL(window.location.href);
-        const result = {'groupAccount': this.state.groupAccount, 
-                        'index': parsedUrl.searchParams.get('index'), 
-                        'id': parsedUrl.searchParams.get('id'),
-                        'form_type': parsedUrl.searchParams.get('form_type')};
+        const result = {
+            'groupAccount': this.state.groupAccount,
+            'index': parsedUrl.searchParams.get('index'),
+            'id': parsedUrl.searchParams.get('id'),
+            'form_type': parsedUrl.searchParams.get('form_type')
+        };
         const data = JSON.stringify(result);
         const config = {
             mode: 'cors',
@@ -1203,48 +1211,48 @@ class Application extends React.Component {
         };
         var self = this;
         fetch("http://localhost:3002/admin/informacoes_formulario/", config)
-            .then(function(res) {
+            .then(function (res) {
                 return res.json();
             })
-            .then(function(json){
+            .then(function (json) {
                 const finalJson = JSON.parse(json);
                 self.setState(finalJson);
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 console.error(e);
             });
     }
 
-   render() {
-        switch(this.state.curr_step) {
+    render() {
+        switch (this.state.curr_step) {
             case 1:
                 return <DadosBase currentState={this.state}
-                                  changeName={this.changeName}
-                                  changeCoordinator={this.changeCoordinator}
-                                  changeYear={this.changeYear}
-                                  changeGrad={this.changeGrad}
-                                  changePosGrad={this.changePosGrad}
-                                  changeGoals={this.changeGoals}
-                                  nextStep={this.nextStep} />
+                    changeName={this.changeName}
+                    changeCoordinator={this.changeCoordinator}
+                    changeYear={this.changeYear}
+                    changeGrad={this.changeGrad}
+                    changePosGrad={this.changePosGrad}
+                    changeGoals={this.changeGoals}
+                    nextStep={this.nextStep} />
             case 2:
                 return <CadastroProfessores nextStep={this.nextStep}
-                                            previousStep={this.previousStep}
-                                            addProfessor={this.addProfessor}
-                                            removeProfessor={this.removeProfessor}
-                                            professors={this.state.professors} />
+                    previousStep={this.previousStep}
+                    addProfessor={this.addProfessor}
+                    removeProfessor={this.removeProfessor}
+                    professors={this.state.professors} />
             case 3:
                 return <Avaliacao previousStep={this.previousStep}
-                                  professors={this.state.professors}
-                                  changeProfessorFieldNumber={this.changeProfessorFieldNumber}
-                                  changeInsertion={this.changeInsertion}
-                                  submit={this.submit}
-                                  getInformation={this.getInformation}/>
+                    professors={this.state.professors}
+                    changeProfessorFieldNumber={this.changeProfessorFieldNumber}
+                    changeInsertion={this.changeInsertion}
+                    submit={this.submit}
+                    getInformation={this.getInformation} />
             case 4:
-                return <Success/>
+                return <Success />
             case 5:
-                return <Fail/>
+                return <Fail />
         }
     }
 }
 
-ReactDOM.render(<Application/>, app);
+ReactDOM.render(<Application />, app);
