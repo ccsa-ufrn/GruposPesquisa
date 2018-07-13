@@ -1,0 +1,32 @@
+{% extends "public/layout.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/static/posgraduacao/css/ppgp.css"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="main-page-header">
+    <h1 class="text-center"><small>Grupo de Pesquisa</small><br/> {{ std.research_group.name | replace("+", " ") }}</h1>
+</div>
+
+<section>
+    <header class="page-header">
+        <h2>Notícias</h2>
+    </header>
+
+    <h3>{{ fullNews.title }}</br>
+        <small>{{ fullNews.headline }}</small>
+    </h3>
+    {% set splitBody = fullNews.body.split('\n') %}
+    {% for split in splitBody %}
+    {% if '.jpeg' in split %}
+        <img src="{{ split }}" height='400' width='400'></img>
+    {% else %}
+        <p>{{ split }}</p>
+    {% endif %}
+    {% endfor %}
+
+</section>
+
+{% endblock %}

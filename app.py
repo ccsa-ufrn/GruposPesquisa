@@ -3,9 +3,10 @@ This script runs the application using a development server.
 """
 # import locale
 
-from flask import Flask
+from flask_cors import CORS
+from flask import Flask, logging
+import os
 
-from views.public import app as public_app
 from views.admin import APP as admin_app
 from views.crud_books import crud_books
 from views.crud_articles import crud_articles
@@ -15,11 +16,26 @@ from views.crud_events import crud_events
 from views.crud_participations import crud_participations 
 from views.crud_staff import crud_staff 
 from views.crud_covenants import crud_covenants 
+from views.crud_magazines import crud_magazines 
 from views.crud_fomentation import crud_fomentation
 from views.crud_scheduled_reports import crud_scheduled_reports 
+from views.crud_news import crud_news 
+from views.avaliation_form import avaliation_form 
+from views.public import app as public_app
 from settings.extensions import ExtensionsManager
 
 APP = Flask(__name__)
+CORS(APP, supports_credentials=True)
+APP.config.update(
+    TRAP_BAD_REQUEST_ERRORS = True,
+    #EMAIL SETTINGS
+    MAIL_SERVER='gandalf.ufrn.br',
+    MAIL_PORT = 465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME=os.environ['MAIL_USER'],
+    MAIL_PASSWORD=os.environ['MAIL_PASSWORD']
+)
+APP.debug = True
 ExtensionsManager.auto_configure(APP)
 
 APP.register_blueprint(public_app)
@@ -31,14 +47,17 @@ APP.register_blueprint(crud_projects)
 APP.register_blueprint(crud_events)
 APP.register_blueprint(crud_staff)
 APP.register_blueprint(crud_covenants)
+APP.register_blueprint(crud_magazines)
 APP.register_blueprint(crud_fomentation)
 APP.register_blueprint(crud_participations)
 APP.register_blueprint(crud_scheduled_reports)
+APP.register_blueprint(crud_news)
+APP.register_blueprint(avaliation_form)
 
 PUBLIC_HOST = '0.0.0.0'
-PUBLIC_PORT = 3001
+PUBLIC_PORT = 3002
 DEV_HOST = 'localhost'
-DEV_PORT = 3001 
+DEV_PORT = 3002 
 
 if __name__ == '__main__':
 

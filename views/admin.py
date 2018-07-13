@@ -8,7 +8,11 @@ import sys
 
 from flask_login import LoginManager, \
     login_user, login_required, logout_user, current_user
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, current_app
+
+from flask_mail import Message, Mail
+
+from bcrypt import hashpw, gensalt
 
 from bson.objectid import ObjectId
 
@@ -19,15 +23,14 @@ from models.users import User
 
 from settings.extensions import ExtensionsManager
 
-from views.forms.auth import LoginForm
-from views.forms.content import ParticipationsInEventsForm, \
-    ScheduledReportForm, InstitutionsWithCovenantsForm, \
-    DocumentForm, SubjectsForm, ProfessorForm, StaffForm, CalendarForm, \
-    EditInstitutionsWithCovenantsForm, EditDocumentForm
+from views.forms.auth import LoginForm, NickForm, ResetPasswordForm
+from views.forms.content import DocumentForm, EditDocumentForm
 
 from bson.json_util import dumps
 import json
 import requests
+import random
+import string
 
 import datetime
 
@@ -97,6 +100,80 @@ def logout():
         'admin/logout.html'
     )
 
+@APP.route('/solicitar_email/', methods=['GET','POST']) 
+def request_email():
+    """
+    Render a form for the user to ask for a password reset link 
+    """
+    form = NickForm()
+    pfactory = ResearchGroupFactory()
+    dao = pfactory.reset_keys_dao()
+
+    if form.validate_on_submit():
+        user_requesting = User.get(form.nick.data)
+        if user_requesting is not None:
+            user_mail = user_requesting._email
+            user_group = user_requesting._group_name
+            key = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+            expires_in = datetime.datetime.now() + datetime.timedelta(hours=1)
+            new_key = {
+                'key': key,
+                'email': user_mail,
+                'expiresIn': expires_in,
+                'groupName': user_group
+            }
+            dao.insert_one(None, new_key)
+            mail = Mail(current_app)
+            msg = Message('Teste', 
+                    sender='assessoriatecnica@ccsa.ufrn.br',
+                    recipients=['luccasmmg@gmail.com'])
+            msg.body = 'localhost:3001/admin/mudar_password/?key=' + key
+            mail.send(msg)
+            return redirect(
+                url_for(
+                'admin.request_email'
+                )
+            )
+        else:
+            return redirect(
+                url_for(
+                'admin.request_email',
+                incorrect_attempt=True
+                )
+            )
+    return render_template(
+        'admin/request_email.html',
+        form=form
+    )
+
+@APP.route('/mudar_password/', methods=['GET', 'POST'])
+def change_password():
+    """
+    Render a form for changing password
+    """
+    key = request.args.get('key')
+    form = ResetPasswordForm(key=key)
+    pfactory = ResearchGroupFactory()
+    dao = pfactory.reset_keys_dao()
+    user_dao = pfactory.research_groups_dao()
+    if form.validate_on_submit() and form.password_one.data == form.password_two.data:
+        reset_document = dict(dao.find_one({'key': form.key.data}))
+        if reset_document['expiresIn'] > datetime.datetime.now():
+            password_one = hashpw(form.password_one.data.encode('utf-8'), gensalt(14))
+            password_one = password_one.decode('utf-8')
+            user_dao.find_one_and_update({'name': reset_document['groupName']},{
+                '$set' : {'users.0.password': password_one}
+            })
+        return redirect(
+            url_for(
+                'admin.login'
+            )
+        )
+    return render_template(
+        'admin/reset_password.html',
+        form=form,
+        key=key
+    )
 
 @ExtensionsManager.login_manager.user_loader
 def user_loader(user_id):

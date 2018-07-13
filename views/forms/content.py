@@ -10,37 +10,6 @@ from flask_wtf.file import FileField, FileRequired
 from wtforms.fields.html5 import EmailField, URLField
 from wtforms.validators import DataRequired, Email, URL
 
-class FindClass(FlaskForm):
-    """
-    Form for finding the classes in a period and year
-    """
-
-    year = IntegerField('Ano:', validators=[
-        DataRequired('Informe o ano da turma.')
-    ])
-
-    period = SelectField('Período:', choices=[('1','1 Período'),
-        ('2', '2 Período'), ('3', '3 Período'), ('4', '4 Período')], validators=[
-        DataRequired('Informe o período da turma.')
-    ])
-
-    create = SubmitField('Pesquisar')
-
-class StudentCoordinatorForm(FlaskForm):
-    """
-    Form for adding and editing coordinators
-    """
-
-    registration = IntegerField('Matricula:', validators=[
-        DataRequired('Informe a matricula do estudante')
-    ])
-
-    coordinator = StringField('Nome do coordenador:', validators=[
-        DataRequired('Informe o nome do coordenador')
-    ])
-
-    create = SubmitField('Editar');
-
 class ParticipationsInEventsForm(FlaskForm):
     """
     Form for the list of participations in events.
@@ -65,33 +34,26 @@ class ParticipationsInEventsForm(FlaskForm):
 
     create = SubmitField('Adicionar')
 
-class SubjectsForm(FlaskForm):
+class NewsForm(FlaskForm):
     """
-    Form for list of subjects.
+    Form for adding and editing news 
     """
-    name = StringField('Nome da disciplina:', validators=[
-        DataRequired('Digite o nome da disciplina.')
+
+    title = StringField('Titúlo da notícia:', validators=[
+        DataRequired('Digite um titúlo para a notícia')
+    ])
+    
+    headLine = StringField('Resumo básico/Manchete:', validators=[
+        DataRequired('Digite a manchete')
     ])
 
-    description = TextAreaField('Resumo da disciplina:', validators=[
-        DataRequired('Insira um breve resumo sobre a disciplina.')
-    ])
-
-    workload_in_hours = IntegerField('Carga Horária:', validators=[
-        DataRequired('Informe a carga horária da disciplina.')
-    ])
-
-    credits = IntegerField('Creditos:', validators=[
-        DataRequired('Informe quantos créditos a disciplina dá.')
-    ])
-
-    requirement = SelectField('Tipo de disciplina', choices=[('Obrigatórias','Obrigatórias'), ('Eletivas','Eletivas')], validators = [
-        DataRequired('Insira o tipo da disciplina')
+    body = TextAreaField('Notícia:', validators=[
+        DataRequired('Insira a notícia.')
     ])
 
     index = IntegerField()
 
-    create = SubmitField('Adicionar')
+    create = SubmitField('Editar');
 
 class StaffForm(FlaskForm):
     """
@@ -160,6 +122,50 @@ class EditInstitutionsWithCovenantsForm(FlaskForm):
 
     create = SubmitField('Editar')
 
+class MagazinesForm(FlaskForm):
+    """
+    Form for the list of magazines.
+    """
+    name = StringField('Nome da revista:', validators=[
+        DataRequired('Digite o nome da revista.')
+    ])
+
+    issn = StringField('ISSN do periódico:', validators=[
+        DataRequired('Digite o ISSN do periódico.')
+    ])
+    
+    description = TextAreaField('Descrição da revista', validators=[
+        DataRequired('Por favor descreva a revista.')
+    ])
+
+    cover = FileField(validators=[
+        DataRequired('Por favor insira uma foto para a revista')
+    ])
+
+    create = SubmitField('Adicionar')
+
+class EditMagazinesForm(FlaskForm):
+    """
+    Form for the list of magazines.
+    """
+    name = StringField('Nome da revista:', validators=[
+        DataRequired('Digite o nome da revista.')
+    ])
+
+    issn = StringField('ISSN do periódico:', validators=[
+        DataRequired('Digite o ISSN do periódico.')
+    ])
+    
+    description = TextAreaField('Descrição da revista', validators=[
+        DataRequired('Por favor descreva a revista.')
+    ])
+
+    cover = FileField()
+
+    index = IntegerField()
+
+    create = SubmitField('Adicionar')
+
 class ScheduledReportForm(FlaskForm):
 
     """
@@ -203,28 +209,6 @@ class CalendarForm(FlaskForm):
     hour = StringField('Hora de começo e termino do evento(Se existir)')
 
     link = URLField('Link para mais informações(Se existir)')
-
-    index = IntegerField()
-
-    create = SubmitField('Adicionar')
-
-class ProfessorForm(FlaskForm):
-    """
-    Form for adding professors to database
-    """
-    name = StringField('Nome do professor(a):', validators=[
-        DataRequired('Digite o nome do professor(a).')
-    ])
-
-    rank = StringField('Rank do professor(a):', validators=[
-        DataRequired('Digite o rank do professor(a).')
-    ])
-
-    lattes = StringField('Link para Lattes do professor(a):')
-
-    email = EmailField('Email do professor(a):', validators=[
-        DataRequired('Digite o Email do professor(a).'), Email()
-        ])
 
     index = IntegerField()
 
@@ -351,6 +335,45 @@ class BookForm(FlaskForm):
     index = IntegerField()
 
     create = SubmitField('Adicionar')
+
+class ChapterForm(FlaskForm):
+    """
+    Form for chapters in books
+    """
+    book_title = StringField('Titulo do livro:', validators=[
+        DataRequired('Digite o título do livro.')
+    ])
+    
+    book_authors = StringField('Nome do autor(es) do livro:', validators=[
+        DataRequired('Digite o nome dos autor(es)')
+    ])
+
+    chapter_title = StringField('Titulo do capitulo:', validators=[
+        DataRequired('Digite o título do capitulo.')
+    ])
+
+    chapter_authors = StringField('Nome do autor(es) do capitulo:', validators=[
+        DataRequired('Digite o nome dos autor(es)')
+    ])
+
+    edition = IntegerField('Número da edição:', validators=[
+        DataRequired('Digite o número da edição')
+    ])
+
+    location = StringField('Local de impressão:')
+
+    publisher = StringField('Editora:')
+
+    year = IntegerField('Ano da publicação:')
+
+    pages = StringField('Número das páginas:', validators=[
+        DataRequired('Digite o número das páginas')
+    ])
+
+    index = IntegerField()
+
+    create = SubmitField('Adicionar')
+
 
 class ArticleForm(FlaskForm):
     """

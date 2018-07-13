@@ -19,6 +19,9 @@ _COLLECTION_OF_ATTENDANCES = 'attendances'
 _COLLECTION_OF_CALENDAR = 'calendar'
 _COLLECTION_OF_PUBLICATIONS = 'publications'
 _COLLECTION_OF_PROJECTS = 'projects'
+_COLLECTION_OF_RESET_KEYS = 'resetKeys'
+_COLLECTION_OF_NEWS = 'news'
+_COLLECTION_OF_AVALIATIONS = 'avaliationForm'
 
 # factory methods
 
@@ -45,6 +48,10 @@ class ResearchGroupFactory(object):
     def research_groups_dao(self):
         """ Gets an instance of a data access object for a certain collection """
         return GenericMongoDAO(_COLLECTION_OF_RESEARCH_GROUPS)
+
+    def reset_keys_dao(self):
+        """ Gets an instance of a data access object for a certain collection """
+        return GenericMongoDAO(_COLLECTION_OF_RESET_KEYS)
 
     def final_reports_dao(self):
         """ Gets an instance of a data access object for a certain collection """
@@ -73,6 +80,14 @@ class ResearchGroupFactory(object):
     def attendances_dao(self):
         """ Gets an instance of a data access object for a certain collection """
         return GenericMongoDAO(_COLLECTION_OF_ATTENDANCES, self.mongo_id)
+
+    def news_dao(self):
+        """ Gets an instance of a data access object for a certain collection """
+        return GenericMongoDAO(_COLLECTION_OF_NEWS, self.mongo_id)
+    
+    def avaliation_form_dao(self):
+        """ Gets an instance of a data access object for a certain collection """
+        return GenericMongoDAO(_COLLECTION_OF_AVALIATIONS, self.mongo_id)
 
     def projects_database_dao(self):
         """ Gets an instance of a data access object for a certain collection """

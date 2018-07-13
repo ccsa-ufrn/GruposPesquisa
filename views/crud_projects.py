@@ -132,7 +132,6 @@ def view_member():
     form = MemberOfProjectForm()
 
     pfactory = ResearchGroupFactory(current_user.group_name)
-    print(current_user.group_name, file=sys.stderr)
     projects = pfactory.projects_database_dao().find()
     projects = list(projects)
     projects = dumps(projects)
