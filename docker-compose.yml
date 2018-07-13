@@ -6,3 +6,6 @@ services:
         volumes:
             - .:/juno
         network_mode: 'host'
+        environment:
+            - MAIL_USER=${MAIL_USER}
+            - MAIL_PASSWORD=${MAIL_PASSWORD}
