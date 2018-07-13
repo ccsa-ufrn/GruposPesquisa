@@ -1,0 +1,12 @@
+{
+    "google_maps_js_api": {
+        "key": ""
+    },
+    "mongo_uri": {
+        "mongo_uri": "localhost"
+    },
+    "mail": {
+        "mail_user" : "",
+        "mail_password" : ""
+    }
+}

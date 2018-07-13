@@ -5,6 +5,7 @@ This script runs the application using a development server.
 
 from flask_cors import CORS
 from flask import Flask, logging
+from models.clients.util import keyring
 import os
 
 from views.admin import APP as admin_app
@@ -24,6 +25,10 @@ from views.avaliation_form import avaliation_form
 from views.public import app as public_app
 from settings.extensions import ExtensionsManager
 
+mail_dict = keyring.get(keyring.MAIL)
+MAIL_USER = mail_dict['mail_user']
+MAIL_PASSWORD = mail_dict['mail_password']
+
 APP = Flask(__name__)
 CORS(APP, supports_credentials=True)
 APP.config.update(
@@ -32,8 +37,8 @@ APP.config.update(
     MAIL_SERVER='gandalf.ufrn.br',
     MAIL_PORT = 465,
     MAIL_USE_SSL=True,
-    MAIL_USERNAME=os.environ['MAIL_USER'],
-    MAIL_PASSWORD=os.environ['MAIL_PASSWORD']
+    MAIL_USERNAME=MAIL_USER,
+    MAIL_PASSWORD=MAIL_PASSWORD
 )
 APP.debug = True
 ExtensionsManager.auto_configure(APP)
