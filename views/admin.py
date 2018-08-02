@@ -127,7 +127,7 @@ def request_email():
             msg = Message('Teste', 
                     sender='assessoriatecnica@ccsa.ufrn.br',
                     recipients=['luccasmmg@gmail.com'])
-            msg.body = 'localhost:3001/admin/mudar_password/?key=' + key
+            msg.body = 'gruposdepesquisa.ccsa.ufrn.br/admin/mudar_password/?key=' + key
             mail.send(msg)
             return redirect(
                 url_for(
