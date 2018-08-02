@@ -2,24 +2,15 @@
 
 {% block content %}
 
-<h2>Plataforma de Grupos de Pesquisa</h2>
-<h3>Projeto Juno</h3>
-
-<p>
-    Esta é a <strong>plataforma acadêmica dos grupos de pesquisa do Centro de Ciências
-    Sociais Aplicadas (CCSA) da Universidade Federal do Rio Grande do Norte (UFRN)</strong>,
-    criado para aumentar o contato entre coordenação, secretaria, corpo docente e discentes
-    através de mais transparência, informações e (em breve) agilidade nos processos burocráticos.
-</p>
-
-<p>
-    Abaixo, a lista de Programas do Centro atualmente disponíveis através deste projeto:
-    <ul>
-        {% for registered in std.research_group_registered.rewind() %}
-        <li><a href="/{{ registered.name }}">{{ registered.name | replace("+"," ") }}</a></li>
-        {% endfor %}
-    </ul>
-</p>
+<div class="main-page-header">
+    <h1 class="text-center">Grupos de Pesquisa</h1>
+</div>
+</br>
+{% for registered in std.research_group_registered.rewind() | sort(attribute="name") %}
+<div class="col-md-6" style="margin-top: 10px">
+    <button onclick="window.location.href='/{{ registered.initials}}'" style="height: 6%; width: 100%; font-size: 20px" type="button" class="btn btn-success">{{ registered.name | replace("+"," ") }}</button> 
+</div>
+{% endfor %}
 
 <p>
     O projeto está sendo desenvolvido e mantido por orientação da Direção Geral e da
