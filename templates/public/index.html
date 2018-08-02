@@ -8,7 +8,7 @@
 </br>
 {% for registered in std.research_group_registered.rewind() | sort(attribute="name") %}
 <div class="col-md-6" style="margin-top: 10px">
-    <button onclick="window.location.href='/{{ registered.initials}}'" style="height: 6%; width: 100%; font-size: 20px" type="button" class="btn btn-success">{{ registered.name | replace("+"," ") }}</button> 
+    <button onclick="window.location.href='/{{ registered.name }}'" style="height: 6%; width: 100%; font-size: 20px" type="button" class="btn btn-success">{{ registered.name | replace("+"," ") }}</button> 
 </div>
 {% endfor %}
 
