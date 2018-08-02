@@ -1074,7 +1074,7 @@ class Application extends React.Component {
             body: data
         };
         var self = this;
-        fetch("http://gruposdepesquisa.ccsa.ufrn.br/admin/formulario_avaliacao_final/", config)
+        fetch("https://gruposdepesquisa.ccsa.ufrn.br/admin/formulario_avaliacao_final/", config)
             .then(function(res) {
                 return res.json();
             })
@@ -1108,7 +1108,7 @@ class Application extends React.Component {
             body: data
         };
         var self = this;
-        fetch("http://gruposdepesquisa.ccsa.ufrn.br/admin/informacoes_formulario/", config)
+        fetch("https://gruposdepesquisa.ccsa.ufrn.br/admin/informacoes_formulario/", config)
             .then(function(res) {
                 return res.json();
             })
