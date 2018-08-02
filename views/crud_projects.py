@@ -200,6 +200,9 @@ def delete_member():
         index = str(form.index.data)
         dao.find_one_and_update({'_id' : ObjectId(form.project_id.data)}, {
             '$set': {'members.' + index + '.deleted' : '' }})
+        projects = pfactory.projects_database_dao().find()
+        projects = list(projects)
+        projects = dumps(projects)
         return jsonify(projects=projects)
     else:
         return jsonify({'error':'Houve um erro'})

@@ -114,6 +114,7 @@
                     <table class="schedule-table">
                         {% for piece in news %}
                         {% if "deleted" not in piece %}
+                        {% if "Seleção" not in piece.title %}
                         {% if loop.revindex < 3 %}
                         <tr class="schedule-container">
                             <td class="schedule-container-info">
@@ -123,6 +124,7 @@
                                 <h6><a href="{{ url_for('public.view_news', id=piece.id, name=std.research_group.name) }}">Mais informações</a></h6><br/>
                             </td>
                         </tr>
+                        {% endif %}
                         {% endif %}
                         {% endif %}
                         {% endfor %}
@@ -181,8 +183,29 @@
         <section>
             <header>
             <h2><span class="glyphicon glyphicon-bullhorn"></span> Seleções</h2>
+            {% if news %}
+            <table class="schedule-table">
+                {% for piece in news %}
+                {% if "deleted" not in piece %}
+                {% if "Seleção" in piece.title %}
+                {% if loop.revindex < 3 %}
+                <tr class="schedule-container">
+                    <td class="schedule-container-info">
+                        <h4>{{ piece.title }}
+                        </h4>
+                        <h5>{{ piece.headLine }}</h5>
+                        <h6><a href="{{ url_for('public.view_news', id=piece.id, name=std.research_group.name) }}">Mais informações</a></h6><br/>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </table>
+            {% else %}
+            <p><small>(Não há nenhuma notícia cadastrada.)</small></p>
+            {% endif %}
             </header>
-            <p><small>(Não há seleções ocorrendo agora.)</small></p>
         </section>
         <!--
         <h4>Mestrado (15 vagas):

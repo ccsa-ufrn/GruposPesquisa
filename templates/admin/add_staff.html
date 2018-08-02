@@ -6,15 +6,17 @@
 $(document).ready(function() {
     $("select[name=function]").val('coordination');
     $("select[name=function]").change(function(){
-        if($(this).val() == 'secretariat'){
+        if($(this).val() == 'students' || $(this).val() == 'researchers'){
             $("input[name=abstract]").attr('minLength', 10);
             $("input[name=photo]").css('visibility','hidden');
             $("label[for='photo']").css('visibility','hidden');
+            $(".text-muted").css('visibility','hidden');
         }
         if($(this).val() == 'coordination'){
             $("input[name=abstract]").attr('minLength', 50);
             $("input[name=photo]").css('visibility','visible');
             $("label[for='photo']").css('visibility','visible');
+            $(".text-muted").css('visibility','visible');
         }
     });
 

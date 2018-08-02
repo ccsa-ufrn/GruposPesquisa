@@ -53,29 +53,29 @@ class NewsForm(FlaskForm):
 
     index = IntegerField()
 
-    create = SubmitField('Editar');
+    create = SubmitField('Adicionar');
 
 class StaffForm(FlaskForm):
     """
     Form for list of staff.
     """
-    name = StringField('Nome do servidor:', validators=[
-        DataRequired('Digite o nome do servidor.')
+    name = StringField('Nome do integrante:', validators=[
+        DataRequired('Digite o nome do integrante.')
     ])
 
-    rank = StringField('Posição do servidor:', validators=[
-        DataRequired('Digite a posição do servidor.')
+    rank = StringField('Posição do integrante:', validators=[
+        DataRequired('Digite a posição do integrante.')
     ])
 
-    abstract = TextAreaField('Resumo da formação caso da coordenação, e descrição do trabalho caso secretário:', validators=[
-        DataRequired('Insira um breve resumo sobre a formação acadêmica do servidor.')
+    abstract = TextAreaField('Resumo da formação acadêmica:', validators=[
+        DataRequired('Insira um breve resumo sobre a formação acadêmica do integrante.')
     ])
 
-    function = SelectField('Tipo de servidor', choices=[('coordination','Coordenação'), ('secretariat','Secretáriado')], validators = [
-        DataRequired('Insira o tipo de servidor')
+    function = SelectField('Tipo de integrante', choices=[('coordination','Coordenação'), ('students','Estudantes'), ('researchers', 'Pesquisadores')], validators = [
+        DataRequired('Insira o tipo de integrante')
     ])
 
-    photo = URLField('Foto do servidor')
+    photo = URLField('Foto do integrante')
 
     index = IntegerField()
 
