@@ -55,6 +55,23 @@ class NewsForm(FlaskForm):
 
     create = SubmitField('Adicionar');
 
+class DescriptionForm(FlaskForm):
+    """
+    Form for adding and editing news 
+    """
+
+    description_small = StringField('Descrição pequena que fica em cima da página:')
+    
+    description_big = StringField('Descrição grande que fica em baixo da página:')
+
+    any_text = StringField('Texto que fica na segunda imagem do carrosel:')
+
+    first_image = StringField('Link da primeira imagem do carrosel:')
+
+    second_image = StringField('Link da segunda imagem do carrosel:')
+
+    create = SubmitField('Editar')
+
 class StaffForm(FlaskForm):
     """
     Form for list of staff.

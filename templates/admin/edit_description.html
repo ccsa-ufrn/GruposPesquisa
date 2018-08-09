@@ -1,0 +1,49 @@
+{% extends "admin/layout.html" %}
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    var description = {{ description|tojson|safe }};
+    description = JSON.parse(description);
+    $("input[name=description_small]").val(description.descriptionSmall);
+    $("input[name=description_big]").val(description.descriptionBig);
+    $("input[name=any_text]").val(description.anyText);
+    $("input[name=first_image]").val(description.firstImage);
+    $("input[name=second_image]").val(description.secondImage);
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-6" style="margin-left: -4%">
+<form method="POST" action="{{ url_for('crud_attendances.edit_description') }}">
+    <div class="form-group">
+    <div class="panel panel-danger">
+    <div class="panel-heading text-center">Informações da homepage</div>
+    <div class="panel-body">
+    {{ form.csrf_token }}
+    <br/>
+    {{ form.description_small.label }}<br/>
+    {{ form.description_small(required='true', class="form-control") }}
+    <br/>
+    {{ form.description_big.label }}<br/>
+    {{ form.description_big(class="form-control") }}
+    <br/>
+    {{ form.any_text.label }}<br/>
+    {{ form.any_text(required='true', class="form-control") }}
+    <br/>
+    {{ form.first_image.label }}<br/>
+    {{ form.first_image(required='true', class="form-control") }}
+    <br/>
+    {{ form.second_image.label }}<br/>
+    {{ form.second_image(required='true', class="form-control") }}
+    <br/>
+    {{ form.create(class="form-control")}}
+    </div>
+    </div>
+<form>
+</div>
+</div>
+</div>
+
+{% endblock %}

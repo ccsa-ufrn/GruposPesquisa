@@ -61,13 +61,13 @@ def covenants():
             }
 
         dao.find_one_and_update(None, {
-            '$push': {'InstitutionsWithCovenants' : new_covenant}
+            '$push': {'institutionsWithCovenant' : new_covenant}
         })
 
         return redirect(
             url_for(
                 'crud_covenants.covenants',
-                success_msg=msg_type + 'Convênio adicionado com sucesso.',
+                success_msg='Convênio adicionado com sucesso.',
             )
         )
 
@@ -142,11 +142,11 @@ def edit_covenants():
                 )
             name, extension = filename.split('.')
             logoFile = 'logo-' + form.initials.data.lower() + '.' + extension
-            uploadFiles(photo, path, logoFile)
+            logo = uploadFiles(photo, path, logoFile)
             new_covenant = {
                 'name': form.name.data,
                 'initials': form.initials.data.upper(),
-                'logoFile': logoFile
+                'logoFile': logo
             }
 
             dao.find_one_and_update(None, {
