@@ -9,7 +9,7 @@ from models.factory import ResearchGroupFactory
 
 from settings.extensions import ExtensionsManager
 
-from views.forms.content import AttendanceForm
+from views.forms.content import AttendanceForm, DescriptionForm
 
 from bson.json_util import dumps
 from bson.objectid import ObjectId
@@ -71,3 +71,39 @@ def edit_attendance():
         success_msg=request.args.get('success_msg')
     )
 
+@crud_attendances.route('/editar_descrições/', methods=['GET', 'POST'])
+@login_required
+def edit_description():
+
+    form = DescriptionForm()
+
+    pfactory = ResearchGroupFactory(current_user.group_name)
+    dao = pfactory.research_groups_dao()
+    json = pfactory.research_groups_dao().find_one()
+    json = dict(json)
+    json = dumps(json)
+
+    if form.validate_on_submit() and form.create.data:
+        new_information = {
+            'descriptionSmall' : form.description_small.data,
+            'descriptionBig' : form.description_big.data,
+            'anyText' : form.any_text.data,
+            'firstImage' : form.first_image.data,
+            'secondImage': form.second_image.data,
+        }
+
+        dao.find_one_and_update({'_id' : ObjectId(current_user.group_id)}, {
+            '$set': new_information
+        })
+
+        return redirect(
+            url_for(
+                'crud_attendances.edit_description',
+                success_msg='Descrições editadas com sucesso.'))
+
+    return render_template(
+        'admin/edit_description.html',
+        description=json,
+        form=form,
+        success_msg=request.args.get('success_msg')
+    )

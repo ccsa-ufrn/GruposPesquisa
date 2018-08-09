@@ -58,8 +58,15 @@ def home(name):
 
     # search for home data
     final_reports = pfactory.final_reports_dao().find_one()
-    events = pfactory.calendar_dao().find_one()
-    events = pfactory.calendar_dao().find_one()['events']
+    calendar = pfactory.calendar_dao().find_one()['events']
+    selections = []
+    events = []
+    for event in range(len(calendar)):
+        if "deleted" not in calendar[event]:
+            if "Seleção" in calendar[event]['title']:
+                selections.append(calendar[event])
+            else:
+                events.append(calendar[event])
     news = pfactory.news_dao().find_one()
     news = news['news']
     final_reports = final_reports['scheduledReports']
@@ -99,6 +106,7 @@ def home(name):
         news=news,
         institutions_with_covenant=institutions_with_covenant,
         attendance=attendance,
+        selections=selections,
     )
 
 @app.route('/<string:name>/documents/<string:filename>/')

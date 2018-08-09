@@ -59,6 +59,7 @@
                 <h6 class="sidebar-collapse collapse in"><strong>EDITAR PÁGINAS</strong></h6>
                 <ul class="nav nav-sidebar sidebar-collapse collapse in">
                     <li><a href="{{ url_for('crud_attendances.edit_attendance') }}">Informações para contato</a></li>
+                    <li><a href="{{ url_for('crud_attendances.edit_description') }}">Textos e imagens da página inicial</a></li>
                     <li><a href="#forms" data-toggle="collapse">Avaliações
                         <span class="caret"></span></a>
                         <ul id="forms" class="collapse">
@@ -95,7 +96,7 @@
                         <ul id="articles" class="collapse">
                             <li><a href="{{ url_for('crud_articles.add_article') }}">Adicionar artigos</a></li>
                             <li><a href="{{ url_for('crud_articles.edit_article') }}">Editar artigos</a></li>
-                            <li><a href="{{ url_for('crud_articles.delete_article') }}">Deletar livros</a></li>
+                            <li><a href="{{ url_for('crud_articles.delete_article') }}">Deletar artigos</a></li>
                         </ul>
                     </li>
                     <li><a href="#magazines" data-toggle="collapse">Periódicos
@@ -162,17 +163,6 @@
                             <li><a href="{{ url_for('crud_events.delete_events') }}">Retirar evento</a></li>
                         </ul>
                     </li>
-                </ul>
-                <h6 class="sidebar-collapse collapse in"><strong>BUROCRACIA</strong></h6>
-                <ul class="nav nav-sidebar sidebar-collapse collapse in">
-                <li><a href="#documents" data-toggle="collapse">Documentos
-                    <span class="caret"></span></a>
-                    <ul id="documents" class="collapse">
-                    <li><a href="{{ url_for('admin.documents') }}">Adicionar documentos</a></li>
-                    <li><a href="{{ url_for('admin.edit_documents') }}">Editar documentos</a></li>
-                    <li><a href="{{ url_for('admin.delete_documents') }}">Retirar documentos</a></li>
-                    </ul>
-                </li>
                 </ul>
             </div>
             </div>

@@ -19,6 +19,7 @@ class User(object):
     def __init__(self):
         self._id = None
         self._group_name = None
+        self._group_id = None
         self._nick = None
         self._full_name = None
         self._role = None
@@ -83,6 +84,11 @@ class User(object):
         return self._group_name
 
     @property
+    def group_id(self):
+        """Research group id that the user manages"""
+        return self._group_id
+
+    @property
     def is_authenticated(self):
         """
         This property should return True if the user is authenticated,
@@ -131,6 +137,7 @@ class User(object):
             research_group = list(dao.find(condition))
             if research_group:
                 group_name = research_group[0]['name']
+                group_id = research_group[0]['_id']
             else:
                 return None
             for user in research_group[0]['users']:
@@ -138,6 +145,7 @@ class User(object):
                     found_user = User()
                     found_user._nick = user['nick']
                     found_user._group_name = group_name
+                    found_user._group_id = group_id
                     found_user._password = user['password'].encode('utf-8')
                     found_user._full_name = user['fullName']
                     found_user._role = user['role']

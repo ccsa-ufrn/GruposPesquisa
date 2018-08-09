@@ -38,7 +38,7 @@ def add_fomentation():
     if form.validate_on_submit() and form.create.data:
         if form.logo.data and allowedFile(form.logo.data.filename, allowed_extensions):
             photo = form.logo.data
-            path = os.path.normpath("static/assets")
+            path = os.path.normpath("static/assets/fomentation")
             filename = secure_filename(photo.filename)
             if filename.count('.') > 1:
                 return redirect(
@@ -126,7 +126,7 @@ def edit_fomentation():
         index = str(form.index.data)
         if form.logo.data and allowedFile(form.logo.data.filename, allowed_extensions):
             photo = form.logo.data
-            path = os.path.normpath("static/assets")
+            path = os.path.normpath("static/assets/fomentation")
             filename = secure_filename(photo.filename)
             if filename.count('.') > 1:
                 return redirect(
@@ -137,12 +137,12 @@ def edit_fomentation():
                 )
             name, extension = filename.split('.')
             logoFile = 'logo-' + form.initials.data.lower() + '.' + extension
-            uploadFiles(photo, path, logoFile)
+            logo = uploadFiles(photo, path, logoFile)
             new_fomentation = {
                 'name': form.name.data,
                 'initials': form.initials.data.upper(),
                 'description': form.description.data,
-                'logoFile': logoFile
+                'logoFile': logo
             }
 
             dao.find_one_and_update(None, {
