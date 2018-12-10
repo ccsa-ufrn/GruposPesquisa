@@ -28,7 +28,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 {% if std.research_group %}
-                <a href="/{{ std.research_group.name }}" class="navbar-brand">{{ std.research_group.name | replace("+", " ") }}</a>
+                <a href="/{{ std.research_group.name }}" style="font-size: 1em;" class="navbar-brand">{{ std.research_group.name | replace("+", " ") }}</a>
                 {% else %}
                 <a href="/" class="navbar-brand">Grupos de Pesquisa</a>
                 {% endif %}
@@ -135,7 +135,7 @@
         <hr/>
     </div>
 
-    <footer>
+    <div class="footer">
         <div class="container">
             <a href="http://www.sistemas.ufrn.br/acessoainformacao/" target="_blank">
                 <img class="pull-right" src="/static/assets/icon-acessoainformacao.png"/>
@@ -156,7 +156,7 @@
             <p><strong>&copy; 2017 - Projeto Plataforma de Pós-Graduação (Centro de Ciências Sociais Aplicadas, Universidade Federal do Rio Grande do Norte)</strong></p>
             <p><a href="https://github.com/ccsa-ufrn/PosGraduacao" target="_blank">Código livre</a>, licenciado em GPL3.</p>
         </div>
-    </footer>
+    </div>
 
     <script src="/static/jquery3/jquery-3.1.1.min.js"></script>
     <script src="/static/bootstrap3/js/bootstrap.js"></script>

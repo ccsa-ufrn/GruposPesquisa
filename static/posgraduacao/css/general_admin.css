@@ -148,6 +148,7 @@ ul li a {
 
 .content {
     margin-left: -5px;
+    flex: 1 0 auto;
 }
 
 @media (max-width: 768px) {

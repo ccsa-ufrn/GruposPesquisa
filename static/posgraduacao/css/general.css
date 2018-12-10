@@ -11,6 +11,7 @@ body {
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 20px;
+    padding-top: 3%;
 }
 
 .darker-container{
@@ -106,7 +107,7 @@ section header h2{
 /* FOOTER
 -------------------------------------------------- */
 
-footer{
+.footer{
     background-color: #D2382A;
     /* Set padding to keep content footer from hitting the edges */
     padding-left: 15px;
@@ -115,14 +116,14 @@ footer{
     padding-bottom: 20px;
 }
 
-footer p,
-footer li,
-footer li a{
+.footer p,
+.footer li,
+.footer li a{
     color: #fff;
 }
 
-footer a,
-footer a:hover,
-footer a:visited{
+.footer a,
+.footer a:hover,
+.footer a:visited{
     color: #bdc3c7;
 }
