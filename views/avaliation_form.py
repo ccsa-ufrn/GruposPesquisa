@@ -15,6 +15,8 @@ from models.factory import ResearchGroupFactory
 
 from settings.extensions import ExtensionsManager
 
+from datetime import datetime
+
 
 from bson.json_util import dumps, loads
 from bson.objectid import ObjectId
@@ -43,6 +45,7 @@ def submit_avaliation_form():
 def submit_avaliation_form_final():
     formResult = request.get_json()
     formResult['success'] = 'true' 
+    formResult['lastModification'] = datetime.datetime.now() 
     pfactory = ResearchGroupFactory(formResult['groupAccount'])
     if '_id' not in formResult:
         formResult['_id'] = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
