@@ -5,7 +5,7 @@ of directly call their own constructor.
 A factory of Data Access Objects.
 """
 
-from models.dao import GenericMongoDAO
+from models.dao import GenericMongoDAO, ProfessorsSigaaDAO
 import sys
 
 # constants for collection names in mongodb
@@ -92,3 +92,6 @@ class ResearchGroupFactory(object):
     def projects_database_dao(self):
         """ Gets an instance of a data access object for a certain collection """
         return GenericMongoDAO(_COLLECTION_OF_PROJECTS, self.mongo_id)
+    def professors_dao(self):
+        """ Gets an instance of a data access object for a certain collection """
+        return ProfessorsSigaaDAO()

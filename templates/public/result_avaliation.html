@@ -13,3 +13,9 @@
 {% endfor %}
 
 {% endblock %}
+
+{% block scripts %}
+   <script type="text/javascript">
+       console.log({{ avaliations|tojson|safe }});
+    </script>
+{% endblock %}

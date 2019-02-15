@@ -367,7 +367,7 @@ def get_list():
             calculated_avaliation = calculate_points(avaliation, 'formYear')
             avaliations.append(calculated_avaliation)
     return render_template(
-        'public/index.html',
+        'public/result_avaliation.html',
         avaliations=avaliations,
         std=get_std_for_template(None),
     )

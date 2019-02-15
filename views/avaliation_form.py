@@ -27,15 +27,20 @@ avaliation_form = Blueprint('avaliation_form', __name__, url_prefix='/admin')
 @ExtensionsManager.csrf.exempt
 @login_required
 def submit_avaliation_form():
+    pfactory = ResearchGroupFactory(current_user.group_name)
+    professors = pfactory.professors_dao().find()
+    professors = list(professors)
     form_type = request.args.get('form_type')
     if form_type == 'formYear':
         return render_template(
         'admin/avaliation_form.html',
+        professors = professors,
         new=request.args.get('new'),
         )
     else:
         return render_template(
         'admin/avaliation_form_four_years.html',
+        professors = professors,
         new=request.args.get('new'),
         )
 
@@ -45,7 +50,7 @@ def submit_avaliation_form():
 def submit_avaliation_form_final():
     formResult = request.get_json()
     formResult['success'] = 'true' 
-    formResult['lastModification'] = datetime.datetime.now() 
+    formResult['lastModification'] = datetime.now() 
     pfactory = ResearchGroupFactory(formResult['groupAccount'])
     if '_id' not in formResult:
         formResult['_id'] = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
@@ -84,6 +89,18 @@ def get_information():
         return jsonify(forms)
     else:
         return jsonify({'not_found': 'not_found'})
+
+@avaliation_form.route('/lista_professores/', methods=['POST'])
+@ExtensionsManager.csrf.exempt
+@cross_origin()
+def get_professors():
+    group = request.get_json()
+    pfactory = ResearchGroupFactory(group['groupAccount'])
+    professors = pfactory.professors_dao().find()
+    professors = list(professors)
+    professors = dumps(professors)
+    print(professors, file=sys.stderr)
+    return jsonify(professors)
 
 @avaliation_form.route('/listar_formularios/', methods=['GET', 'POST'])
 @ExtensionsManager.csrf.exempt

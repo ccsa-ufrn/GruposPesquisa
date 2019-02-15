@@ -7,6 +7,7 @@ from threading import Thread
 import sys
 
 from models.clients.mongo import DB
+from models.clients import api_sistemas
 
 class AbstractDAO(object):
 
@@ -141,3 +142,43 @@ class GenericMongoDAO(AbstractDAO):
         but can no longer be retrieved using regular CRUD methods.
         """
         raise NotImplementedError("Need to implement update function for logical deleting it.")
+
+class ProfessorsSigaaDAO(AbstractDAO):
+
+    def __init__(self):
+        self.ENDPOINT = api_sistemas.API_URL_ROOT
+        self.ENDPOINT += '/unidade/v1/unidades?sigla=CCSA&limit=40&id-nivel-organizacional=1&id-nivel-organizacional=2&id-nivel-organizacional=3&id-nivel-organizacional=4'
+        self._professors = []
+        self._bearer_token = None
+
+    def find_all(self):
+        raise NotImplementedError("Not implemented method inherited from an abstract class.")
+
+    def find_one(self, conditions):
+        raise NotImplementedError("Not implemented method inherited from an abstract class.")
+
+    def find(self, conditions: dict = {}):
+        bearer_token = api_sistemas.retrieve_token()
+        units = api_sistemas.get_public_data(self.ENDPOINT, bearer_token)
+        list_of_professors = []
+        for unit in units:
+            list_of_professors.extend(self.get_professor(unit['id-unidade'], bearer_token))
+        return list_of_professors
+
+    def get_professor(self, id_unit: str, bearer_token: str):
+        url = api_sistemas.API_URL_ROOT
+        url += '/docente/v1/docentes?id-unidade={id_unit}'
+        url = url.format(id_unit=id_unit)
+        return api_sistemas.get_public_data(url, bearer_token)
+
+    def insert_one(self, document: dict):
+        raise NotImplementedError("Data from SIGAA are read-only.")
+
+    def insert_many(self, document: list):
+        raise NotImplementedError("Data from SIGAA are read-only.")
+
+    def update(self, document: dict):
+        raise NotImplementedError("Data from SIGAA are read-only.")
+
+    def delete(self, document: dict):
+        raise NotImplementedError("Data from SIGAA are read-only.")
