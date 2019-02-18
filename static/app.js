@@ -1184,7 +1184,7 @@ class Application extends React.Component {
             body: data
         };
         var self = this;
-        fetch("http://localhost:3002/admin/formulario_avaliacao_final/", config)
+        fetch("https://gruposdepesquisa.ccsa.ufrn.br/admin/formulario_avaliacao_final/", config)
             .then(function(res) {
                 return res.json();
             })
@@ -1218,7 +1218,7 @@ class Application extends React.Component {
             body: data
         };
         var self = this;
-        fetch("http://localhost:3002/admin/informacoes_formulario/", config)
+        fetch("https://gruposdepesquisa.ccsa.ufrn.br/admin/informacoes_formulario/", config)
             .then(function(res) {
                 return res.json();
             })
@@ -1241,7 +1241,7 @@ class Application extends React.Component {
             method: 'GET',
         };
         var self = this;
-        fetch(`http://localhost:3002/admin/lista_professores/`, config)
+        fetch(`https://gruposdepesquisa.ccsa.ufrn.br/admin/lista_professores/`, config)
             .then(function(res) {
                 return res.json();
             })
