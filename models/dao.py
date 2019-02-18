@@ -7,6 +7,7 @@ from threading import Thread
 import sys
 
 from models.clients.mongo import DB
+from models.clients import api_sistemas
 
 class AbstractDAO(object):
 
@@ -141,3 +142,49 @@ class GenericMongoDAO(AbstractDAO):
         but can no longer be retrieved using regular CRUD methods.
         """
         raise NotImplementedError("Need to implement update function for logical deleting it.")
+
+class ProfessorsSigaaDAO(AbstractDAO):
+
+    def __init__(self):
+        self.ENDPOINT = api_sistemas.API_URL_ROOT
+        self._professors = []
+        self._bearer_token = None
+
+    def find_all(self):
+        raise NotImplementedError("Not implemented method inherited from an abstract class.")
+
+    def find_one(self, conditions):
+        raise NotImplementedError("Not implemented method inherited from an abstract class.")
+
+    def find(self, conditions: dict = {}):
+        bearer_token = api_sistemas.retrieve_token()
+        units = ['63','11612', '161', '163', '79', '84', '160', '162', '5393', '9750']
+        list_of_professors = []
+        for unit in units:
+            list_of_professors.extend(self.get_professor(unit, bearer_token))
+        return list_of_professors
+
+    def get_professor(self, id_unit: str, bearer_token: str):
+        url = api_sistemas.API_URL_ROOT
+        url += '/docente/v1/docentes?id-unidade={id_unit}&limit=100&id-ativo=1'
+        url = url.format(id_unit=id_unit)
+        results = api_sistemas.get_public_data(url, bearer_token)
+        print(len(results), file=sys.stderr)
+        list_without_duplicates = []
+        for result in results:
+            if not any(professor.get('cpf', None) == result['cpf'] for professor in list_without_duplicates):
+                list_without_duplicates.append(result)
+        print(len(list_without_duplicates), file=sys.stderr)
+        return list_without_duplicates
+
+    def insert_one(self, document: dict):
+        raise NotImplementedError("Data from SIGAA are read-only.")
+
+    def insert_many(self, document: list):
+        raise NotImplementedError("Data from SIGAA are read-only.")
+
+    def update(self, document: dict):
+        raise NotImplementedError("Data from SIGAA are read-only.")
+
+    def delete(self, document: dict):
+        raise NotImplementedError("Data from SIGAA are read-only.")

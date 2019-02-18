@@ -1,5 +1,6 @@
 var app = document.getElementById('app');
 
+
 class DadosBase extends React.Component {
     render() {
         return(
@@ -50,19 +51,135 @@ class DadosBase extends React.Component {
     }
 }
 
+class Autocomplete extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            activeSuggestion: 0,
+            filteredSuggestions: [],
+            showSuggestions: false,
+            userInput: ""
+        }
+        this.onChange = this.onChange.bind(this);
+        this.onClick = this.onClick.bind(this);
+        this.sendProfessor = this.sendProfessor.bind(this);
+    } 
+
+    onChange(e) {
+        const suggestions = this.props.suggestions;
+        const userInput = e.currentTarget.value;
+
+        // Filter our suggestions that don't contain the user's input
+        const filteredSuggestions = suggestions.filter(
+        suggestion =>
+            suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+        );
+
+        // Update the user input and filtered suggestions, reset the active
+        // suggestion and make sure the suggestions are shown
+        this.setState({
+            activeSuggestion: 0,
+            filteredSuggestions,
+            showSuggestions: true,
+            userInput: e.currentTarget.value
+        });
+    };
+
+    sendProfessor(event) {
+        if(this.props.suggestions.filter(el => el === this.state.userInput).length > 0){
+            this.props.addProfessor(this.state.userInput, true, this.props.phd);
+            this.setState({
+                activeSuggestion: 0,
+                filteredSuggestions: [],
+                showSuggestions: false,
+                userInput: "" 
+            });
+        }
+    }
+
+    onClick(e) {
+        this.setState({
+            activeSuggestion: 0,
+            filteredSuggestions: [],
+            showSuggestions: false,
+            userInput: e.currentTarget.innerText
+        });
+    }
+
+    render() {
+        const {
+            onChange,
+            onClick,
+            onKeyDown,
+            state: {
+              activeSuggestion,
+              filteredSuggestions,
+              showSuggestions,
+              userInput
+            }
+          } = this;
+          let suggestionsListComponent;
+
+          if (showSuggestions && userInput) {
+            if (filteredSuggestions.length) {
+              suggestionsListComponent = (
+                <ul class="suggestions">
+                  {filteredSuggestions.map((suggestion, index) => {
+                    let className;
+      
+                    return (
+                      <li
+                        className={className}
+                        key={suggestion}
+                        onClick={onClick}
+                      >
+                        {suggestion}
+                      </li>
+                    );
+                  })}
+                </ul>
+              );
+            } else {
+              suggestionsListComponent = (
+                <div class="no-suggestions">
+                  <em>Nenhum professor com esse nome foi encontrado</em>
+                </div>
+              );
+            }
+          }
+      
+          return (
+            <div>
+            <React.Fragment>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Procure o professor na lista"
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                value={userInput}
+              />
+              {suggestionsListComponent}
+            </React.Fragment>
+            <button className="btn-primary btn-block" onClick={this.sendProfessor} >Adicionar professor</button>
+            </div>
+          );
+        }
+}
+
 class CadastroProfessores extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             curr_professor: {
                 name: '',
-                ccsa: 0,
-                master_phd: 0
-            }
+                ccsa: false,
+                master_phd: false 
+            },
         }
 
         this.changeProfessorName = this.changeProfessorName.bind(this);
-        this.changeProfessorCCSA = this.changeProfessorCCSA.bind(this);
         this.changeProfessorMasterPHD = this.changeProfessorMasterPHD.bind(this);
         this.sendProfessor = this.sendProfessor.bind(this);
     }
@@ -71,15 +188,6 @@ class CadastroProfessores extends React.Component {
         this.setState({curr_professor : {
                name : event.nativeEvent.target.value,
                ccsa: this.state.curr_professor.ccsa,
-               master_phd: this.state.curr_professor.master_phd
-            }
-        });
-    }
-
-    changeProfessorCCSA(event) {
-        this.setState({curr_professor : {
-               name : this.state.curr_professor.name,
-               ccsa: !(this.state.curr_professor.ccsa),
                master_phd: this.state.curr_professor.master_phd
             }
         });
@@ -94,14 +202,13 @@ class CadastroProfessores extends React.Component {
         });
     }
     sendProfessor(event) {
-        this.props.addProfessor(this.state.curr_professor.name, this.state.curr_professor.ccsa, this.state.curr_professor.master_phd);
+        this.props.addProfessor(this.state.curr_professor.name, false, this.state.curr_professor.master_phd);
         document.getElementById('nomeDoProfessor').value = '';
-        document.getElementById('professorCCSA').checked = false;
         document.getElementById('professorQualificacao').checked = false;
         this.setState({curr_professor: {
                 name: '',
-                ccsa: 0,
-                master_phd: 0,
+                ccsa: false,
+                master_phd: false,
             }
         });
     }
@@ -113,24 +220,19 @@ class CadastroProfessores extends React.Component {
                 <p>Por favor, cadastre os professores relacionados à base de pesquisas para avaliação</p>
 
                 <div className="row">
-                    <div className="col-md-7">
+                    <div className="col-md-10">
                         <div className="row">
-                            <div className="col-8">
+                            <div className="col-md-10">
+                                <Autocomplete addProfessor={this.props.addProfessor} suggestions={this.props.professorsList} phd={this.state.curr_professor.master_phd} />
+                                <br/>
                                 <input type="text" id="nomeDoProfessor" className="form-control" onChange={this.changeProfessorName} placeholder="Nome do professor"/>
-                                <div className="form-check">
-                                <br></br>
-                                <p>O professor faz parte do CCSA?</p>
-                                <input type="checkbox" name="ccsa" value="1" id="professorCCSA" onChange={this.changeProfessorCCSA}/>
-                                <label className="form-check-label" htmlFor="professorCCSA">Sim</label>
-                                </div>
+                                <button className="btn-primary btn-block" onClick={this.sendProfessor} >Adicionar professor</button>
+                                <br/>
                                 <div className="form-check">
                                 <p>O professor possui titúlo de mestre ou doutor?</p>
                                 <input type="checkbox" name="master_phd" value="1" id="professorQualificacao" onChange={this.changeProfessorMasterPHD}/>
                                 <label className="form-check-label" htmlFor="professorQualificacao">Sim</label>
                                 </div>
-                            </div>
-                            <div className="col-4">
-                                <button className="btn" onClick={this.sendProfessor} >Adicionar professor</button>
                             </div>
                         </div><br/>
                         <TabelaProfessores professors={this.props.professors} removeProfessor={this.props.removeProfessor}/>
@@ -159,7 +261,13 @@ class TabelaProfessores extends React.Component {
                             this.props.professors.map(function(prof) {
                                 return(
                                     <tr key={prof.id}>
-                                        <td>{prof.name} <button onClick={this.props.removeProfessor.bind(null, prof.id)}>remover</button></td>
+                                        <td>{prof.name} { 
+                                            prof.master_phd === true ? <span className="btn btn-success">Possui PHD</span> 
+                                            : <span className="btn btn-danger">Não possui PHD</span>  } 
+                                            {
+                                            prof.ccsa === true ? <span className="btn btn-success">Filiado ao CCSA</span> 
+                                            : <span className="btn btn-danger">Não filiado ao CCSA</span>  } 
+                                            <button onClick={() => this.props.removeProfessor(prof.id)}>remover</button></td>
                                     </tr>
                                 );
                             }, this)
@@ -806,7 +914,8 @@ class Application extends React.Component {
             numPosGrad: 0,
             goals: '',
             id_counter: 0,
-            professors: []
+            professors: [],
+            professorsList: []
         };
 
         this.changeName = this.changeName.bind(this);
@@ -828,7 +937,8 @@ class Application extends React.Component {
     componentWillMount() {
         if (!(window.location.href.includes("new=new"))) {
             this.getInformation();
-        }     
+        }
+        this.getProfessors();
     }
 
     changeName(event) {
@@ -934,7 +1044,7 @@ class Application extends React.Component {
     getCriterionInsertions(profId, criterionIdx, type) {
         for (var i = 0; i < this.state.professors.length; i++) {
             if (this.state.professors[i].id == profId) {
-                var types = this.state.professors[profId].criterions[criterionIdx];
+                var types = this.state.professors.filter(prof => prof.id === profId)[0].criterions[criterionIdx];
                 for (var j = 0; j < types.length; j++) {
                     if (types[j].type == type) return types[j].insertions;
                 }
@@ -1074,7 +1184,7 @@ class Application extends React.Component {
             body: data
         };
         var self = this;
-        fetch("https://gruposdepesquisa.ccsa.ufrn.br/admin/formulario_avaliacao_final/", config)
+        fetch("http://localhost:3002/admin/formulario_avaliacao_final/", config)
             .then(function(res) {
                 return res.json();
             })
@@ -1108,13 +1218,36 @@ class Application extends React.Component {
             body: data
         };
         var self = this;
-        fetch("https://gruposdepesquisa.ccsa.ufrn.br/admin/informacoes_formulario/", config)
+        fetch("http://localhost:3002/admin/informacoes_formulario/", config)
             .then(function(res) {
                 return res.json();
             })
             .then(function(json){
                 const finalJson = JSON.parse(json);
                 self.setState(finalJson);
+            })
+            .catch(function(e) {
+                console.error(e);
+            });
+    }
+
+    getProfessors() {
+        const config = {
+            mode: 'cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            method: 'GET',
+        };
+        var self = this;
+        fetch(`http://localhost:3002/admin/lista_professores/`, config)
+            .then(function(res) {
+                return res.json();
+            })
+            .then(function(json){
+                const finalJson = JSON.parse(json);
+                self.setState({ professorsList : finalJson.map(prof => prof.nome) });
             })
             .catch(function(e) {
                 console.error(e);
@@ -1137,7 +1270,8 @@ class Application extends React.Component {
                                             previousStep={this.previousStep}
                                             addProfessor={this.addProfessor}
                                             removeProfessor={this.removeProfessor}
-                                            professors={this.state.professors} />
+                                            professors={this.state.professors} 
+                                            professorsList={this.state.professorsList} />
             case 3:
                 return <Avaliacao previousStep={this.previousStep}
                                   professors={this.state.professors}
