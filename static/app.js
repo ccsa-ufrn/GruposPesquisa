@@ -88,7 +88,7 @@ class Autocomplete extends React.Component {
 
     sendProfessor(event) {
         if(this.props.suggestions.filter(el => el === this.state.userInput).length > 0){
-            this.props.addProfessor(this.state.userInput, 1, this.props.phd);
+            this.props.addProfessor(this.state.userInput, true, this.props.phd);
             this.setState({
                 activeSuggestion: 0,
                 filteredSuggestions: [],
@@ -143,7 +143,7 @@ class Autocomplete extends React.Component {
             } else {
               suggestionsListComponent = (
                 <div class="no-suggestions">
-                  <em>No suggestions, you're on your own!</em>
+                  <em>Nenhum professor com esse nome foi encontrado</em>
                 </div>
               );
             }
@@ -155,13 +155,14 @@ class Autocomplete extends React.Component {
               <input
                 type="text"
                 className="form-control"
+                placeholder="Procure o professor na lista"
                 onChange={onChange}
                 onKeyDown={onKeyDown}
                 value={userInput}
               />
               {suggestionsListComponent}
             </React.Fragment>
-            <button className="btn" onClick={this.sendProfessor} >Adicionar professor</button>
+            <button className="btn-primary btn-block" onClick={this.sendProfessor} >Adicionar professor</button>
             </div>
           );
         }
@@ -173,8 +174,8 @@ class CadastroProfessores extends React.Component {
         this.state = {
             curr_professor: {
                 name: '',
-                ccsa: 0,
-                master_phd: 0
+                ccsa: false,
+                master_phd: false 
             },
         }
 
@@ -201,13 +202,13 @@ class CadastroProfessores extends React.Component {
         });
     }
     sendProfessor(event) {
-        this.props.addProfessor(this.state.curr_professor.name, 0, this.state.curr_professor.master_phd);
+        this.props.addProfessor(this.state.curr_professor.name, false, this.state.curr_professor.master_phd);
         document.getElementById('nomeDoProfessor').value = '';
         document.getElementById('professorQualificacao').checked = false;
         this.setState({curr_professor: {
                 name: '',
-                ccsa: 0,
-                master_phd: 0,
+                ccsa: false,
+                master_phd: false,
             }
         });
     }
@@ -219,14 +220,14 @@ class CadastroProfessores extends React.Component {
                 <p>Por favor, cadastre os professores relacionados à base de pesquisas para avaliação</p>
 
                 <div className="row">
-                    <div className="col-md-7">
+                    <div className="col-md-10">
                         <div className="row">
-                            <div className="col-8">
-                                <Autocomplete addProfessor={this.props.addProfessor} suggestions={['Alligador', 'Bask', 'Crocodilian', 'Death Roll', 'Eggs', 'Jaws']} phd={this.state.curr_professor.master_phd} />
+                            <div className="col-md-10">
+                                <Autocomplete addProfessor={this.props.addProfessor} suggestions={this.props.professorsList} phd={this.state.curr_professor.master_phd} />
+                                <br/>
                                 <input type="text" id="nomeDoProfessor" className="form-control" onChange={this.changeProfessorName} placeholder="Nome do professor"/>
-                                <div className="col-4">
-                                    <button className="btn" onClick={this.sendProfessor} >Adicionar professor</button>
-                                </div>
+                                <button className="btn-primary btn-block" onClick={this.sendProfessor} >Adicionar professor</button>
+                                <br/>
                                 <div className="form-check">
                                 <p>O professor possui titúlo de mestre ou doutor?</p>
                                 <input type="checkbox" name="master_phd" value="1" id="professorQualificacao" onChange={this.changeProfessorMasterPHD}/>
@@ -260,7 +261,13 @@ class TabelaProfessores extends React.Component {
                             this.props.professors.map(function(prof) {
                                 return(
                                     <tr key={prof.id}>
-                                        <td>{prof.name} <button onClick={this.props.removeProfessor.bind(null, prof.id)}>remover</button></td>
+                                        <td>{prof.name} { 
+                                            prof.master_phd === true ? <span className="btn btn-success">Possui PHD</span> 
+                                            : <span className="btn btn-danger">Não possui PHD</span>  } 
+                                            {
+                                            prof.ccsa === true ? <span className="btn btn-success">Filiado ao CCSA</span> 
+                                            : <span className="btn btn-danger">Não filiado ao CCSA</span>  } 
+                                            <button onClick={() => this.props.removeProfessor(prof.id)}>remover</button></td>
                                     </tr>
                                 );
                             }, this)
@@ -907,7 +914,8 @@ class Application extends React.Component {
             numPosGrad: 0,
             goals: '',
             id_counter: 0,
-            professors: []
+            professors: [],
+            professorsList: []
         };
 
         this.changeName = this.changeName.bind(this);
@@ -930,6 +938,7 @@ class Application extends React.Component {
         if (!(window.location.href.includes("new=new"))) {
             this.getInformation();
         }
+        this.getProfessors();
     }
 
     changeName(event) {
@@ -1035,7 +1044,7 @@ class Application extends React.Component {
     getCriterionInsertions(profId, criterionIdx, type) {
         for (var i = 0; i < this.state.professors.length; i++) {
             if (this.state.professors[i].id == profId) {
-                var types = this.state.professors[profId].criterions[criterionIdx];
+                var types = this.state.professors.filter(prof => prof.id === profId)[0].criterions[criterionIdx];
                 for (var j = 0; j < types.length; j++) {
                     if (types[j].type == type) return types[j].insertions;
                 }
@@ -1223,17 +1232,13 @@ class Application extends React.Component {
     }
 
     getProfessors() {
-        var parsedUrl = new URL(window.location.href);
-        const result = {'groupAccount': this.state.groupAccount } 
-        const data = JSON.stringify(result);
         const config = {
             mode: 'cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            method: 'POST',
-            body: data
+            method: 'GET',
         };
         var self = this;
         fetch(`http://localhost:3002/admin/lista_professores/`, config)
@@ -1242,7 +1247,7 @@ class Application extends React.Component {
             })
             .then(function(json){
                 const finalJson = JSON.parse(json);
-                self.setState({ professors : finalJson });
+                self.setState({ professorsList : finalJson.map(prof => prof.nome) });
             })
             .catch(function(e) {
                 console.error(e);
@@ -1265,7 +1270,8 @@ class Application extends React.Component {
                                             previousStep={this.previousStep}
                                             addProfessor={this.addProfessor}
                                             removeProfessor={this.removeProfessor}
-                                            professors={this.state.professors} />
+                                            professors={this.state.professors} 
+                                            professorsList={this.state.professorsList} />
             case 3:
                 return <Avaliacao previousStep={this.previousStep}
                                   professors={this.state.professors}

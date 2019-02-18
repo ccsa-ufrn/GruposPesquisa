@@ -28,21 +28,35 @@ avaliation_form = Blueprint('avaliation_form', __name__, url_prefix='/admin')
 @login_required
 def submit_avaliation_form():
     pfactory = ResearchGroupFactory(current_user.group_name)
-    professors = pfactory.professors_dao().find()
-    professors = list(professors)
     form_type = request.args.get('form_type')
     if form_type == 'formYear':
         return render_template(
         'admin/avaliation_form.html',
-        professors = professors,
         new=request.args.get('new'),
         )
     else:
         return render_template(
         'admin/avaliation_form_four_years.html',
-        professors = professors,
         new=request.args.get('new'),
         )
+
+@avaliation_form.route('/add_professores/', methods=['GET', 'POST'])
+@login_required
+def add_professors():
+    """Render a view for adding professors."""
+
+
+    pfactory = ResearchGroupFactory()
+    result = pfactory.get_professors_ccsa_dao()
+    dao = pfactory.professors_ccsa_dao()
+    result = pfactory.get_professors_ccsa_dao().find()
+    if result:
+        for professor in result:
+            dao.insert_one(None, professor)
+    final_result = dao.find({'id-ativo': 1})
+    final_result = list(final_result)
+    final_result = dumps(final_result)
+    return jsonify(final_result)
 
 @avaliation_form.route('/formulario_avaliacao_final/', methods=['POST'])
 @ExtensionsManager.csrf.exempt
@@ -90,17 +104,16 @@ def get_information():
     else:
         return jsonify({'not_found': 'not_found'})
 
-@avaliation_form.route('/lista_professores/', methods=['POST'])
+@avaliation_form.route('/lista_professores/', methods=['GET'])
 @ExtensionsManager.csrf.exempt
 @cross_origin()
 def get_professors():
-    group = request.get_json()
-    pfactory = ResearchGroupFactory(group['groupAccount'])
-    professors = pfactory.professors_dao().find()
-    professors = list(professors)
-    professors = dumps(professors)
-    print(professors, file=sys.stderr)
-    return jsonify(professors)
+    pfactory = ResearchGroupFactory()
+    dao = pfactory.professors_ccsa_dao()
+    final_result = dao.find()
+    final_result = list(final_result)
+    final_result = dumps(final_result)
+    return jsonify(final_result)
 
 @avaliation_form.route('/listar_formularios/', methods=['GET', 'POST'])
 @ExtensionsManager.csrf.exempt
