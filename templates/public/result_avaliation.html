@@ -1,4 +1,7 @@
 {% extends "public/layout.html" %}
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+{% endblock %}
 
 {% block content %}
 
@@ -6,16 +9,59 @@
     <h1 class="text-center">Grupos de Pesquisa</h1>
 </div>
 </br>
-{% for registered in std.research_group_registered.rewind() | sort(attribute="name") %}
-<div class="col-md-12" style="margin-top: 10px">
-    <button onclick="window.location.href='/{{ registered.name }}'" style="height: 10%; width: 100%" type="button" class="btn btn-success"><span style="font-size: 2vw;">{{ registered.name | replace("+"," ") }}</span></button> 
+<div class="container"> 
+    <div style="margin-top: 20px"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                            <h4>Dados(Mostrando apenas professores com vínculo ao CCSA)</h4>
+                    </div>
+            </div>
+            {% for avaliation in avaliations %}
+            <table style="width: 100%" class="{{ avaliation._id }} pure-table pure-table-bordered">
+                <thead>
+                    <th>Nome</th>
+                    <th>Coordenador</th>
+                    <th>Pontos</th>
+                </thead>
+                <tr class="{{ avaliation._id }}">
+                    <td>{{ avaliation.group_name }}</td>
+                    <td>{{ avaliation.coordinator }}</td>
+                    <td>{{ avaliation.points }}</td>
+                </tr>
+                <td colspan="5" class="{{ avaliation._id }}">
+                    <table style="width: 100%" class="pure-table pure-table-bordered">
+                        <thead>
+                            <th>Nome</th>
+                            <th>Crit 1</th>
+                            <th>Crit 2</th>
+                            <th>Crit 3</th>
+                            <th>Crit 4</th>
+                            <th>Crit 5</th>
+                            <th>Crit 6</th>
+                            <th>Crit 7</th>
+                            <th>Total</th>
+                        </thead>
+                        {% for professor in avaliation.professors %}
+                            {% if professor.ccsa %}
+                            <tr>
+                                <td>{{ professor.name }}</td>
+                                {% for point in professor.points%}
+                                    {% if loop.index > 1 %}
+                                    <td>{{ point }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+            </table>
+            <br/>
+            {% endfor %}
+        </div>
+    </div>
 </div>
-{% endfor %}
 
-{% endblock %}
-
-{% block scripts %}
-   <script type="text/javascript">
-       console.log({{ avaliations|tojson|safe }});
-    </script>
 {% endblock %}

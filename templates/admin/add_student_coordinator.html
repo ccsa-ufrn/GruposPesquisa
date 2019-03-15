@@ -8,8 +8,6 @@ $(document).ready(function() {
     var students = JSON.parse(students);
     var courses = {{ courses|tojson|safe }};
     var courses = JSON.parse(courses);
-    console.log(courses);
-    console.log(students);
     var listOfStudents = [];
     showStudents(students, courses);
     $("tbody").on("click", ".edit", function(){

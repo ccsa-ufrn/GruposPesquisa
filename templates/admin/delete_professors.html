@@ -13,7 +13,6 @@ $(document).ready(function() {
     $("input[name=create]").val("Deletar");
     var professors = {{ professors|tojson|safe }};
     var professors = JSON.parse(professors);
-    console.log(professors);
     var listOfProfessors = [];
     for( i = 0; i < professors.professors.length; i++){
         if(!(professors.professors[i].hasOwnProperty('deleted'))){

@@ -12,7 +12,6 @@ $(document).ready(function() {
     $("input[name=create]").val("Deletar");
     var integrations = {{ integrations|tojson|safe }};
     var integrations = JSON.parse(integrations);
-    console.log(integrations);
     var listOfFomentation = [];
     for( i = 0; i < integrations.fomentation.length; i++){
         if (!(integrations.fomentation[i].hasOwnProperty('deleted'))){

@@ -13,7 +13,6 @@ $(document).ready(function() {
     $("input[name=create]").val("Editar");
     var events = {{ events|tojson|safe }};
     var events = JSON.parse(events);
-    console.log(events);
     var listOfEvents = [];
     for( i = 0; i < events.events.length; i++){
         if(!(events.events[i].hasOwnProperty('deleted'))){

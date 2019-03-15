@@ -324,7 +324,7 @@ class CriterioUm extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 1.</b> Produção científica dos professores do Grupo de Pesquisa nos últimos quatro anos em eventos locais, regionais, nacionais e internacionais (número de participações em eventos com trabalhos completos em anais de congressos) Fonte: Lattes
+                        <b>Critério 1.</b> Produção científica dos professores do Grupo de Pesquisa no ano referente em eventos locais, regionais, nacionais e internacionais (número de participações em eventos com trabalhos completos em anais de congressos) Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -409,7 +409,7 @@ class CriterioDois extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 2.</b> Produção científica definitiva dos professores do Grupo de Pesquisa no último quadriênio (número de publicações em artigos, livros, capítulos de livros). Fonte: Lattes
+                        <b>Critério 2.</b> Produção científica definitiva dos professores do Grupo de Pesquisa no ano referente (número de publicações em artigos, livros, capítulos de livros). Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -493,7 +493,7 @@ class CriterioTres extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 3.</b> Número de projetos de pesquisa financiados por agências externas à UFRN no último quadriênio. Fonte: Lattes
+                        <b>Critério 3.</b> Número de projetos de pesquisa financiados por agências externas à UFRN no ano referente. Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -568,7 +568,7 @@ class CriterioQuatro extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 4.</b> Número de projetos de pesquisa desenvolvidos internamente pelos participantes do Grupo de Pesquisa, com ou sem financiamento, nos últimos quatro anos, cadastrados no SIGAA. (serão contabilizados o número de projetos por coordenador). Fonte:Lattes
+                        <b>Critério 4.</b> Número de projetos de pesquisa desenvolvidos internamente pelos participantes do Grupo de Pesquisa, com ou sem financiamento, no ano referente, cadastrados no SIGAA. (serão contabilizados o número de projetos por coordenador). Fonte:Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -643,7 +643,7 @@ class CriterioCinco extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 5.</b> Número de professores com bolsas produtividade que participam do Grupo de Pesquisa nos últimos quatro anos. Fonte: Lattes
+                        <b>Critério 5.</b> Número de professores com bolsas produtividade que participam do Grupo de Pesquisa no ano referente. Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -718,7 +718,7 @@ class CriterioSeis extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 6.</b> Participação do Grupo de Pesquisa no Seminário de Pesquisa do CCSA nos últimos quatro anos, (número de atividades). Fonte: Lattes
+                        <b>Critério 6.</b> Participação do Grupo de Pesquisa no Seminário de Pesquisa do CCSA no ano referente, (número de atividades). Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -1184,7 +1184,7 @@ class Application extends React.Component {
             body: data
         };
         var self = this;
-        fetch("https://gruposdepesquisa.ccsa.ufrn.br/admin/formulario_avaliacao_final/", config)
+        fetch("http://localhost:3002/admin/formulario_avaliacao_final/", config)
             .then(function(res) {
                 return res.json();
             })
@@ -1218,7 +1218,7 @@ class Application extends React.Component {
             body: data
         };
         var self = this;
-        fetch("https://gruposdepesquisa.ccsa.ufrn.br/admin/informacoes_formulario/", config)
+        fetch("http://localhost:3002/admin/informacoes_formulario/", config)
             .then(function(res) {
                 return res.json();
             })
@@ -1241,7 +1241,7 @@ class Application extends React.Component {
             method: 'GET',
         };
         var self = this;
-        fetch(`https://gruposdepesquisa.ccsa.ufrn.br/admin/lista_professores/`, config)
+        fetch(`http://localhost:3002/admin/lista_professores/`, config)
             .then(function(res) {
                 return res.json();
             })

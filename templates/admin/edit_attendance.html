@@ -4,9 +4,7 @@
 $(document).ready(function() {
     var attendance = {{ attendance|tojson|safe }};
     var attendance = JSON.parse(attendance);
-    console.log(attendance)
     $("input[name=attendance_id]").val(attendance._id.$oid);
-    console.log($("input[name=attendance_id").val());
     $("input[name=building]").val(attendance.location.building);
     $("input[name=floor]").val(attendance.location.floor);
     $("input[name=room]").val(attendance.location.room);
@@ -16,7 +14,6 @@ $(document).ready(function() {
 
     $("input[name=type1]").val(attendance.phones[0].type);
     $("input[name=phone1]").val(attendance.phones[0].number);
-    console.log($("input[name=phone1").val());
 
     $("input[name=type2]").val(attendance.phones[1].type);
     $("input[name=phone2]").val(attendance.phones[1].number);

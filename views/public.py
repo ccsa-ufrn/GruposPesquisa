@@ -416,39 +416,54 @@ def calculate_points(avaliation, type_of_form):
     else:
         avaliation['points'] = 0
     for professor in avaliation['professors']: 
-        professor['points'] = [0,0,0,0,0,0,0,0]
+        professor['points'] = [0,0,0,0,0,0,0,0,0]
         if professor['ccsa']:
             if professor['master_phd'] and type_of_form == 'formFourYears':
                 professor['points'][0] = 4
+                professor['points'][8] += 4
                 avaliation['points'] += 4
             for crit4 in professor['criterions'][0]:
-                if len(crit4['insertions']) > 0:
-                    professor['points'][1] += 3
-                    avaliation['points'] += 3
+                for insertion in crit4['insertions']:
+                    if(len(insertion) > 0):
+                        professor['points'][1] += 3
+                        professor['points'][8] += 3 
+                        avaliation['points'] += 3
             for crit5 in professor['criterions'][1]:
-                if len(crit5['insertions']) > 0:
-                    professor['points'][2] += 5 
-                    avaliation['points'] += 5 
+                for insertion in crit5['insertions']:
+                    if(len(insertion) > 0):
+                        professor['points'][2] += 5 
+                        professor['points'][8] += 5 
+                        avaliation['points'] += 5 
             for crit6 in professor['criterions'][2]:
-                if len(crit6['insertions']) > 0:
-                    professor['points'][3] += 4 
-                    avaliation['points'] += 4 
+                for insertion in crit6['insertions']:
+                    if(len(insertion) > 0):
+                        professor['points'][3] += 4 
+                        professor['points'][8] += 4 
+                        avaliation['points'] += 4 
             for crit7 in professor['criterions'][3]:
-                if len(crit7['insertions']) > 0:
-                    professor['points'][4] += 3 
-                    avaliation['points'] += 3 
+                for insertion in crit7['insertions']:
+                    if(len(insertion) > 0):
+                        professor['points'][4] += 3 
+                        professor['points'][8] += 3 
+                        avaliation['points'] += 3 
             for crit8 in professor['criterions'][4]:
-                if len(crit8['insertions']) > 0:
-                    professor['points'][5] += 4
-                    avaliation['points'] += 4
+                for insertion in crit8['insertions']:
+                    if(len(insertion) > 0):
+                        professor['points'][5] += 4
+                        professor['points'][8] += 4 
+                        avaliation['points'] += 4
             for crit9 in professor['criterions'][5]:
-                if len(crit9['insertions']) > 0:
-                    professor['points'][6] += 5
-                    avaliation['points'] += 5
+                for insertion in crit9['insertions']:
+                    if(len(insertion) > 0):
+                        professor['points'][6] += 5
+                        professor['points'][8] += 5 
+                        avaliation['points'] += 5
             for crit10 in professor['criterions'][6]:
-                if len(crit10['insertions']) > 0:
-                    professor['points'][7] += 3
-                    avaliation['points'] += 3
+                for insertion in crit10['insertions']:
+                    if(len(insertion) > 0):
+                        professor['points'][7] += 3
+                        professor['points'][8] += 3 
+                        avaliation['points'] += 3
     return avaliation
 
 @app.route('/404')

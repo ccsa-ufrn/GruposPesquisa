@@ -12,7 +12,6 @@ $(document).ready(function() {
     $("input[name=create]").val("Editar");
     var magazines = {{ magazines|tojson|safe }};
     var magazines = JSON.parse(magazines);
-    console.log(magazines);
     var listOfMagazines = [];
     for( i = 0; i < magazines.length; i++){
         if (!(magazines[i].hasOwnProperty('deleted'))){

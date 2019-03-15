@@ -6,7 +6,6 @@
 $(document).ready(function() {
     var projects = {{ projects|tojson|safe }};
     var projects = JSON.parse(projects);
-    console.log(projects);
     var listOfProjects = [];
     for( i = 0; i < projects.length; i++){
         if (!(projects[i].hasOwnProperty('deleted'))){
@@ -59,7 +58,6 @@ function showMembers(projects) {
         for( i = 0; i < (projects[indexInProjects].members).length; i++){
             if(!(projects[indexInProjects].members[i].hasOwnProperty('deleted'))){
             $("tbody").append("<tr>" + "<td>" + projects[indexInProjects].members[i].name + "</td>" + "<td>" + projects[indexInProjects].members[i].general_role + "<td>" + projects[indexInProjects].members[i].project_role +"</td>" + "<td style='display:none'>" + i.toString() + "</td></tr>");
-            console.log('pq n ta prestando');
             }
         };
     }

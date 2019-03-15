@@ -12,7 +12,6 @@ $(document).ready(function() {
     $("input[name=create]").val("Editar");
     var integrations = {{ integrations|tojson|safe }};
     var integrations = JSON.parse(integrations);
-    console.log(integrations);
     var listOfCovenants = [];
     for( i = 0; i < integrations.institutionsWithCovenant.length; i++){
         if (!(integrations.institutionsWithCovenant[i].hasOwnProperty('deleted'))){

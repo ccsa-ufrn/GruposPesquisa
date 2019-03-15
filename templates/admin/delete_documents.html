@@ -12,7 +12,6 @@ $(document).ready(function() {
     $("input[name=create]").val("Deletar");
     var documents = {{ documents|tojson|safe }};
     var documents = JSON.parse(documents);
-    console.log(documents[0]._id.$oid);
     var listOfDocuments = [];
     for( i = 0; i < documents.length; i++){
         if (!(documents[i].hasOwnProperty('deleted'))){

@@ -12,7 +12,6 @@ $(document).ready(function() {
     $("input[name=create]").val("Deletar");
     var publications = {{ publications|tojson|safe }};
     var publications = JSON.parse(publications);
-    console.log(publications)
     var listOfArticles = [];
     for( i = 0; i < publications.articles.length; i++){
         if (!(publications.articles[i].hasOwnProperty('deleted'))){
@@ -40,7 +39,6 @@ $(document).ready(function() {
         $("input[name=number]").val(publications.articles[indexInArticles].number);
         $("input[name=pages]").val(publications.articles[indexInArticles].pages);
         $("input[name=index]").val(indexInArticles);
-        console.log($("input[name=index]").val());
     });
 });
 </script>

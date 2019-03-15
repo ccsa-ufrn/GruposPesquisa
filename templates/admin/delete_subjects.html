@@ -14,7 +14,6 @@ $(document).ready(function() {
     var requirement = ($("#requirements").val());
     var subjects = {{ subjects|tojson|safe }};
     var subjects = JSON.parse(subjects);
-    console.log(subjects);
     var listOfElectives = [];
     var listOfMandatory = [];
     for( i = 0; i < subjects[0].subjects.length; i++){

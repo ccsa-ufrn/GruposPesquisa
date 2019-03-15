@@ -41,7 +41,6 @@ $(document).ready(function() {
         $("#form-edit").css("visibility", "visible");
         $("input[name=name]").val(subjects[indexRequirement].subjects[indexInSubjects].name);
         $("textarea[name=description]").val(subjects[indexRequirement].subjects[indexInSubjects].description);
-        console.log(subjects[indexRequirement].subjects[indexInSubjects].description);
         $("input[name=workload_in_hours]").val(subjects[indexRequirement].subjects[indexInSubjects].workloadInHours);
         $("input[name=credits]").val(subjects[indexRequirement].subjects[indexInSubjects].credits);
         $("select[name=requirement]").val($("#requirements").val());
@@ -50,7 +49,6 @@ $(document).ready(function() {
 
     $("#requirements").change(function(){
         var requirement = $(this).val();
-        console.log(requirement);
         if($(this).val() == "Eletivas"){
             indexRequirement = 1;
             $("#list").html("");
