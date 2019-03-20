@@ -124,10 +124,10 @@ def request_email():
             }
             dao.insert_one(None, new_key)
             mail = Mail(current_app)
-            msg = Message('Teste', 
+            msg = Message('Mudança de senha', 
                     sender='assessoriatecnica@ccsa.ufrn.br',
-                    recipients=['luccasmmg@gmail.com'])
-            msg.body = 'gruposdepesquisa.ccsa.ufrn.br/admin/mudar_password/?key=' + key
+                    recipients=[user_requesting._email])
+            msg.body = 'Por favor, acesse o link https://gruposdepesquisa.ccsa.ufrn.br/admin/mudar_password/?key=' + key + ' para poder solicitar a mudança de senha'
             mail.send(msg)
             return redirect(
                 url_for(
@@ -151,6 +151,7 @@ def change_password():
     """
     Render a form for changing password
     """
+    print('chegou aqui', file=sys.stderr)
     key = request.args.get('key')
     form = ResetPasswordForm(key=key)
     pfactory = ResearchGroupFactory()
