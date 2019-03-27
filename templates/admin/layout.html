@@ -26,7 +26,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/admin/" class="navbar-brand">Painel de Controle</a><span class="navbar-brand" id="groupName"><small>{{ current_user.group_name | replace("+", " ") }}</small></span>
+                <a href="/admin/" class="navbar-brand">Painel de Controle</a><span class="navbar-brand"><small>{{ current_user.group_name | replace("+", " ") }}</small></span>
+                <span style="display: none" id="groupName">{{ current_user.group_name }}</span>
             </div>
 
             <div class="navbar-collapse collapse">                
