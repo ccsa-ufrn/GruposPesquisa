@@ -14,7 +14,8 @@ $(document).ready(function() {
     var staff = {{ staff|tojson|safe }};
     var staff = JSON.parse(staff);
     var listOfCoordination = [];
-    var listOfSecretariat = [];
+    var listOfResearchers = [];
+    var listOfStudents = [];
     for (i = 0; i < staff.coordination.length; i++){
         if(!(staff.coordination[i].hasOwnProperty('deleted'))){
             listOfCoordination.push({
@@ -23,11 +24,19 @@ $(document).ready(function() {
             })
         }
     }
-    for (i = 0; i < staff.secretariat.length; i++){
-        if(!(staff.secretariat[i].hasOwnProperty('deleted'))){
-            listOfSecretariat.push({
+    for (i = 0; i < staff.students.length; i++){
+        if(!(staff.students[i].hasOwnProperty('deleted'))){
+            listOfStudents.push({
                 id: i,
-                text: (staff.secretariat[i].name)
+                text: (staff.students[i].name)
+            })
+        }
+    }
+    for (i = 0; i < staff.researchers.length; i++){
+        if(!(staff.researchers[i].hasOwnProperty('deleted'))){
+            listOfResearchers.push({
+                id: i,
+                text: (staff.researchers[i].name)
             })
         }
     }
@@ -46,41 +55,60 @@ $(document).ready(function() {
             $("textarea[name=abstract]").val(staff.coordination[indexInStaff].abstract);
             $("input[name=rank]").val(staff.coordination[indexInStaff].rank);
             $("input[name=photo]").val(staff.coordination[indexInStaff].photo);
-            $(".col-md-3").css("display", "block");
+            $(".image").css("display", "block");
             $(".img-circle").css("display", "block");
             $(".img-circle").attr("src", staff.coordination[indexInStaff].photo);
             $("select[name=function]").val(functionStaff);
-        } else {
-            $("input[name=name]").val(staff.secretariat[indexInStaff].name);
-            $("input[name=rank]").val(staff.secretariat[indexInStaff].function.rank);
-            $("textarea[name=abstract]").val(staff.secretariat[indexInStaff].function.description);
+        } else if(functionStaff == "students") {
+            $("input[name=name]").val(staff.students[indexInStaff].name);
+            $("input[name=rank]").val(staff.students[indexInStaff].function.rank);
+            $("textarea[name=abstract]").val(staff.students[indexInStaff].function.description);
+            $("input[name=photo]").val("");
+            $(".image").css("display", "none");
+            $(".img-circle").css("display", "none");
+            $(".img-circle").attr("src", staff.coordination[indexInStaff].photo);
+            $("select[name=function]").val(functionStaff);
+        } else if(functionStaff == "researchers") {
+            $("input[name=name]").val(staff.researchers[indexInStaff].name);
+            $("input[name=rank]").val(staff.researchers[indexInStaff].function.rank);
+            $("textarea[name=abstract]").val(staff.researchers[indexInStaff].function.description);
+            $(".image").css("display", "none");
+            $(".img-circle").css("display", "none");
             $("input[name=photo]").val("");
             $("select[name=function]").val(functionStaff);
         }
-
     });
 
     $("#functionStaff").change(function(){
         functionStaff = $(this).val();
-        if($(this).val() == 'secretariat'){
+        if($(this).val() == 'students'){
             $("input[name=photo]").css('visibility','hidden');
             $("label[for='photo']").css('visibility','hidden');
-            $(".col-md-3").css("display", "none");
+            $(".image").css("display", "none");
             $(".img-circle").css("display", "none");
-            $(".img-circle").attr("src", "")
             $("#list").html("");
             $("#list").select2({
-                data: listOfSecretariat
+                data: listOfStudents
             });
         }
         if($(this).val() == 'coordination'){
             $("input[name=photo]").css('visibility','visible');
             $("label[for='photo']").css('visibility','visible');
-            $(".col-md-3").css("display", "block");
+            $(".image").css("display", "block");
             $(".img-circle").css("display", "block");
             $("#list").html("");
             $("#list").select2({
                 data: listOfCoordination
+            });
+        }
+        if($(this).val() == 'researchers'){
+            $("input[name=photo]").css('visibility','hidden');
+            $("label[for='photo']").css('visibility','hidden');
+            $(".image").css("display", "none");
+            $(".img-circle").css("display", "none");
+            $("#list").html("");
+            $("#list").select2({
+                data: listOfResearchers
             });
         }
     });
@@ -101,7 +129,8 @@ $(document).ready(function() {
 </br>
 <select id="functionStaff" type="select" class="btn btn-default">
     <option value="coordination" selected="selected">Coordenação</option>
-    <option value="secretariat">Secretária</option>
+    <option value="researchers">Pesquisadores</option>
+    <option value="students">Estudantes</option>
 </select>
 <button id="edit"type="button" class="btn btn-default">Selecionar</button>
 </div>
