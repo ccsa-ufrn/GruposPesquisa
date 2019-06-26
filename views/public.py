@@ -372,6 +372,28 @@ def get_list():
         std=get_std_for_template(None),
     )
 
+@app.route('/um_formulario_anual/', methods=['GET'])
+def get_avaliation():
+    avaliations = []
+    pfactory = ResearchGroupFactory(request.args.get('groupaccount'))
+    list_of_avaliations = pfactory.avaliation_form_dao().find_one()['formYear']
+    for avaliation in list_of_avaliations:
+        if avaliation['_id'] == request.args.get('id'):
+            avaliations.append(avaliation)
+    criterions_name = ['Produção Cientifica em eventos(3 Pontos)',
+                       'Produção cientifica definitiva (5 Pontos)',
+                       'Projetos de pesquisa financiados por agências externas(4 Pontos)',
+                       'Projetos de pesquisa desenvolvidos internamente(3 Pontos)',
+                       'Professores participantes de bolsa produtividade(4 Pontos)',
+                       'Participação no Seminario do CCSA(5 Pontos)',
+                       'Organização de eventos (3 Pontos)']
+    return render_template(
+        'public/result_one_avaliation.html',
+        avaliation=avaliations[0],
+        criterions_name=criterions_name,
+        std=get_std_for_template(None),
+    )
+
 # AUX
 def get_std_for_template(research_group, give_me_empty=False):
     """

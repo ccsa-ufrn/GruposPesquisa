@@ -1,0 +1,104 @@
+{% extends "public/layout.html" %}
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+
+<div class="main-page-header">
+    <h1 class="text-center">Grupos de Pesquisa</h1>
+</div>
+</br>
+<div class="container"> 
+    <div style="margin-top: 20px"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                            <h4>Dados(Mostrando apenas professores com vínculo ao CCSA)</h4>
+                    </div>
+            </div>
+            <table class="pure-table pure-table-bordered {{ avaliation._id }}" width="100%">
+                <thead>
+                    <tr>
+                        <td colspan="2"><b>Informações pessoais</b></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="20%">Nome</td>
+                        <td>{{ avaliation.group_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Coordenador</td>
+                        <td>{{ avaliation.coordinator }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ano</td>
+                        <td>{{ avaliation.year }}</td>
+                    </tr>
+                    <tr>
+                        <td>Número de Alunos da Graduação</td>
+                        <td>{{ avaliation.numGrad }}</td>
+                    </tr>
+                    <tr>
+                        <td>Número de Alunos da Pós-Graduação</td>
+                        <td>{{ avaliation.numPosGrad }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="pure-table pure-table-bordered {{ avaliation._id }}" width="100%">
+                <thead>
+                    <tr>
+                        <td colspan="2"><b>Objetivos</b></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span>{{ avaliation.goals }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {% for professor in avaliation.professors %}
+            <table class="pure-table pure-table-bordered {{ avaliation._id }}" width="100%">
+                <thead>
+                    <tr>
+                        <td colspan=2><b>{{ professor.name }}{% if professor.master_phd %}<strong>(Possui Pós)</strong>{% endif %}</b></td>
+                    </tr>
+                </thead>
+            {% for i in range(0, criterions_name|count) %}
+            <table class="pure-table pure-table-bordered {{ avaliation._id }}" width="100%">
+                <thead>
+                    <tr class="{{ avaliation._id }}">
+                        <td colspan=2>{{ criterions_name[i] }}</td>
+                    </tr>
+                </thead>
+            </table>
+            {% for criterions in professor.criterions[i] %}
+            <table class="pure-table pure-table-bordered {{ avaliation._id}}" width="100%">
+                <thead style="background-color: #F4F4F4">
+                    <tr class="{{ avaliation._id }}">
+                        <td colspan=2>{{ criterions.type }}</td>
+                    </tr>
+                </thead>
+                <table class="pure-table pure-table-bordered {{ avaliation._id }}" width="100%">
+                    <tbody>
+                        {% for insertion in criterions.insertions %}
+                        <tr>
+                            <td>{{ insertion }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </table>
+            </table>
+            {% endfor %}
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

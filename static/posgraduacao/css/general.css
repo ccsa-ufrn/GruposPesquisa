@@ -38,6 +38,11 @@ section header h2{
     margin-bottom: 5px;
 }
 
+/* LIST OF AVALIATIONS */
+.pure-table-bordered{
+    page-break-after: always;
+}
+
 
 /* NAVBAR
 -------------------------------------------------- */

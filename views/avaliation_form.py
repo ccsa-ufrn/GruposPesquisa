@@ -36,7 +36,7 @@ def submit_avaliation_form():
         )
     else:
         return render_template(
-        'admin/avaliation_form_four_years.html',
+       'admin/avaliation_form_four_years.html',
         new=request.args.get('new'),
         )
 

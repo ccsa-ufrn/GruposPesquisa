@@ -56,6 +56,8 @@
                             {% endif %}
                         {% endfor %}
                     </table>
+                    <br/>
+                    <a class="btn btn-default" style="width: 100%" onclick='goToUrl("{{ avaliation._id}}", "{{ avaliation.groupAccount }}")'>Informações completas</a>
                 </td>
             </table>
             <br/>
@@ -63,5 +65,11 @@
         </div>
     </div>
 </div>
+<script>
+ console.log({{ avaliations|tojson|safe }});
+ function goToUrl( id,groupaccount) {
+     window.location.href = `/um_formulario_anual/?id=${id}&groupaccount=${encodeURIComponent(groupaccount)}`;
+ }
+</script>
 
 {% endblock %}
