@@ -23,6 +23,7 @@ _COLLECTION_OF_RESET_KEYS = 'resetKeys'
 _COLLECTION_OF_NEWS = 'news'
 _COLLECTION_OF_AVALIATIONS = 'avaliationForm'
 _COLLECTION_OF_PROFESSORS_CCSA = 'professorsCCSA'
+_COLLECTION_OF_RESEARCH_LINES = 'researchLines'
 
 # factory methods
 
@@ -101,3 +102,7 @@ class ResearchGroupFactory(object):
     def professors_ccsa_dao(self):
         """ Gets an instance of a data access object for a certain collection """
         return GenericMongoDAO(_COLLECTION_OF_PROFESSORS_CCSA, self.mongo_id)
+
+    def research_lines_dao(self):
+        """ Gets an instance of a data access object for a certain collection """
+        return GenericMongoDAO(_COLLECTION_OF_RESEARCH_LINES, self.mongo_id)

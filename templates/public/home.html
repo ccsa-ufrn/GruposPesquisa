@@ -83,12 +83,24 @@
             <h2><span class="glyphicon glyphicon-map-marker"></span> Atendimento</h2>
         </header>
         <p>
+          {% if attendance.location.building %}
             <span>Sala:</span> {{ attendance.location.building }}, {{ attendance.location.floor }}, {{ attendance.location.room }}.<br/>
             <span>Horários: </span> {{ attendance.location.opening }}<br/>
+          {% endif %}
+          {% if attendance.email %}
             <span>E-mail:</span> <a href="mailto:{{ std.research_group.email }}">{{ attendance.email }}</a><br/>
-            {% for phone in attendance.phones %}
+          {% endif %}
+          {% if attendance.instagram %}
+            <span>Instagram:</span>{{ attendance.instagram }}<br/>
+          {% endif %}
+          {% if attendance.facebook %}
+            <span>Facebook:</span> <a href="https://facebook.com/{{ attendance.facebook }}">{{ attendance.facebook }}</a><br/>
+          {% endif %}
+          {% for phone in attendance.phones %}
+            {% if phone.number %}
             <span>Telefone {{ phone.type }}:</span> {{ phone.number }}<br/>
-            {% endfor %}
+            {% endif %}
+          {% endfor %}
         </p>
         <div id="map"><!-- Google Maps API. --></div>
         <p>
