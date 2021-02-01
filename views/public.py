@@ -362,7 +362,7 @@ def get_list():
         research_groups[i] = research_groups[i]['name']
     for group in research_groups:
         pfactory = ResearchGroupFactory(group)
-        list_of_avaliations = pfactory.avaliation_form_dao().find_one()['formYear']
+        list_of_avaliations = filter(lambda x: int(x['year']) == 2019 ,pfactory.avaliation_form_dao().find_one()['formYear'])
         for avaliation in list_of_avaliations:
             calculated_avaliation = calculate_points(avaliation, 'formYear')
             avaliations.append(calculated_avaliation)
