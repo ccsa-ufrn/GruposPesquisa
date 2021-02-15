@@ -34,7 +34,7 @@ CORS(APP, supports_credentials=True)
 APP.config.update(
     TRAP_BAD_REQUEST_ERRORS = True,
     #EMAIL SETTINGS
-    MAIL_SERVER='gandalf.ufrn.br',
+    MAIL_SERVER='mx5.ufrn.br',
     MAIL_PORT = 465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME=MAIL_USER,
