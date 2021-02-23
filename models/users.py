@@ -135,6 +135,7 @@ class User(object):
             pfactory = ResearchGroupFactory()
             dao = pfactory.research_groups_dao()
             research_group = list(dao.find(condition))
+            print(research_group, file=sys.stderr)
             if research_group:
                 group_name = research_group[0]['name']
                 group_id = research_group[0]['_id']

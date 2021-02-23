@@ -78,9 +78,9 @@ def edit_description():
     form = DescriptionForm()
 
     pfactory = ResearchGroupFactory(current_user.group_name)
+    research_group = pfactory.research_group
     dao = pfactory.research_groups_dao()
-    json = pfactory.research_groups_dao().find_one()
-    json = dict(json)
+    json = dict(research_group)
     json = dumps(json)
 
     if form.validate_on_submit() and form.create.data:

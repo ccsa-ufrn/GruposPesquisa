@@ -40,7 +40,7 @@ section header h2{
 
 /* LIST OF AVALIATIONS */
 .pure-table-bordered{
-    page-break-after: always;
+    page-break-after: avoid;
 }
 
 
