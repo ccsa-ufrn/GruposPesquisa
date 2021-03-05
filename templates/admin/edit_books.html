@@ -35,6 +35,7 @@ $(document).ready(function() {
         $("input[name=edition]").val(publications.books[indexInBooks].edition);
         $("input[name=location]").val(publications.books[indexInBooks].location);
         $("input[name=publisher]").val(publications.books[indexInBooks].publisher);
+        $("input[name=link]").val(publications.books[indexInBooks].link);
         $("input[name=year]").val(publications.books[indexInBooks].year);
         $("input[name=index]").val(indexInBooks);
     });
@@ -79,6 +80,9 @@ $(document).ready(function() {
     <br/>
     {{ form.publisher.label }}<br/>
     {{ form.publisher(required='true', class="form-control") }}
+    <br/>
+    {{ form.link.label }}<br/>
+    {{ form.link(required='true', class="form-control") }}
     <br/>
     {{ form.year.label }}<br/>
     {{ form.year(required='true', type='number', step='1', placeholder='2002', class="form-control") }}    

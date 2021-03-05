@@ -26,6 +26,9 @@
         <li><strong>Edição:</strong>  {{ book.edition }}</li>
         <li><strong>Editora:</strong> {{ book.publisher }}</li>   
         <li><strong>Local de impressão:</strong> {{ book.location }}</li>   
+    {% if book.link  %}
+        <li><strong>Link para acesso:</strong> <a href="{{ book.link }}">Clique aqui</a></li>   
+    {% endif %}
         <li><strong>Ano:</strong> {{ book.year }}</li>
     </ul>
     <br/>

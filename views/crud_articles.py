@@ -36,6 +36,7 @@ def add_article():
             'edition': form.edition.data,
             'location': form.location.data,
             'publisher': form.publisher.data,
+            'link': form.link.data,
             'number': form.number.data,
             'pages': form.pages.data,
             'date': form.date.data
@@ -81,6 +82,7 @@ def edit_article():
             'authors': form.authors.data,
             'edition': form.edition.data,
             'location': form.location.data,
+            'link': form.link.data,
             'publisher': form.publisher.data,
             'number': form.number.data,
             'pages': form.pages.data,

@@ -345,6 +345,8 @@ class BookForm(FlaskForm):
 
     location = StringField('Local de impressão:')
 
+    link = StringField('Link para repositório externo:')
+
     publisher = StringField('Editora:')
 
     year = IntegerField('Ano da publicação:')
@@ -417,6 +419,8 @@ class ArticleForm(FlaskForm):
     number = IntegerField('Número:')
 
     location = StringField('Local de impressão:')
+
+    link = StringField('Link de acesso:')
 
     publisher = StringField('Editora:')
 

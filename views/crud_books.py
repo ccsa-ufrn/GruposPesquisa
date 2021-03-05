@@ -37,6 +37,7 @@ def add_book():
             'edition': form.edition.data,
             'location': form.location.data,
             'publisher': form.publisher.data,
+            'link': form.link.data,
             'year': form.year.data
         }
 
@@ -81,6 +82,7 @@ def edit_book():
             'edition': form.edition.data,
             'location': form.location.data,
             'publisher': form.publisher.data,
+            'link': form.link.data,
             'year': form.year.data
         }
 

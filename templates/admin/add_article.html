@@ -43,12 +43,17 @@
     <br/>
 
     {{ form.number.label }}<br/>
-    {{ form.number(class="form-control", placeholder="5") }}
+    {{ form.number(type='number', class="form-control", placeholder="5") }}
 
     <br/>
 
     {{ form.publisher.label }}<br/>
     {{ form.publisher(required='true', class="form-control", placeholder="Ex: Saraiva") }}
+
+    <br/>
+
+    {{ form.link.label }}<br/>
+    {{ form.link(class="form-control", type='url', placeholder="Ex: https://google.com") }}
 
     <br/>
 

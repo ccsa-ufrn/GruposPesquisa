@@ -33,6 +33,7 @@ $(document).ready(function() {
         $("input[name=subtitle]").val(publications.articles[indexInArticles].subtitle);
         $("input[name=authors]").val(publications.articles[indexInArticles].authors);
         $("input[name=edition]").val(publications.articles[indexInArticles].edition);
+        $("input[name=link]").val(publications.articles[indexInArticles].link);
         $("input[name=location]").val(publications.articles[indexInArticles].location);
         $("input[name=publisher]").val(publications.articles[indexInArticles].publisher);
         $("input[name=date]").val(publications.articles[indexInArticles].date);
@@ -87,6 +88,9 @@ $(document).ready(function() {
     <br/>
     {{ form.publisher.label }}<br/>
     {{ form.publisher(required='true', class="form-control") }}
+    <br/>
+    {{ form.link.label }}<br/>
+    {{ form.link(type='url', class="form-control") }}
     <br/>
     {{ form.date.label }}<br/>
     {{ form.date(class="form-control") }}    
