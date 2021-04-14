@@ -392,6 +392,26 @@ def get_list_2():
         std=get_std_for_template(None),
     )
 
+@app.route('/SFVjLfFjk7J3a5G/', methods=['GET'])
+def get_list_3():
+    avaliations = []
+    pfactory = ResearchGroupFactory()
+    research_groups_registered = pfactory.research_groups_dao().find({'isSignedIn': True})
+    research_groups = list(research_groups_registered)
+    for i in range(0, len(research_groups)):
+        research_groups[i] = research_groups[i]['name']
+    for group in research_groups:
+        pfactory = ResearchGroupFactory(group)
+        list_of_avaliations = pfactory.avaliation_form_dao().find_one()['formYear']
+        for avaliation in list_of_avaliations:
+            calculated_avaliation = calculate_points(avaliation, 'formYear')
+            avaliations.append(calculated_avaliation)
+    return render_template(
+        'public/result_avaliation.html',
+        avaliations=avaliations,
+        std=get_std_for_template(None),
+    )
+
 @app.route('/um_formulario_anual/', methods=['GET'])
 def get_avaliation():
     avaliations = []
