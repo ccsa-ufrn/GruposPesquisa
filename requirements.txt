@@ -6,7 +6,7 @@ bs4==0.0.1
 cffi==1.14.1
 click==6.7
 Flask==1.1.2
-Flask-Cors==1.10.3
+Flask-Cors==3.0.9
 Flask-Login==0.4.0
 Flask-Mail==0.9.1
 Flask-WTF==0.14.2
