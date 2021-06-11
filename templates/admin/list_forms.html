@@ -10,8 +10,9 @@
 <div class="panel-body">
     <table class="table">
         <thead>
-            <th>Nome</th>
             <th>Ano</th>
+            <th>Nome</th>
+            <th>Relatório completo</th>
             <th>Status</th>
             <th>Continuar editando</th>
         </thead>
@@ -19,6 +20,7 @@
             <tr>
                 <td>{{ form.year }}</td>
                 <td>{{ form.group_name }}</td>
+                <td><a class="btn btn-default" style="width: 100%" onclick='goToUrl("{{ form._id}}", "{{ form.groupAccount }}")'>Relatório completo</a></td>
                 {% if form.state == "final" %}
                 <td>Finalizado</td>
                 <td>Não é possível continuar editando</td>
@@ -38,5 +40,10 @@
 </div>
 </div>
 </div>
+<script>
+ function goToUrl( id,groupaccount) {
+     window.location.href = `/um_formulario_anual/?id=${id}&groupaccount=${encodeURIComponent(groupaccount)}`;
+ }
+</script>
 
 {% endblock %}

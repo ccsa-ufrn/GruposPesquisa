@@ -415,11 +415,12 @@ def get_list_3():
 @app.route('/um_formulario_anual/', methods=['GET'])
 def get_avaliation():
     avaliations = []
-    pfactory = ResearchGroupFactory(request.args.get('groupaccount'))
-    list_of_avaliations = pfactory.avaliation_form_dao().find_one()['formYear']
-    for avaliation in list_of_avaliations:
-        if avaliation['_id'] == request.args.get('id'):
-            avaliations.append(avaliation)
+    pfactory = ResearchGroupFactory()
+    list_of_research_groups = list(pfactory.avaliation_form_dao().find())
+    for research_group in list_of_research_groups:
+        for avaliation in research_group['formYear']:
+            if avaliation['_id'] == request.args.get('id'):
+                avaliations.append(avaliation)
     criterions_name = ['Produção Cientifica em eventos(3 Pontos)',
                        'Produção cientifica definitiva (5 Pontos)',
                        'Projetos de pesquisa financiados por agências externas(4 Pontos)',
